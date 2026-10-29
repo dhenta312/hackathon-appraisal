@@ -1,0 +1,24 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table->unsignedBigInteger('team_id')->nullable()->after('email');
+            $table->unsignedBigInteger('job_role_id')->nullable()->after('team_id');
+            $table->boolean('is_admin')->default(false)->after('job_role_id');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn(['team_id', 'job_role_id', 'is_admin']);
+        });
+    }
+};
