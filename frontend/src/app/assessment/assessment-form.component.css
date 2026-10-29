@@ -1,0 +1,87 @@
+.assessment-container {
+  max-width: 40rem;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.role {
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+.progress {
+  color: #4b5563;
+  font-size: 0.875rem;
+}
+
+.component {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+}
+
+.weight {
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.question {
+  margin-top: 1rem;
+}
+
+.question-text {
+  margin: 0 0 0.5rem;
+}
+
+.options {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.option {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  background: white;
+  cursor: pointer;
+}
+
+.option.selected {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: white;
+}
+
+.reason {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.reason textarea {
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font: inherit;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+
+.actions .primary {
+  background: #2563eb;
+  color: white;
+}
+
+.error {
+  color: #dc2626;
+}

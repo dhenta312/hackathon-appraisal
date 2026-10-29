@@ -1,0 +1,58 @@
+<div class="assessment-container">
+  @if (loading()) {
+    <p>Memuat...</p>
+  } @else {
+    <header class="assessment-header">
+      <h1>Menilai: {{ assessmentTemplate()?.assessed?.name }}</h1>
+      <p class="role">{{ assessmentTemplate()?.assessed?.job_role_name }}</p>
+      <p class="progress">Terisi {{ answeredCount() }} dari {{ totalQuestions() }} pertanyaan</p>
+    </header>
+
+    @if (error) {
+      <p class="error">{{ error }}</p>
+    }
+
+    @for (component of assessmentTemplate()?.components ?? []; track component.id) {
+      <section class="component">
+        <h2>
+          {{ component.name }}
+          <span class="weight">maks {{ component.weight }} poin</span>
+        </h2>
+
+        @for (question of component.questions; track question.id) {
+          <div class="question">
+            <p class="question-text">{{ question.text }}</p>
+            <div class="options">
+              @for (value of [1, 2, 3, 4, 5]; track value) {
+                <button
+                  type="button"
+                  class="option"
+                  [class.selected]="scores()[question.id] === value"
+                  (click)="setScore(question.id, value)"
+                >
+                  {{ value }}
+                </button>
+              }
+            </div>
+          </div>
+        }
+
+        <label class="reason">
+          <span>Alasan untuk {{ component.name }}</span>
+          <textarea
+            rows="2"
+            [value]="reasons()[component.id]"
+            (input)="setReason(component.id, $event)"
+          ></textarea>
+        </label>
+      </section>
+    }
+
+    <div class="actions">
+      <button type="button" (click)="save('draft')" [disabled]="saving()">Simpan draf</button>
+      <button type="button" class="primary" (click)="save('submit')" [disabled]="saving()">
+        Kirim
+      </button>
+    </div>
+  }
+</div>
