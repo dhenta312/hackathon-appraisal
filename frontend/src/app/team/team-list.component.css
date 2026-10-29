@@ -10,6 +10,16 @@
   align-items: center;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.my-results {
+  color: #2563eb;
+}
+
 .progress {
   color: #4b5563;
 }
@@ -21,6 +31,13 @@
 }
 
 .member-card {
+  display: flex;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+
+.member-main {
+  flex: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -44,6 +61,15 @@
 .member-status {
   color: #2563eb;
   font-size: 0.875rem;
+}
+
+.member-results {
+  padding: 0 1rem;
+  border: 1px solid #2563eb;
+  border-radius: 0.5rem;
+  background: white;
+  color: #2563eb;
+  cursor: pointer;
 }
 
 .error {

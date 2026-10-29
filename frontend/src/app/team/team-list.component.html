@@ -1,7 +1,10 @@
 <div class="team-container">
   <header class="team-header">
     <h1>Tim saya</h1>
-    <button class="logout" (click)="logout()">Keluar</button>
+    <div class="header-actions">
+      <a class="my-results" [routerLink]="['/results', myId]">Lihat hasil saya</a>
+      <button class="logout" (click)="logout()">Keluar</button>
+    </div>
   </header>
 
   @if (loading()) {
@@ -15,11 +18,16 @@
 
     <div class="members">
       @for (member of members(); track member.id) {
-        <button class="member-card" (click)="openAssessment(member.id)">
-          <span class="member-name">{{ member.name }}</span>
-          <span class="member-role">{{ member.job_role_name }}</span>
-          <span class="member-status">{{ statusLabel(member.status) }}</span>
-        </button>
+        <div class="member-card">
+          <button class="member-main" (click)="openAssessment(member.id)">
+            <span class="member-name">{{ member.name }}</span>
+            <span class="member-role">{{ member.job_role_name }}</span>
+            <span class="member-status">{{ statusLabel(member.status) }}</span>
+          </button>
+          @if (isAdmin) {
+            <button class="member-results" (click)="viewResults(member.id)">Hasil</button>
+          }
+        </div>
       }
     </div>
   }
