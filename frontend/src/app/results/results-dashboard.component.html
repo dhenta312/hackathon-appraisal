@@ -1,0 +1,46 @@
+<div class="results-container">
+  @if (loading()) {
+    <p>Memuat...</p>
+  } @else {
+    @if (result(); as result) {
+      <header class="results-header">
+        <h1>Hasil Penilaian</h1>
+        @if (result.total !== null) {
+          <p class="total">Total: <strong>{{ result.total }}</strong> / 100</p>
+        } @else {
+          <p class="total">Belum dinilai</p>
+        }
+      </header>
+
+      @if (error) {
+        <p class="error">{{ error }}</p>
+      }
+
+      @for (component of result.components; track component.code) {
+        <section class="component">
+          <h2>
+            {{ component.name }}
+            <span class="weight">{{ component.score ?? '-' }} / {{ component.weight }}</span>
+          </h2>
+
+          @for (assessor of component.per_assessor; track assessor.label) {
+            <div class="assessor">
+              <span class="label">{{ assessor.label }}:</span>
+              <span class="score">{{ assessor.score ?? '-' }}</span>
+              @if (assessor.reason) {
+                <p class="reason">&ldquo;{{ assessor.reason }}&rdquo;</p>
+              }
+            </div>
+          }
+        </section>
+      }
+
+      <section class="component attendance">
+        <h2>
+          Presensi
+          <span class="weight">{{ result.attendance.points }} / {{ result.attendance.max }}</span>
+        </h2>
+      </section>
+    }
+  }
+</div>

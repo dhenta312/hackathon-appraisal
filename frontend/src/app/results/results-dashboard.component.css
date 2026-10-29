@@ -1,0 +1,49 @@
+.results-container {
+  max-width: 40rem;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.total {
+  font-size: 1.25rem;
+}
+
+.component {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+}
+
+.weight {
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-weight: 400;
+}
+
+.assessor {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.label {
+  font-weight: 600;
+}
+
+.score {
+  margin-left: 0.25rem;
+}
+
+.reason {
+  color: #4b5563;
+  font-style: italic;
+  margin: 0.25rem 0 0;
+}
+
+.attendance {
+  background: #f9fafb;
+}
+
+.error {
+  color: #dc2626;
+}

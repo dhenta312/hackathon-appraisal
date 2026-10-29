@@ -15,7 +15,7 @@ class ScoringService
      */
     public function compute(int $userId, string $period): array
     {
-        $assessments = Assessment::with('scores.question')
+        $assessments = Assessment::with(['scores.question', 'reasons'])
             ->where('assessed_id', $userId)
             ->where('period', $period)
             ->where('status', 'submitted')
@@ -31,11 +31,15 @@ class ScoringService
                     ->filter(fn ($score) => $score->question?->component_id === $component->id)
                     ->pluck('value');
 
+                $reason = $assessment->reasons
+                    ->first(fn ($reason) => $reason->component_id === $component->id);
+
                 return [
                     'label' => 'Penilai ' . chr(65 + $index),
                     'score' => $values->isEmpty()
                         ? null
                         : round($values->avg() / 5 * $component->weight, 1),
+                    'reason' => $reason?->text ?? '',
                 ];
             })->values();
 
