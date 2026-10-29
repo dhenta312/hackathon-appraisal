@@ -1,0 +1,5 @@
+# Plan-execution scratch workspace (ledger, briefs, review packages)
+.superpowers/
+
+# macOS
+.DS_Store
