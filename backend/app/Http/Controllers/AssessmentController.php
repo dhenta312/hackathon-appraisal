@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Assessment;
 use App\Models\Component;
+use App\Models\Question;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -83,6 +84,15 @@ class AssessmentController extends Controller
         $assessor = $request->user();
         $assessed = $this->resolveTeammate($assessor, $assessedId);
 
+        $existing = Assessment::where('assessor_id', $assessor->id)
+            ->where('assessed_id', $assessed->id)
+            ->where('period', self::PERIOD)
+            ->first();
+
+        if ($existing && $existing->status === 'submitted') {
+            abort(409, 'Penilaian sudah dikirim');
+        }
+
         $data = $request->validate([
             'action' => ['required', 'in:draft,submit'],
             'scores' => ['array'],
@@ -92,6 +102,17 @@ class AssessmentController extends Controller
             'reasons.*.component_id' => ['required', 'integer'],
             'reasons.*.text' => ['nullable', 'string'],
         ]);
+
+        if ($data['action'] === 'submit') {
+            $requiredQuestionIds = $this->templateQuestionIds($assessed);
+            $providedQuestionIds = collect($data['scores'])->pluck('question_id')->unique();
+
+            if ($requiredQuestionIds->diff($providedQuestionIds)->isNotEmpty()) {
+                return response()->json([
+                    'message' => 'Semua pertanyaan harus diisi sebelum mengirim',
+                ], 422);
+            }
+        }
 
         $submitting = $data['action'] === 'submit';
 
@@ -127,6 +148,19 @@ class AssessmentController extends Controller
             'id' => $assessment->id,
             'status' => $assessment->status,
         ]);
+    }
+
+    /**
+     * Collect every question id in the assessed person's role template.
+     */
+    private function templateQuestionIds(User $assessed): \Illuminate\Support\Collection
+    {
+        return Question::where(function ($query) use ($assessed) {
+            $query->whereNull('job_role_id');
+            if ($assessed->job_role_id) {
+                $query->orWhere('job_role_id', $assessed->job_role_id);
+            }
+        })->pluck('id');
     }
 
     /**
