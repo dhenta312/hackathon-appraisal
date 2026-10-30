@@ -79,12 +79,9 @@ body {
 }
 
 .login-hero img {
-  width: 861px;
-  height: 100%;
-  max-width: none;
-  object-fit: cover;
-  object-position: bottom;
-  border-bottom-right-radius: 160px;
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .login-content {
