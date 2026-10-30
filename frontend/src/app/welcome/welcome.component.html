@@ -1,0 +1,77 @@
+<div class="page">
+  <div class="breadcrumb">Beranda</div>
+
+  <section class="pilar-card welcome-card">
+    <div class="welcome-head">
+      <div class="welcome-logo">
+        <img class="logo-mark-2" src="logo-mark-2.svg" alt="UII" />
+        <img class="logo-mark-1" src="logo-mark-1.svg" alt="" />
+      </div>
+      <div class="welcome-titles">
+        <h1 class="welcome-title">Selamat datang di Penilaian Kinerja</h1>
+        <p class="welcome-subtitle">Penilaian kinerja pegawai</p>
+      </div>
+    </div>
+
+    <div class="welcome-divider"></div>
+
+    <div class="announcement">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="10" cy="10" r="8" />
+        <path d="M10 6v5M10 14h.01" />
+      </svg>
+      <div>
+        <p class="announcement-title">Periode penilaian</p>
+        <p class="announcement-desc">Pengisian penilaian kinerja berlangsung dari {{ periodStart }} sampai {{ periodEnd }}.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="dashboard-cards">
+    <section class="pilar-card info-card">
+      <div class="info-head">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M15 6.7a5 5 0 0 0-10 0c0 6-2.5 7.5-2.5 7.5h15S15 12.7 15 6.7z" />
+          <path d="M11.4 17.5a2 2 0 0 1-3.8-.5" />
+        </svg>
+        <div>
+          <h2 class="info-title">Pemberitahuan</h2>
+          <p class="info-subtitle">Notifikasi penting untuk Anda.</p>
+        </div>
+      </div>
+      <div class="info-divider"></div>
+      <div class="info-list">
+        @for (item of notifications; track $index) {
+          <div class="info-item">
+            <p class="info-text">{{ item.text }}</p>
+            <p class="info-time">{{ item.time }}</p>
+          </div>
+        }
+      </div>
+    </section>
+
+    <section class="pilar-card info-card">
+      <div class="info-head">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="10" cy="10" r="8" />
+          <path d="M10 6v4l3 2" />
+        </svg>
+        <div>
+          <h2 class="info-title">Aktivitas terkini</h2>
+          <p class="info-subtitle">Riwayat aktivitas Anda.</p>
+        </div>
+      </div>
+      <div class="info-divider"></div>
+      <div class="info-list">
+        @for (item of activities; track $index) {
+          <div class="info-item">
+            <p class="info-text">
+              <strong>{{ item.user }}</strong> {{ item.action }} <strong class="info-target">{{ item.target }}</strong>
+            </p>
+            <p class="info-time">{{ item.time }}</p>
+          </div>
+        }
+      </div>
+    </section>
+  </div>
+</div>

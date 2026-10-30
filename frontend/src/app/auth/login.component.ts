@@ -35,7 +35,7 @@ export class LoginComponent {
     const { email, password } = this.form.value;
 
     this.auth.login(email ?? '', password ?? '').subscribe({
-      next: () => this.router.navigate(['/team']),
+      next: () => this.router.navigate(['/welcome']),
       error: () => {
         this.error = 'Email atau password salah';
         this.submitting = false;
