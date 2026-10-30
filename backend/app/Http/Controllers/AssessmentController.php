@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Assessment;
 use App\Models\Component;
+use App\Models\Period;
 use App\Models\Question;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -11,8 +12,6 @@ use Illuminate\Http\Request;
 
 class AssessmentController extends Controller
 {
-    private const PERIOD = '2026-Q4';
-
     /**
      * List the caller's teammates with their assessment status.
      */
@@ -34,7 +33,7 @@ class AssessmentController extends Controller
     }
 
     /**
-     * Return the role-specific template and any existing draft for a teammate.
+     * Return the role-specific template (with answer choices) and any draft.
      */
     public function template(Request $request, int $assessedId): JsonResponse
     {
@@ -50,6 +49,7 @@ class AssessmentController extends Controller
                 'name' => $component->name,
                 'weight' => $component->weight,
                 'questions' => $component->questions()
+                    ->with('choices')
                     ->where(function ($query) use ($assessed) {
                         $query->whereNull('job_role_id');
                         if ($assessed->job_role_id) {
@@ -62,6 +62,14 @@ class AssessmentController extends Controller
                         'id' => $question->id,
                         'text' => $question->text,
                         'sort_order' => $question->sort_order,
+                        'choices' => $question->choices
+                            ->sortBy('sort_order')
+                            ->values()
+                            ->map(fn ($choice) => [
+                                'id' => $choice->id,
+                                'label' => $choice->label,
+                                'point_value' => $choice->point_value,
+                            ]),
                     ]),
             ]);
 
@@ -86,7 +94,7 @@ class AssessmentController extends Controller
 
         $existing = Assessment::where('assessor_id', $assessor->id)
             ->where('assessed_id', $assessed->id)
-            ->where('period', self::PERIOD)
+            ->where('period', $this->periodName())
             ->first();
 
         if ($existing && $existing->status === 'submitted') {
@@ -97,7 +105,7 @@ class AssessmentController extends Controller
             'action' => ['required', 'in:draft,submit'],
             'scores' => ['array'],
             'scores.*.question_id' => ['required', 'integer'],
-            'scores.*.value' => ['required', 'integer', 'between:1,5'],
+            'scores.*.value' => ['required', 'integer', 'min:0'],
             'reasons' => ['array'],
             'reasons.*.component_id' => ['required', 'integer'],
             'reasons.*.text' => ['nullable', 'string'],
@@ -120,7 +128,7 @@ class AssessmentController extends Controller
             [
                 'assessor_id' => $assessor->id,
                 'assessed_id' => $assessed->id,
-                'period' => self::PERIOD,
+                'period' => $this->periodName(),
             ],
             [
                 'status' => $submitting ? 'submitted' : 'draft',
@@ -148,6 +156,14 @@ class AssessmentController extends Controller
             'id' => $assessment->id,
             'status' => $assessment->status,
         ]);
+    }
+
+    /**
+     * The name of the currently-open assessment period.
+     */
+    private function periodName(): string
+    {
+        return Period::open()?->name ?? '2026-Q4';
     }
 
     /**
@@ -184,7 +200,7 @@ class AssessmentController extends Controller
     {
         $assessment = Assessment::where('assessor_id', $assessorId)
             ->where('assessed_id', $assessedId)
-            ->where('period', self::PERIOD)
+            ->where('period', $this->periodName())
             ->first();
 
         return $assessment?->status ?? 'not_started';
@@ -197,7 +213,7 @@ class AssessmentController extends Controller
     {
         $assessment = Assessment::where('assessor_id', $assessorId)
             ->where('assessed_id', $assessedId)
-            ->where('period', self::PERIOD)
+            ->where('period', $this->periodName())
             ->where('status', 'draft')
             ->first();
 

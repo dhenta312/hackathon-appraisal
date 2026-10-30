@@ -24,4 +24,9 @@ class Question extends Model
     {
         return $this->hasMany(Score::class);
     }
+
+    public function choices(): HasMany
+    {
+        return $this->hasMany(AnswerChoice::class);
+    }
 }

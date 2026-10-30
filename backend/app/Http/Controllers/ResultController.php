@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Period;
 use App\Models\User;
 use App\Services\ScoringService;
 use Illuminate\Http\JsonResponse;
@@ -9,8 +10,6 @@ use Illuminate\Http\Request;
 
 class ResultController extends Controller
 {
-    private const PERIOD = '2026-Q4';
-
     /**
      * Return the transparent score breakdown for a user.
      */
@@ -23,6 +22,8 @@ class ResultController extends Controller
             abort(403, 'Tidak diizinkan melihat hasil orang lain');
         }
 
-        return response()->json($scoring->compute($subject->id, self::PERIOD));
+        $period = Period::open()?->name ?? '2026-Q4';
+
+        return response()->json($scoring->compute($subject->id, $period));
     }
 }

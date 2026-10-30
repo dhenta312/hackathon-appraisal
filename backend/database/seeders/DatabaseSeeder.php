@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\AnswerChoice;
 use App\Models\Attendance;
 use App\Models\Component;
 use App\Models\JobRole;
+use App\Models\Period;
 use App\Models\Question;
 use App\Models\Team;
 use App\Models\User;
@@ -30,6 +32,13 @@ class DatabaseSeeder extends Seeder
         foreach (['UX', 'Frontend', 'Backend'] as $roleName) {
             JobRole::create(['name' => $roleName]);
         }
+
+        Period::create([
+            'name' => '2026-Q4',
+            'start_date' => '2026-11-01',
+            'end_date' => '2026-11-30',
+            'is_open' => true,
+        ]);
 
         $team = Team::create(['name' => 'Team Alpha']);
 
@@ -59,6 +68,7 @@ class DatabaseSeeder extends Seeder
         }
 
         $this->seedQuestions();
+        $this->seedAnswerChoices();
     }
 
     /**
@@ -125,6 +135,31 @@ class DatabaseSeeder extends Seeder
                     'job_role_id' => $role->id,
                     'text' => $text,
                     'sort_order' => $index + 1,
+                ]);
+            }
+        }
+    }
+
+    /**
+     * Seed default 1–5 answer choices for every question.
+     */
+    private function seedAnswerChoices(): void
+    {
+        $labels = [
+            1 => 'Sangat kurang',
+            2 => 'Kurang',
+            3 => 'Cukup',
+            4 => 'Baik',
+            5 => 'Sangat baik',
+        ];
+
+        foreach (Question::all() as $question) {
+            foreach ($labels as $point => $label) {
+                AnswerChoice::create([
+                    'question_id' => $question->id,
+                    'label' => $label,
+                    'point_value' => $point,
+                    'sort_order' => $point,
                 ]);
             }
         }
