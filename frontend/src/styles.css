@@ -74,13 +74,14 @@ body {
   width: 800px;
   flex: 0 0 800px;
   overflow: hidden;
-  display: flex;
-  align-items: flex-end;
 }
 
 .login-hero img {
   width: 100%;
-  height: auto;
+  aspect-ratio: 800 / 883;
+  object-fit: cover;
+  object-position: 60% 50%;
+  border-bottom-right-radius: 160px;
   display: block;
 }
 
