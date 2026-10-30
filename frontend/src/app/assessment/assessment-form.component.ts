@@ -22,14 +22,6 @@ export class AssessmentFormComponent implements OnInit {
   readonly saving = signal(false);
   error: string | null = null;
 
-  readonly scaleOptions = [
-    { value: 1, label: 'Sangat kurang' },
-    { value: 2, label: 'Kurang' },
-    { value: 3, label: 'Cukup' },
-    { value: 4, label: 'Baik' },
-    { value: 5, label: 'Sangat baik' },
-  ];
-
   readonly totalQuestions = computed(() =>
     (this.assessmentTemplate()?.components ?? []).reduce(
       (total, component) => total + component.questions.length,

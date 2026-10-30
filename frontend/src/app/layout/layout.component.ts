@@ -23,16 +23,24 @@ export class LayoutComponent {
     return this.userName.charAt(0).toUpperCase();
   }
 
+  get isAdmin(): boolean {
+    return this.auth.currentUser()?.is_admin ?? false;
+  }
+
   get pageLabel(): string {
     const url = this.router.url;
     if (url.startsWith('/team')) return 'Penilaian';
     if (url.startsWith('/assess')) return 'Form Penilaian';
     if (url.startsWith('/results')) return 'Hasil Penilaian';
+    if (url.startsWith('/settings')) return 'Pengaturan';
     return 'Beranda';
   }
 
-  get activeLevel(): 'welcome' | 'team' {
+  get activeLevel(): 'welcome' | 'team' | 'settings' {
     const url = this.router.url;
+    if (url.startsWith('/settings')) {
+      return 'settings';
+    }
     if (url.startsWith('/team') || url.startsWith('/assess') || url.startsWith('/results')) {
       return 'team';
     }

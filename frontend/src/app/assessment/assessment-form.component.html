@@ -38,21 +38,21 @@
         @for (question of component.questions; track question.id) {
           <div class="mb-5">
             <p class="text-body-m text-text-primary mb-2">{{ question.text }}</p>
-            <div class="grid grid-cols-5 gap-2">
-              @for (opt of scaleOptions; track opt.value) {
+            <div class="flex flex-wrap gap-2">
+              @for (choice of question.choices; track choice.id) {
                 <button
                   type="button"
-                  class="flex flex-col items-center gap-1 py-2 border rounded-m transition-colors"
-                  [class.bg-brand-600]="scores()[question.id] === opt.value"
-                  [class.border-brand-600]="scores()[question.id] === opt.value"
-                  [class.text-white]="scores()[question.id] === opt.value"
-                  [class.border-border-secondary]="scores()[question.id] !== opt.value"
-                  [class.text-text-primary]="scores()[question.id] !== opt.value"
-                  [class.hover:bg-background-secondary]="scores()[question.id] !== opt.value"
-                  (click)="setScore(question.id, opt.value)"
+                  class="flex-1 min-w-[80px] flex flex-col items-center gap-1 py-2 border rounded-m transition-colors"
+                  [class.bg-brand-600]="scores()[question.id] === choice.point_value"
+                  [class.border-brand-600]="scores()[question.id] === choice.point_value"
+                  [class.text-white]="scores()[question.id] === choice.point_value"
+                  [class.border-border-secondary]="scores()[question.id] !== choice.point_value"
+                  [class.text-text-primary]="scores()[question.id] !== choice.point_value"
+                  [class.hover:bg-background-secondary]="scores()[question.id] !== choice.point_value"
+                  (click)="setScore(question.id, choice.point_value)"
                 >
-                  <span class="text-body-m font-semibold leading-none">{{ opt.value }}</span>
-                  <span class="text-[10px] leading-[12px]">{{ opt.label }}</span>
+                  <span class="text-body-m font-semibold leading-none">{{ choice.point_value }}</span>
+                  <span class="text-[10px] leading-[12px]">{{ choice.label }}</span>
                 </button>
               }
             </div>

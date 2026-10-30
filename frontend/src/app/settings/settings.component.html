@@ -1,0 +1,209 @@
+<div class="flex flex-col gap-5">
+  <div class="bg-white rounded-xl p-5 shadow-sm">
+    <h1 class="text-heading-m font-semibold text-text-primary mb-1">Pengaturan</h1>
+    <p class="text-body-m text-text-tertiary mb-4">Kelola periode penilaian, pertanyaan & pilihan jawaban, serta bobot skor.</p>
+
+    <div class="flex gap-2 border-b border-border-secondary mb-4">
+      <button
+        type="button"
+        class="px-4 py-2 text-body-m font-semibold border-b-2 -mb-px"
+        [class.text-brand-600]="activeTab() === 'periode'"
+        [class.border-brand-600]="activeTab() === 'periode'"
+        [class.text-text-tertiary]="activeTab() !== 'periode'"
+        [class.border-transparent]="activeTab() !== 'periode'"
+        (click)="activeTab.set('periode')"
+      >Periode</button>
+      <button
+        type="button"
+        class="px-4 py-2 text-body-m font-semibold border-b-2 -mb-px"
+        [class.text-brand-600]="activeTab() === 'pertanyaan'"
+        [class.border-brand-600]="activeTab() === 'pertanyaan'"
+        [class.text-text-tertiary]="activeTab() !== 'pertanyaan'"
+        [class.border-transparent]="activeTab() !== 'pertanyaan'"
+        (click)="activeTab.set('pertanyaan')"
+      >Pertanyaan</button>
+      <button
+        type="button"
+        class="px-4 py-2 text-body-m font-semibold border-b-2 -mb-px"
+        [class.text-brand-600]="activeTab() === 'skor'"
+        [class.border-brand-600]="activeTab() === 'skor'"
+        [class.text-text-tertiary]="activeTab() !== 'skor'"
+        [class.border-transparent]="activeTab() !== 'skor'"
+        (click)="activeTab.set('skor')"
+      >Skor / Rumus</button>
+    </div>
+
+    <!-- ============ PERIODE ============ -->
+    @if (activeTab() === 'periode') {
+      <div>
+        <div class="bg-background-secondary rounded-xl p-4 mb-4 flex flex-wrap items-end gap-3">
+          <label class="flex flex-col gap-1 text-body-s text-text-secondary">
+            Nama periode
+            <input [(ngModel)]="newPeriod.name" placeholder="2027-Q1" class="h-10 border border-border-secondary rounded-m px-3 text-body-m text-text-primary w-40" />
+          </label>
+          <label class="flex flex-col gap-1 text-body-s text-text-secondary">
+            Mulai
+            <input [(ngModel)]="newPeriod.start_date" type="date" class="h-10 border border-border-secondary rounded-m px-3 text-body-m text-text-primary" />
+          </label>
+          <label class="flex flex-col gap-1 text-body-s text-text-secondary">
+            Selesai
+            <input [(ngModel)]="newPeriod.end_date" type="date" class="h-10 border border-border-secondary rounded-m px-3 text-body-m text-text-primary" />
+          </label>
+          <button (click)="addPeriod()" class="h-10 inline-flex items-center px-4 rounded-m bg-brand-600 text-white text-body-m font-semibold">Tambah periode</button>
+        </div>
+
+        <table class="w-full text-body-m text-text-primary">
+          <thead>
+            <tr class="text-body-s uppercase tracking-wider text-left">
+              <th class="py-2 font-semibold">Periode</th>
+              <th class="py-2 font-semibold">Rentang</th>
+              <th class="py-2 font-semibold">Status</th>
+              <th class="py-2 font-semibold text-right">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (period of periods(); track period.id) {
+              <tr class="border-t border-border-secondary">
+                <td class="py-3 font-medium">{{ period.name }}</td>
+                <td class="py-3 text-text-secondary">{{ dateOnly(period.start_date) }} s/d {{ dateOnly(period.end_date) }}</td>
+                <td class="py-3">
+                  <span class="inline-flex items-center gap-150 rounded-full px-250 py-50 text-body-s font-semibold"
+                    [class]="period.is_open ? 'bg-green-50 text-green-800' : 'bg-background-tertiary text-text-secondary'">
+                    {{ period.is_open ? 'Terbuka' : 'Tertutup' }}
+                  </span>
+                </td>
+                <td class="py-3 text-right">
+                  <button (click)="togglePeriod(period.id)" class="h-8 inline-flex items-center px-3 rounded-m border border-border-secondary text-body-s font-semibold"
+                    [class]="period.is_open ? 'text-text-primary' : 'bg-brand-600 text-white border-brand-600'">
+                    {{ period.is_open ? 'Tutup' : 'Buka' }}
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+
+    <!-- ============ PERTANYAAN ============ -->
+    @if (activeTab() === 'pertanyaan') {
+      <div>
+        <div class="bg-background-secondary rounded-xl p-4 mb-4 flex flex-wrap items-end gap-3">
+          <label class="flex flex-col gap-1 text-body-s text-text-secondary flex-1 min-w-[200px]">
+            Teks pertanyaan
+            <input [(ngModel)]="newQuestion.text" placeholder="Contoh: Menunjukkan integritas dalam bekerja" class="h-10 border border-border-secondary rounded-m px-3 text-body-m text-text-primary w-full" />
+          </label>
+          <label class="flex flex-col gap-1 text-body-s text-text-secondary">
+            Komponen
+            <select [(ngModel)]="newQuestion.component_id" class="h-10 border border-border-secondary rounded-m px-3 text-body-m text-text-primary">
+              <option [ngValue]="0">— pilih —</option>
+              @for (c of components(); track c.id) {
+                <option [ngValue]="c.id">{{ c.name }}</option>
+              }
+            </select>
+          </label>
+          <label class="flex flex-col gap-1 text-body-s text-text-secondary">
+            Role
+            <select [(ngModel)]="newQuestion.job_role_id" class="h-10 border border-border-secondary rounded-m px-3 text-body-m text-text-primary">
+              <option [ngValue]="null">Semua role</option>
+              @for (r of roles(); track r.id) {
+                <option [ngValue]="r.id">{{ r.name }}</option>
+              }
+            </select>
+          </label>
+          <button (click)="addQuestion()" class="h-10 inline-flex items-center px-4 rounded-m bg-brand-600 text-white text-body-m font-semibold">Tambah</button>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          @for (q of questions(); track q.id) {
+            <div class="border border-border-secondary rounded-xl p-4">
+              @if (editingQuestionId() === q.id) {
+                <div class="flex flex-wrap items-end gap-3">
+                  <label class="flex flex-col gap-1 text-body-s text-text-secondary flex-1 min-w-[200px]">
+                    Teks
+                    <input [(ngModel)]="editQuestion.text" class="h-10 border border-border-secondary rounded-m px-3 text-body-m text-text-primary w-full" />
+                  </label>
+                  <label class="flex flex-col gap-1 text-body-s text-text-secondary">
+                    Komponen
+                    <select [(ngModel)]="editQuestion.component_id" class="h-10 border border-border-secondary rounded-m px-3 text-body-m text-text-primary">
+                      @for (c of components(); track c.id) {
+                        <option [ngValue]="c.id">{{ c.name }}</option>
+                      }
+                    </select>
+                  </label>
+                  <label class="flex flex-col gap-1 text-body-s text-text-secondary">
+                    Role
+                    <select [(ngModel)]="editQuestion.job_role_id" class="h-10 border border-border-secondary rounded-m px-3 text-body-m text-text-primary">
+                      <option [ngValue]="null">Semua role</option>
+                      @for (r of roles(); track r.id) {
+                        <option [ngValue]="r.id">{{ r.name }}</option>
+                      }
+                    </select>
+                  </label>
+                  <button (click)="saveEdit(q)" class="h-10 px-4 rounded-m bg-brand-600 text-white text-body-m font-semibold">Simpan</button>
+                  <button (click)="editingQuestionId.set(null)" class="h-10 px-4 rounded-m border border-border-secondary text-body-m">Batal</button>
+                </div>
+              } @else {
+                <div class="flex items-start justify-between gap-3">
+                  <div class="flex-1">
+                    <p class="text-body-m font-medium text-text-primary">{{ q.text }}</p>
+                    <p class="text-body-s text-text-tertiary mt-0.5">
+                      {{ componentName(q.component_id) }} · {{ roleName(q.job_role_id) }}
+                      <span class="text-text-muted">· {{ q.choices.length }} pilihan</span>
+                    </p>
+                  </div>
+                  <div class="flex items-center gap-2 shrink-0">
+                    <button (click)="toggleChoices(q.id)" class="h-8 px-3 rounded-m border border-border-secondary text-body-s">Pilihan jawaban</button>
+                    <button (click)="startEdit(q)" class="h-8 px-3 rounded-m border border-border-secondary text-body-s">Edit</button>
+                    <button (click)="deleteQuestion(q.id)" class="h-8 px-3 rounded-m border border-border-secondary text-body-s text-text-destructive">Hapus</button>
+                  </div>
+                </div>
+              }
+
+              @if (managingChoicesId() === q.id) {
+                <div class="mt-3 pt-3 border-t border-border-secondary">
+                  <div class="flex flex-wrap gap-2 mb-3">
+                    @for (choice of q.choices; track choice.id) {
+                      <span class="inline-flex items-center gap-2 bg-background-tertiary rounded-full px-3 py-1 text-body-s">
+                        <span class="font-semibold text-text-primary">{{ choice.point_value }}</span>
+                        <span class="text-text-secondary">{{ choice.label }}</span>
+                        <button (click)="deleteChoice(choice.id)" class="text-text-destructive font-bold" aria-label="Hapus pilihan">&times;</button>
+                      </span>
+                    }
+                  </div>
+                  <div class="flex flex-wrap items-end gap-3">
+                    <label class="flex flex-col gap-1 text-body-s text-text-secondary flex-1 min-w-[160px]">
+                      Label pilihan
+                      <input [(ngModel)]="newChoice.label" placeholder="Sangat baik" class="h-10 border border-border-secondary rounded-m px-3 text-body-m text-text-primary w-full" />
+                    </label>
+                    <label class="flex flex-col gap-1 text-body-s text-text-secondary">
+                      Poin
+                      <input [(ngModel)]="newChoice.point_value" type="number" min="0" class="h-10 w-20 border border-border-secondary rounded-m px-3 text-body-m text-text-primary" />
+                    </label>
+                    <button (click)="addChoice(q.id)" class="h-10 px-4 rounded-m bg-brand-600 text-white text-body-m font-semibold">Tambah pilihan</button>
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    }
+
+    <!-- ============ SKOR ============ -->
+    @if (activeTab() === 'skor') {
+      <div class="max-w-xl">
+        <p class="text-body-m text-text-secondary mb-4">Atur bobot tiap komponen (total ideal 100). Presensi tidak dinilai oleh rekan.</p>
+        <div class="flex flex-col gap-3">
+          @for (c of scoreComponents(); track c.id) {
+            <div class="flex items-center gap-3">
+              <span class="flex-1 text-body-m text-text-primary">{{ c.name }}</span>
+              <input [(ngModel)]="c.weight" type="number" min="0" max="100" class="h-10 w-24 border border-border-secondary rounded-m px-3 text-body-m text-text-primary" />
+              <button (click)="saveWeight(c)" class="h-10 px-4 rounded-m bg-brand-600 text-white text-body-m font-semibold">Simpan</button>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

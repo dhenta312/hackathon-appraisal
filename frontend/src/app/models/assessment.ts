@@ -1,7 +1,14 @@
+export interface AssessmentChoice {
+  id: number;
+  label: string;
+  point_value: number;
+}
+
 export interface AssessmentQuestion {
   id: number;
   text: string;
   sort_order: number;
+  choices: AssessmentChoice[];
 }
 
 export interface AssessmentComponent {
