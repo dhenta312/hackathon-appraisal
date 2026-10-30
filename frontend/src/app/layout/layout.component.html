@@ -66,12 +66,21 @@
 
   <div class="app-body">
     <aside class="sidebar">
-      <div class="sidebar-collapse" aria-hidden="true">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M11 5l-5 5 5 5M15 5l-5 5 5 5" />
-        </svg>
+      <div class="sidebar-rail">
+        <a class="rail-item" routerLink="/welcome" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 10l7-7 7 7" />
+            <path d="M5 9v9h10V9" />
+          </svg>
+        </a>
+        <a class="rail-item" routerLink="/team" routerLinkActive="active">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="3" width="12" height="14" rx="2" />
+            <path d="M8 3v3h4V3" />
+          </svg>
+        </a>
       </div>
-      <nav class="sidebar-menu">
+      <div class="sidebar-labels">
         <a class="menu-item" routerLink="/welcome" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 10l7-7 7 7" />
@@ -86,13 +95,25 @@
           </svg>
           <span>Penilaian</span>
         </a>
-      </nav>
+      </div>
     </aside>
 
     <main class="app-main">
-      <div class="page-container">
-        <router-outlet></router-outlet>
+      <div class="breadcrumb">
+        <span class="breadcrumb-root">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2.5 8l.83-.83L8 2.5l4.67 4.67L13.5 8" />
+            <path d="M4 5.5V13.5h8V5.5" />
+            <path d="M7 13.5V9h2v4.5" />
+          </svg>
+          <span>Penilaian Kinerja</span>
+        </span>
+        <svg class="breadcrumb-sep" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 4l4 4-4 4" />
+        </svg>
+        <span class="breadcrumb-current">{{ pageLabel }}</span>
       </div>
+      <router-outlet></router-outlet>
     </main>
   </div>
 </div>
