@@ -1,77 +1,62 @@
-.team-container {
-  max-width: 40rem;
-  margin: 2rem auto;
-  padding: 1rem;
-}
-
-.team-header {
+.page-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.my-results {
-  color: #2563eb;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 8px;
 }
 
 .progress {
-  color: #4b5563;
+  margin: 0 0 16px;
+  font-size: var(--pilar-fontsize-body-m);
+  color: var(--pilar-text-secondary);
 }
 
-.members {
+.member-list {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 12px;
 }
 
 .member-card {
   display: flex;
-  gap: 0.5rem;
-  align-items: stretch;
+  gap: 12px;
+  align-items: center;
+  background: var(--pilar-background-primary);
+  border-radius: var(--pilar-radius-xxxl);
+  padding: 16px 20px;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.05);
 }
 
 .member-main {
   flex: 1;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 1rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.5rem;
-  background: white;
+  gap: 16px;
+  border: none;
+  background: transparent;
   cursor: pointer;
   text-align: left;
-  font-size: 1rem;
+  font-family: inherit;
+  padding: 0;
 }
 
 .member-name {
+  font-size: var(--pilar-fontsize-body-l);
   font-weight: 600;
+  color: var(--pilar-text-primary);
 }
 
 .member-role {
-  color: #6b7280;
+  font-size: var(--pilar-fontsize-body-m);
+  color: var(--pilar-text-secondary);
 }
 
 .member-status {
-  color: #2563eb;
-  font-size: 0.875rem;
-}
-
-.member-results {
-  padding: 0 1rem;
-  border: 1px solid #2563eb;
-  border-radius: 0.5rem;
-  background: white;
-  color: #2563eb;
-  cursor: pointer;
+  margin-left: auto;
 }
 
 .error {
-  color: #dc2626;
+  color: var(--pilar-text-destructive);
+  font-size: var(--pilar-fontsize-body-s);
 }

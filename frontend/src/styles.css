@@ -376,3 +376,208 @@ body {
     padding: 24px;
   }
 }
+
+/* ============================================================
+   App shell / topbar
+   ============================================================ */
+.app-shell {
+  min-height: 100vh;
+  background: var(--pilar-background-secondary);
+}
+
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+}
+
+.topbar-strip {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  height: 20px;
+  padding: 0 20px;
+  background: var(--pilar-background-action);
+}
+
+.strip-item {
+  font-size: 10px;
+  line-height: 14px;
+  color: #ccddff;
+}
+
+.strip-sep {
+  font-size: 10px;
+  color: rgba(204, 221, 255, 0.55);
+}
+
+.topbar-main {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 64px;
+  padding: 0 20px;
+  background: var(--pilar-background-primary);
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+}
+
+.topbar-logo {
+  position: relative;
+  flex: 1;
+  height: 32px;
+  width: 97.427px;
+}
+
+.topbar-logo img {
+  position: absolute;
+  width: auto;
+  max-width: none;
+}
+
+.topbar-logo .logo-mark-2 {
+  inset: 0 75.03% -0.01% 0;
+  height: 100%;
+}
+
+.topbar-logo .logo-mark-1 {
+  top: 12.68%;
+  bottom: 12.7%;
+  left: 32.42%;
+  right: 0;
+  height: 74.62%;
+}
+
+.topbar-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-name {
+  font-size: var(--pilar-fontsize-body-m);
+  font-weight: 600;
+  color: var(--pilar-text-primary);
+}
+
+.logout-btn {
+  padding: 6px 14px;
+  border: 1px solid var(--pilar-border-secondary);
+  border-radius: var(--pilar-radius-m);
+  background: var(--pilar-background-primary);
+  font-family: inherit;
+  font-size: var(--pilar-fontsize-body-s);
+  line-height: var(--pilar-line-height-body-s);
+  color: var(--pilar-text-primary);
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  background: var(--pilar-background-tertiary);
+}
+
+.app-content {
+  padding-top: 104px;
+}
+
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px 32px;
+}
+
+/* ============================================================
+   Shared page elements (cards, badges, buttons)
+   ============================================================ */
+.page-heading {
+  margin: 0 0 4px;
+  font-size: var(--pilar-fontsize-heading-l);
+  line-height: var(--pilar-line-height-heading-l);
+  font-weight: 700;
+  color: var(--pilar-text-primary);
+}
+
+.page-subtitle {
+  margin: 0 0 20px;
+  font-size: var(--pilar-fontsize-body-m);
+  line-height: var(--pilar-line-height-body-m);
+  color: var(--pilar-text-tertiary);
+}
+
+.pilar-card {
+  background: var(--pilar-background-primary);
+  border-radius: var(--pilar-radius-xxxl);
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.05);
+}
+
+.pilar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 16px;
+  border: none;
+  border-radius: var(--pilar-radius-m);
+  background: var(--pilar-background-action);
+  color: var(--pilar-text-white);
+  font-family: inherit;
+  font-size: var(--pilar-fontsize-body-m);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pilar-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.pilar-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--pilar-border-secondary);
+  border-radius: var(--pilar-radius-m);
+  background: var(--pilar-background-primary);
+  color: var(--pilar-text-primary);
+  font-family: inherit;
+  font-size: var(--pilar-fontsize-body-m);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pilar-btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.pilar-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 10px;
+  border-radius: var(--pilar-radius-full);
+  font-size: var(--pilar-fontsize-body-s);
+  line-height: var(--pilar-line-height-body-s);
+  font-weight: 600;
+}
+
+.badge-submitted {
+  background: #e7f6ec;
+  color: #137a33;
+}
+
+.badge-draft {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge-not-started {
+  background: var(--pilar-background-tertiary);
+  color: var(--pilar-text-secondary);
+}

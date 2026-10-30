@@ -1,11 +1,11 @@
-<div class="team-container">
-  <header class="team-header">
-    <h1>Tim saya</h1>
-    <div class="header-actions">
-      <a class="my-results" [routerLink]="['/results', myId]">Lihat hasil saya</a>
-      <button class="logout" (click)="logout()">Keluar</button>
+<div class="page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-heading">Tim saya</h1>
+      <p class="page-subtitle">Menilai rekan setim kamu</p>
     </div>
-  </header>
+    <a class="pilar-btn-secondary" [routerLink]="['/results', myId]">Lihat hasil saya</a>
+  </div>
 
   @if (loading()) {
     <p>Memuat...</p>
@@ -16,16 +16,16 @@
       <p class="error">{{ error }}</p>
     }
 
-    <div class="members">
+    <div class="member-list">
       @for (member of members(); track member.id) {
         <div class="member-card">
           <button class="member-main" (click)="openAssessment(member.id)">
             <span class="member-name">{{ member.name }}</span>
             <span class="member-role">{{ member.job_role_name }}</span>
-            <span class="member-status">{{ statusLabel(member.status) }}</span>
+            <span class="member-status" [class]="badgeClass(member.status)">{{ statusLabel(member.status) }}</span>
           </button>
           @if (isAdmin) {
-            <button class="member-results" (click)="viewResults(member.id)">Hasil</button>
+            <button class="pilar-btn-secondary" (click)="viewResults(member.id)">Hasil</button>
           }
         </div>
       }

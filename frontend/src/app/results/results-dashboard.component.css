@@ -1,49 +1,70 @@
-.results-container {
-  max-width: 40rem;
-  margin: 2rem auto;
-  padding: 1rem;
+.results-header {
+  margin-bottom: 8px;
 }
 
-.total {
-  font-size: 1.25rem;
+.total-score {
+  margin: 8px 0 0;
+  font-size: var(--pilar-fontsize-body-l);
+  color: var(--pilar-text-secondary);
 }
 
-.component {
-  margin-top: 1.5rem;
-  padding: 1rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.5rem;
+.total-score strong {
+  font-size: 24px;
+  color: var(--pilar-text-action);
 }
 
-.weight {
-  color: #6b7280;
-  font-size: 0.875rem;
-  font-weight: 400;
+.result-card {
+  margin-top: 16px;
+}
+
+.result-title {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0 0 8px;
+  font-size: var(--pilar-fontsize-body-l);
+  font-weight: 700;
+  color: var(--pilar-text-primary);
+}
+
+.result-score {
+  font-size: var(--pilar-fontsize-body-m);
+  font-weight: 600;
+  color: var(--pilar-text-action);
 }
 
 .assessor {
-  margin-top: 0.75rem;
-  font-size: 0.9rem;
+  padding: 10px 0;
+  border-top: 1px solid var(--pilar-border-tertiary);
+  font-size: var(--pilar-fontsize-body-m);
 }
 
-.label {
+.assessor:first-of-type {
+  border-top: none;
+}
+
+.assessor-label {
   font-weight: 600;
+  color: var(--pilar-text-primary);
 }
 
-.score {
-  margin-left: 0.25rem;
+.assessor-score {
+  margin-left: 8px;
+  color: var(--pilar-text-secondary);
 }
 
-.reason {
-  color: #4b5563;
+.assessor-reason {
+  margin: 4px 0 0;
+  color: var(--pilar-text-tertiary);
   font-style: italic;
-  margin: 0.25rem 0 0;
 }
 
-.attendance {
-  background: #f9fafb;
+.attendance-card {
+  background: var(--pilar-background-tertiary);
 }
 
 .error {
-  color: #dc2626;
+  color: var(--pilar-text-destructive);
+  font-size: var(--pilar-fontsize-body-s);
 }

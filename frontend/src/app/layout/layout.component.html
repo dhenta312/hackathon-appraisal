@@ -1,0 +1,27 @@
+<div class="app-shell">
+  <header class="topbar">
+    <div class="topbar-strip">
+      <span class="strip-item">IT Support</span>
+      <span class="strip-sep">&middot;</span>
+      <span class="strip-item">bsi.uii.ac.id</span>
+    </div>
+
+    <div class="topbar-main">
+      <div class="topbar-logo">
+        <img class="logo-mark-2" src="logo-mark-2.svg" alt="UII" />
+        <img class="logo-mark-1" src="logo-mark-1.svg" alt="" />
+      </div>
+
+      <div class="topbar-user">
+        <span class="user-name">{{ userName }}</span>
+        <button class="logout-btn" (click)="logout()">Keluar</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-content">
+    <div class="page-container">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

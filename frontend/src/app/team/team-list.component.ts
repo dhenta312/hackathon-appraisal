@@ -61,16 +61,22 @@ export class TeamListComponent implements OnInit {
     }
   }
 
+  badgeClass(status: TeamMember['status']): string {
+    switch (status) {
+      case 'submitted':
+        return 'pilar-badge badge-submitted';
+      case 'draft':
+        return 'pilar-badge badge-draft';
+      default:
+        return 'pilar-badge badge-not-started';
+    }
+  }
+
   openAssessment(memberId: number): void {
     this.router.navigate(['/assess', memberId]);
   }
 
   viewResults(memberId: number): void {
     this.router.navigate(['/results', memberId]);
-  }
-
-  logout(): void {
-    this.auth.logout();
-    this.router.navigate(['/login']);
   }
 }

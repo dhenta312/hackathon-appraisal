@@ -1,44 +1,44 @@
-<div class="results-container">
+<div class="page">
+  <header class="results-header">
+    <h1 class="page-heading">Hasil Penilaian</h1>
+    @if (result()?.total !== null) {
+      <p class="total-score">Total: <strong>{{ result()?.total }}</strong> / 100</p>
+    } @else {
+      <p class="total-score">Belum dinilai</p>
+    }
+  </header>
+
   @if (loading()) {
     <p>Memuat...</p>
   } @else {
+    @if (error) {
+      <p class="error">{{ error }}</p>
+    }
+
     @if (result(); as result) {
-      <header class="results-header">
-        <h1>Hasil Penilaian</h1>
-        @if (result.total !== null) {
-          <p class="total">Total: <strong>{{ result.total }}</strong> / 100</p>
-        } @else {
-          <p class="total">Belum dinilai</p>
-        }
-      </header>
-
-      @if (error) {
-        <p class="error">{{ error }}</p>
-      }
-
       @for (component of result.components; track component.code) {
-        <section class="component">
-          <h2>
+        <section class="pilar-card result-card">
+          <h2 class="result-title">
             {{ component.name }}
-            <span class="weight">{{ component.score ?? '-' }} / {{ component.weight }}</span>
+            <span class="result-score">{{ component.score ?? '-' }} / {{ component.weight }}</span>
           </h2>
 
           @for (assessor of component.per_assessor; track assessor.label) {
             <div class="assessor">
-              <span class="label">{{ assessor.label }}:</span>
-              <span class="score">{{ assessor.score ?? '-' }}</span>
+              <span class="assessor-label">{{ assessor.label }}</span>
+              <span class="assessor-score">{{ assessor.score ?? '-' }}</span>
               @if (assessor.reason) {
-                <p class="reason">&ldquo;{{ assessor.reason }}&rdquo;</p>
+                <p class="assessor-reason">&ldquo;{{ assessor.reason }}&rdquo;</p>
               }
             </div>
           }
         </section>
       }
 
-      <section class="component attendance">
-        <h2>
+      <section class="pilar-card result-card attendance-card">
+        <h2 class="result-title">
           Presensi
-          <span class="weight">{{ result.attendance.points }} / {{ result.attendance.max }}</span>
+          <span class="result-score">{{ result.attendance.points }} / {{ result.attendance.max }}</span>
         </h2>
       </section>
     }

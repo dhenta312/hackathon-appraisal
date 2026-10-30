@@ -1,22 +1,23 @@
-<div class="assessment-container">
+<div class="page">
+  <header class="assessment-header">
+    <h1 class="page-heading">Menilai: {{ assessmentTemplate()?.assessed?.name }}</h1>
+    <p class="page-subtitle">
+      {{ assessmentTemplate()?.assessed?.job_role_name }} &middot; Terisi {{ answeredCount() }} dari {{ totalQuestions() }} pertanyaan
+    </p>
+  </header>
+
   @if (loading()) {
     <p>Memuat...</p>
   } @else {
-    <header class="assessment-header">
-      <h1>Menilai: {{ assessmentTemplate()?.assessed?.name }}</h1>
-      <p class="role">{{ assessmentTemplate()?.assessed?.job_role_name }}</p>
-      <p class="progress">Terisi {{ answeredCount() }} dari {{ totalQuestions() }} pertanyaan</p>
-    </header>
-
     @if (error) {
       <p class="error">{{ error }}</p>
     }
 
     @for (component of assessmentTemplate()?.components ?? []; track component.id) {
-      <section class="component">
-        <h2>
+      <section class="pilar-card component-card">
+        <h2 class="component-title">
           {{ component.name }}
-          <span class="weight">maks {{ component.weight }} poin</span>
+          <span class="component-weight">maks {{ component.weight }} poin</span>
         </h2>
 
         @for (question of component.questions; track question.id) {
@@ -38,21 +39,15 @@
         }
 
         <label class="reason">
-          <span>Alasan untuk {{ component.name }}</span>
-          <textarea
-            rows="2"
-            [value]="reasons()[component.id]"
-            (input)="setReason(component.id, $event)"
-          ></textarea>
+          <span class="reason-label">Alasan untuk {{ component.name }}</span>
+          <textarea rows="2" [value]="reasons()[component.id]" (input)="setReason(component.id, $event)"></textarea>
         </label>
       </section>
     }
 
     <div class="actions">
-      <button type="button" (click)="save('draft')" [disabled]="saving()">Simpan draf</button>
-      <button type="button" class="primary" (click)="save('submit')" [disabled]="saving()">
-        Kirim
-      </button>
+      <button type="button" class="pilar-btn-secondary" (click)="save('draft')" [disabled]="saving()">Simpan draf</button>
+      <button type="button" class="pilar-btn" (click)="save('submit')" [disabled]="saving()">Kirim</button>
     </div>
   }
 </div>
