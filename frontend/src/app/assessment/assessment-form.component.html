@@ -1,10 +1,18 @@
 <div class="bg-white rounded-xl p-5 shadow-sm">
   <h1 class="text-heading-m font-semibold text-text-primary mb-1">Menilai: {{ assessmentTemplate()?.assessed?.name }}</h1>
-  <p class="text-body-m text-text-tertiary mb-4">
-    {{ assessmentTemplate()?.assessed?.job_role_name }} &middot; Terisi {{ answeredCount() }} dari {{ totalQuestions() }} pertanyaan
-  </p>
+  <p class="text-body-m text-text-tertiary mb-4">{{ assessmentTemplate()?.assessed?.job_role_name }}</p>
 
   <div class="h-px w-full bg-[#FFF67A] mb-4" aria-hidden="true"></div>
+
+  <div class="mb-5">
+    <div class="flex items-center justify-between mb-1">
+      <span class="text-body-s font-semibold text-text-secondary">Progres penilaian</span>
+      <span class="text-body-s text-text-tertiary">{{ answeredCount() }} dari {{ totalQuestions() }} pertanyaan</span>
+    </div>
+    <div class="h-2 rounded-full bg-background-secondary overflow-hidden">
+      <div class="h-full rounded-full bg-brand-600 transition-all" [style.width.%]="progressPercent()"></div>
+    </div>
+  </div>
 
   @if (error) {
     <p class="text-body-s text-text-destructive mb-4">{{ error }}</p>
@@ -14,28 +22,37 @@
     <p class="text-body-m text-text-tertiary">Memuat...</p>
   } @else {
     @for (component of assessmentTemplate()?.components ?? []; track component.id) {
-      <section class="mb-5">
-        <h2 class="text-heading-xxs font-semibold text-text-primary mb-3">
-          {{ component.name }}
-          <span class="text-body-s text-text-tertiary font-normal">maks {{ component.weight }} poin</span>
-        </h2>
+      <section class="mb-6">
+        <div class="flex items-center gap-2 mb-3">
+          <h2 class="text-heading-xxs font-semibold text-text-primary">{{ component.name }}</h2>
+          <span class="text-body-s text-text-tertiary">maks {{ component.weight }} poin</span>
+          @if (componentComplete(component)) {
+            <span class="inline-flex items-center justify-center size-4 rounded-full bg-green-600 text-white">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 5l2 2 4-4" />
+              </svg>
+            </span>
+          }
+        </div>
 
         @for (question of component.questions; track question.id) {
-          <div class="mb-4">
+          <div class="mb-5">
             <p class="text-body-m text-text-primary mb-2">{{ question.text }}</p>
-            <div class="flex gap-2">
-              @for (value of [1, 2, 3, 4, 5]; track value) {
+            <div class="grid grid-cols-5 gap-2">
+              @for (opt of scaleOptions; track opt.value) {
                 <button
                   type="button"
-                  class="w-10 h-10 border rounded-m text-body-m"
-                  [class.bg-brand-600]="scores()[question.id] === value"
-                  [class.text-white]="scores()[question.id] === value"
-                  [class.border-brand-600]="scores()[question.id] === value"
-                  [class.border-border-secondary]="scores()[question.id] !== value"
-                  [class.text-text-primary]="scores()[question.id] !== value"
-                  (click)="setScore(question.id, value)"
+                  class="flex flex-col items-center gap-1 py-2 border rounded-m transition-colors"
+                  [class.bg-brand-600]="scores()[question.id] === opt.value"
+                  [class.border-brand-600]="scores()[question.id] === opt.value"
+                  [class.text-white]="scores()[question.id] === opt.value"
+                  [class.border-border-secondary]="scores()[question.id] !== opt.value"
+                  [class.text-text-primary]="scores()[question.id] !== opt.value"
+                  [class.hover:bg-background-secondary]="scores()[question.id] !== opt.value"
+                  (click)="setScore(question.id, opt.value)"
                 >
-                  {{ value }}
+                  <span class="text-body-m font-semibold leading-none">{{ opt.value }}</span>
+                  <span class="text-[10px] leading-[12px]">{{ opt.label }}</span>
                 </button>
               }
             </div>
@@ -54,19 +71,22 @@
       </section>
     }
 
-    <div class="flex justify-end gap-200">
-      <button
-        type="button"
-        class="h-10 inline-flex items-center px-400 rounded-m border border-border-secondary text-body-m text-text-primary font-semibold disabled:opacity-50"
-        (click)="save('draft')"
-        [disabled]="saving()"
-      >Simpan draf</button>
-      <button
-        type="button"
-        class="h-10 inline-flex items-center px-400 rounded-m bg-brand-600 text-white text-body-m font-semibold disabled:opacity-50"
-        (click)="save('submit')"
-        [disabled]="saving()"
-      >Kirim</button>
+    <div class="sticky bottom-0 -mx-5 -mb-5 px-5 py-4 bg-white border-t border-border-secondary rounded-b-xl flex items-center justify-between gap-3">
+      <span class="text-body-s text-text-tertiary">{{ answeredCount() }} dari {{ totalQuestions() }} terisi</span>
+      <div class="flex gap-200">
+        <button
+          type="button"
+          class="h-10 inline-flex items-center px-400 rounded-m border border-border-secondary text-body-m text-text-primary font-semibold disabled:opacity-50"
+          (click)="save('draft')"
+          [disabled]="saving()"
+        >Simpan draf</button>
+        <button
+          type="button"
+          class="h-10 inline-flex items-center px-400 rounded-m bg-brand-600 text-white text-body-m font-semibold disabled:opacity-50"
+          (click)="save('submit')"
+          [disabled]="saving()"
+        >Kirim</button>
+      </div>
     </div>
   }
 </div>

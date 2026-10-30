@@ -1,7 +1,7 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { AssessmentTemplate, SaveAssessmentPayload } from '../models/assessment';
+import { AssessmentComponent, AssessmentTemplate, SaveAssessmentPayload } from '../models/assessment';
 import { AssessmentService } from '../services/assessment.service';
 
 @Component({
@@ -22,6 +22,14 @@ export class AssessmentFormComponent implements OnInit {
   readonly saving = signal(false);
   error: string | null = null;
 
+  readonly scaleOptions = [
+    { value: 1, label: 'Sangat kurang' },
+    { value: 2, label: 'Kurang' },
+    { value: 3, label: 'Cukup' },
+    { value: 4, label: 'Baik' },
+    { value: 5, label: 'Sangat baik' },
+  ];
+
   readonly totalQuestions = computed(() =>
     (this.assessmentTemplate()?.components ?? []).reduce(
       (total, component) => total + component.questions.length,
@@ -30,6 +38,15 @@ export class AssessmentFormComponent implements OnInit {
   );
 
   readonly answeredCount = computed(() => Object.keys(this.scores()).length);
+
+  get progressPercent(): number {
+    const total = this.totalQuestions();
+    return total ? Math.round((this.answeredCount() / total) * 100) : 0;
+  }
+
+  componentComplete(component: AssessmentComponent): boolean {
+    return component.questions.every((question) => this.scores()[question.id] !== undefined);
+  }
 
   ngOnInit(): void {
     const assessedId = Number(this.route.snapshot.paramMap.get('id'));
