@@ -71,18 +71,19 @@ body {
 }
 
 .login-hero {
-  width: 800px;
-  flex: 0 0 800px;
+  flex: 0 0 60%;
+  position: relative;
   overflow: hidden;
 }
 
 .login-hero img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  aspect-ratio: 800 / 883;
+  height: 100%;
   object-fit: cover;
   object-position: 60% 50%;
   border-bottom-right-radius: 160px;
-  display: block;
 }
 
 .login-content {
@@ -92,7 +93,7 @@ body {
   align-items: center;
   justify-content: center;
   gap: 24px;
-  padding: 80px;
+  padding: 48px;
 }
 
 .login-card {
