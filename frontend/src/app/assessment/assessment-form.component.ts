@@ -73,6 +73,10 @@ export class AssessmentFormComponent implements OnInit {
     this.reasons.update((current) => ({ ...current, [componentId]: text }));
   }
 
+  reasonFor(componentId: number): string {
+    return this.reasons()[componentId] ?? '';
+  }
+
   save(action: 'draft' | 'submit'): void {
     const template = this.assessmentTemplate();
 

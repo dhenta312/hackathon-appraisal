@@ -63,9 +63,10 @@
           <span class="text-body-s font-semibold text-text-secondary">Alasan untuk {{ component.name }}</span>
           <textarea
             rows="2"
-            [value]="reasons()[component.id]"
+            [value]="reasonFor(component.id)"
+            placeholder="Tulis alasan singkat (opsional), mis. 'menyelesaikan tugas tepat waktu'"
             (input)="setReason(component.id, $event)"
-            class="border border-border-secondary rounded-m p-250 text-body-m text-text-primary w-full"
+            class="border border-border-secondary rounded-m p-250 text-body-m text-text-primary w-full placeholder:text-text-muted"
           ></textarea>
         </label>
       </section>
