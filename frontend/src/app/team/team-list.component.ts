@@ -68,7 +68,18 @@ export class TeamListComponent implements OnInit {
       case 'draft':
         return 'bg-[#fef3c7] text-[#92400e]';
       default:
-        return 'bg-background-tertiary text-text-tertiary';
+        return 'bg-background-tertiary text-text-secondary';
+    }
+  }
+
+  dotClass(status: TeamMember['status']): string {
+    switch (status) {
+      case 'submitted':
+        return 'bg-green-600';
+      case 'draft':
+        return 'bg-[#f59e0b]';
+      default:
+        return 'bg-slate-400';
     }
   }
 
