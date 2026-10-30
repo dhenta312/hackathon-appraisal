@@ -1,72 +1,72 @@
-<div class="page">
-  <section class="pilar-card welcome-card">
-    <div class="welcome-head">
-      <div class="welcome-logo">
-        <img class="logo-mark-2" src="logo-mark-2.svg" alt="UII" />
-        <img class="logo-mark-1" src="logo-mark-1.svg" alt="" />
+<div class="flex flex-col gap-5">
+  <section class="bg-white rounded-xl p-6 shadow-sm">
+    <div class="flex gap-6 items-center">
+      <div class="overflow-clip relative rounded-[24px] shrink-0 size-[120px] bg-background-tertiary">
+        <img src="logo-mark-2.svg" alt="UII" class="absolute inset-[0_75.03%_-0.01%_0] w-auto h-full max-w-none" />
+        <img src="logo-mark-1.svg" alt="" class="absolute top-[12.68%] bottom-[12.7%] left-[32.42%] right-0 h-[74.62%] w-auto max-w-none" />
       </div>
-      <div class="welcome-titles">
-        <h1 class="welcome-title">Selamat datang di Penilaian Kinerja</h1>
-        <p class="welcome-subtitle">Penilaian kinerja pegawai</p>
+      <div class="flex-1 min-w-0">
+        <h1 class="text-[36px] leading-[40px] font-bold text-text-primary">Selamat datang di Penilaian Kinerja</h1>
+        <p class="text-[20px] leading-[28px] text-text-secondary">Penilaian kinerja pegawai</p>
       </div>
     </div>
 
-    <div class="welcome-divider"></div>
+    <div class="h-px w-full bg-border-secondary my-6"></div>
 
-    <div class="announcement">
-      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <div class="bg-[#fffbeb] flex gap-2 items-start p-4 rounded-m">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#7b3306" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
         <circle cx="10" cy="10" r="8" />
         <path d="M10 6v5M10 14h.01" />
       </svg>
       <div>
-        <p class="announcement-title">Periode penilaian</p>
-        <p class="announcement-desc">Pengisian penilaian kinerja berlangsung dari {{ periodStart }} sampai {{ periodEnd }}.</p>
+        <p class="text-heading-xxs font-bold text-[#7b3306]">Periode penilaian</p>
+        <p class="text-body-m text-[#7b3306]">Pengisian penilaian kinerja berlangsung dari {{ periodStart }} sampai {{ periodEnd }}.</p>
       </div>
     </div>
   </section>
 
-  <div class="dashboard-cards">
-    <section class="pilar-card info-card">
-      <div class="info-head">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+    <section class="bg-white rounded-xl p-6 shadow-sm">
+      <div class="flex gap-2 items-start">
+        <svg width="24" height="24" viewBox="0 0 20 20" fill="none" stroke="#0044cd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
           <path d="M15 6.7a5 5 0 0 0-10 0c0 6-2.5 7.5-2.5 7.5h15S15 12.7 15 6.7z" />
           <path d="M11.4 17.5a2 2 0 0 1-3.8-.5" />
         </svg>
         <div>
-          <h2 class="info-title">Pemberitahuan</h2>
-          <p class="info-subtitle">Notifikasi penting untuk Anda.</p>
+          <h2 class="text-[20px] leading-[24px] font-bold text-text-primary">Pemberitahuan</h2>
+          <p class="text-body-m text-text-tertiary">Notifikasi penting untuk Anda.</p>
         </div>
       </div>
-      <div class="info-divider"></div>
-      <div class="info-list">
+      <div class="h-px w-full bg-border-secondary my-4"></div>
+      <div class="flex flex-col gap-4">
         @for (item of notifications; track $index) {
-          <div class="info-item">
-            <p class="info-text">{{ item.text }}</p>
-            <p class="info-time">{{ item.time }}</p>
+          <div class="p-2 rounded-m">
+            <p class="text-body-m text-text-secondary">{{ item.text }}</p>
+            <p class="text-body-xs text-text-tertiary mt-0.5">{{ item.time }}</p>
           </div>
         }
       </div>
     </section>
 
-    <section class="pilar-card info-card">
-      <div class="info-head">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <section class="bg-white rounded-xl p-6 shadow-sm">
+      <div class="flex gap-2 items-start">
+        <svg width="24" height="24" viewBox="0 0 20 20" fill="none" stroke="#0044cd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
           <circle cx="10" cy="10" r="8" />
           <path d="M10 6v4l3 2" />
         </svg>
         <div>
-          <h2 class="info-title">Aktivitas terkini</h2>
-          <p class="info-subtitle">Riwayat aktivitas Anda.</p>
+          <h2 class="text-[20px] leading-[24px] font-bold text-text-primary">Aktivitas terkini</h2>
+          <p class="text-body-m text-text-tertiary">Riwayat aktivitas Anda.</p>
         </div>
       </div>
-      <div class="info-divider"></div>
-      <div class="info-list">
+      <div class="h-px w-full bg-border-secondary my-4"></div>
+      <div class="flex flex-col gap-4">
         @for (item of activities; track $index) {
-          <div class="info-item">
-            <p class="info-text">
-              <strong>{{ item.user }}</strong> {{ item.action }} <strong class="info-target">{{ item.target }}</strong>
+          <div class="p-2 rounded-m">
+            <p class="text-body-m text-text-secondary">
+              <span class="font-bold text-text-primary">{{ item.user }}</span> {{ item.action }} <span class="font-bold text-brand-600">{{ item.target }}</span>
             </p>
-            <p class="info-time">{{ item.time }}</p>
+            <p class="text-body-xs text-text-tertiary mt-0.5">{{ item.time }}</p>
           </div>
         }
       </div>

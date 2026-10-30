@@ -1,45 +1,45 @@
-<div class="page">
-  <header class="results-header">
-    <h1 class="page-heading">Hasil Penilaian</h1>
+<div class="flex flex-col gap-5">
+  <div class="bg-white rounded-xl p-5 shadow-sm">
+    <h1 class="text-heading-m font-semibold text-text-primary mb-1">Hasil Penilaian</h1>
     @if (result()?.total !== null) {
-      <p class="total-score">Total: <strong>{{ result()?.total }}</strong> / 100</p>
+      <p class="text-body-m text-text-secondary">Total: <span class="text-metric-l font-semibold text-brand-600">{{ result()?.total }}</span> / 100</p>
     } @else {
-      <p class="total-score">Belum dinilai</p>
+      <p class="text-body-m text-text-tertiary">Belum dinilai</p>
     }
-  </header>
+    <div class="h-px w-full bg-[#FFF67A] mt-4" aria-hidden="true"></div>
+  </div>
 
   @if (loading()) {
-    <p>Memuat...</p>
+    <p class="text-body-m text-text-tertiary">Memuat...</p>
   } @else {
     @if (error) {
-      <p class="error">{{ error }}</p>
+      <p class="text-body-s text-text-destructive">{{ error }}</p>
     }
 
     @if (result(); as result) {
       @for (component of result.components; track component.code) {
-        <section class="pilar-card result-card">
-          <h2 class="result-title">
-            {{ component.name }}
-            <span class="result-score">{{ component.score ?? '-' }} / {{ component.weight }}</span>
-          </h2>
-
+        <section class="bg-white rounded-xl p-5 shadow-sm">
+          <div class="flex items-center justify-between mb-2">
+            <h2 class="text-heading-xxs font-semibold text-text-primary">{{ component.name }}</h2>
+            <span class="text-body-m font-semibold text-brand-600">{{ component.score ?? '-' }} / {{ component.weight }}</span>
+          </div>
           @for (assessor of component.per_assessor; track assessor.label) {
-            <div class="assessor">
-              <span class="assessor-label">{{ assessor.label }}</span>
-              <span class="assessor-score">{{ assessor.score ?? '-' }}</span>
+            <div class="border-t border-border-secondary py-2.5">
+              <span class="font-semibold text-text-primary">{{ assessor.label }}</span>
+              <span class="ml-2 text-text-secondary">{{ assessor.score ?? '-' }}</span>
               @if (assessor.reason) {
-                <p class="assessor-reason">&ldquo;{{ assessor.reason }}&rdquo;</p>
+                <p class="text-body-s text-text-tertiary italic mt-0.5">&ldquo;{{ assessor.reason }}&rdquo;</p>
               }
             </div>
           }
         </section>
       }
 
-      <section class="pilar-card result-card attendance-card">
-        <h2 class="result-title">
-          Presensi
-          <span class="result-score">{{ result.attendance.points }} / {{ result.attendance.max }}</span>
-        </h2>
+      <section class="bg-background-tertiary rounded-xl p-5 shadow-sm">
+        <div class="flex items-center justify-between">
+          <h2 class="text-heading-xxs font-semibold text-text-primary">Presensi</h2>
+          <span class="text-body-m font-semibold text-brand-600">{{ result.attendance.points }} / {{ result.attendance.max }}</span>
+        </div>
       </section>
     }
   }

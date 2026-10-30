@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* ============================================================
    PILAR design tokens (Universitas Islam Indonesia design system)
    ============================================================ */

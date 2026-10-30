@@ -1,12 +1,13 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-layout',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterOutlet, RouterLink],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.css',
 })
@@ -28,6 +29,14 @@ export class LayoutComponent {
     if (url.startsWith('/assess')) return 'Form Penilaian';
     if (url.startsWith('/results')) return 'Hasil Penilaian';
     return 'Beranda';
+  }
+
+  get activeLevel(): 'welcome' | 'team' {
+    const url = this.router.url;
+    if (url.startsWith('/team') || url.startsWith('/assess') || url.startsWith('/results')) {
+      return 'team';
+    }
+    return 'welcome';
   }
 
   logout(): void {

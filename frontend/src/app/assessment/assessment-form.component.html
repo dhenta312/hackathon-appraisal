@@ -1,34 +1,38 @@
-<div class="page">
-  <header class="assessment-header">
-    <h1 class="page-heading">Menilai: {{ assessmentTemplate()?.assessed?.name }}</h1>
-    <p class="page-subtitle">
-      {{ assessmentTemplate()?.assessed?.job_role_name }} &middot; Terisi {{ answeredCount() }} dari {{ totalQuestions() }} pertanyaan
-    </p>
-  </header>
+<div class="bg-white rounded-xl p-5 shadow-sm">
+  <h1 class="text-heading-m font-semibold text-text-primary mb-1">Menilai: {{ assessmentTemplate()?.assessed?.name }}</h1>
+  <p class="text-body-m text-text-tertiary mb-4">
+    {{ assessmentTemplate()?.assessed?.job_role_name }} &middot; Terisi {{ answeredCount() }} dari {{ totalQuestions() }} pertanyaan
+  </p>
+
+  <div class="h-px w-full bg-[#FFF67A] mb-4" aria-hidden="true"></div>
+
+  @if (error) {
+    <p class="text-body-s text-text-destructive mb-4">{{ error }}</p>
+  }
 
   @if (loading()) {
-    <p>Memuat...</p>
+    <p class="text-body-m text-text-tertiary">Memuat...</p>
   } @else {
-    @if (error) {
-      <p class="error">{{ error }}</p>
-    }
-
     @for (component of assessmentTemplate()?.components ?? []; track component.id) {
-      <section class="pilar-card component-card">
-        <h2 class="component-title">
+      <section class="mb-5">
+        <h2 class="text-heading-xxs font-semibold text-text-primary mb-3">
           {{ component.name }}
-          <span class="component-weight">maks {{ component.weight }} poin</span>
+          <span class="text-body-s text-text-tertiary font-normal">maks {{ component.weight }} poin</span>
         </h2>
 
         @for (question of component.questions; track question.id) {
-          <div class="question">
-            <p class="question-text">{{ question.text }}</p>
-            <div class="options">
+          <div class="mb-4">
+            <p class="text-body-m text-text-primary mb-2">{{ question.text }}</p>
+            <div class="flex gap-2">
               @for (value of [1, 2, 3, 4, 5]; track value) {
                 <button
                   type="button"
-                  class="option"
-                  [class.selected]="scores()[question.id] === value"
+                  class="w-10 h-10 border rounded-m text-body-m"
+                  [class.bg-brand-600]="scores()[question.id] === value"
+                  [class.text-white]="scores()[question.id] === value"
+                  [class.border-brand-600]="scores()[question.id] === value"
+                  [class.border-border-secondary]="scores()[question.id] !== value"
+                  [class.text-text-primary]="scores()[question.id] !== value"
                   (click)="setScore(question.id, value)"
                 >
                   {{ value }}
@@ -38,16 +42,31 @@
           </div>
         }
 
-        <label class="reason">
-          <span class="reason-label">Alasan untuk {{ component.name }}</span>
-          <textarea rows="2" [value]="reasons()[component.id]" (input)="setReason(component.id, $event)"></textarea>
+        <label class="flex flex-col gap-1">
+          <span class="text-body-s font-semibold text-text-secondary">Alasan untuk {{ component.name }}</span>
+          <textarea
+            rows="2"
+            [value]="reasons()[component.id]"
+            (input)="setReason(component.id, $event)"
+            class="border border-border-secondary rounded-m p-250 text-body-m text-text-primary w-full"
+          ></textarea>
         </label>
       </section>
     }
 
-    <div class="actions">
-      <button type="button" class="pilar-btn-secondary" (click)="save('draft')" [disabled]="saving()">Simpan draf</button>
-      <button type="button" class="pilar-btn" (click)="save('submit')" [disabled]="saving()">Kirim</button>
+    <div class="flex justify-end gap-200">
+      <button
+        type="button"
+        class="h-10 inline-flex items-center px-400 rounded-m border border-border-secondary text-body-m text-text-primary font-semibold disabled:opacity-50"
+        (click)="save('draft')"
+        [disabled]="saving()"
+      >Simpan draf</button>
+      <button
+        type="button"
+        class="h-10 inline-flex items-center px-400 rounded-m bg-brand-600 text-white text-body-m font-semibold disabled:opacity-50"
+        (click)="save('submit')"
+        [disabled]="saving()"
+      >Kirim</button>
     </div>
   }
 </div>

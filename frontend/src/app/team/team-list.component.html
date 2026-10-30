@@ -1,34 +1,56 @@
-<div class="page">
-  <div class="page-header">
-    <div>
-      <h1 class="page-heading">Tim saya</h1>
-      <p class="page-subtitle">Menilai rekan setim kamu</p>
-    </div>
-    <a class="pilar-btn-secondary" [routerLink]="['/results', myId]">Lihat hasil saya</a>
+<div class="bg-white rounded-xl p-5 shadow-sm">
+  <div class="flex items-center justify-between flex-wrap gap-2 mb-4">
+    <h1 class="text-heading-m font-semibold text-text-primary">Tim saya</h1>
+    <a routerLink="/results/{{ myId }}" class="h-10 inline-flex items-center px-400 rounded-m border border-border-secondary text-body-m text-text-primary font-semibold">Lihat hasil saya</a>
   </div>
 
+  <div class="h-px w-full bg-[#FFF67A] mb-4" aria-hidden="true"></div>
+
+  <p class="text-body-m text-text-secondary mb-4">Sudah {{ doneCount }} dari {{ totalCount }} dinilai</p>
+
+  @if (error) {
+    <p class="text-body-s text-text-destructive mb-4">{{ error }}</p>
+  }
+
   @if (loading()) {
-    <p>Memuat...</p>
+    <p class="text-body-m text-text-tertiary">Memuat...</p>
   } @else {
-    <p class="progress">Sudah {{ doneCount }} dari {{ totalCount }} dinilai</p>
-
-    @if (error) {
-      <p class="error">{{ error }}</p>
-    }
-
-    <div class="member-list">
-      @for (member of members(); track member.id) {
-        <div class="member-card">
-          <button class="member-main" (click)="openAssessment(member.id)">
-            <span class="member-name">{{ member.name }}</span>
-            <span class="member-role">{{ member.job_role_name }}</span>
-            <span class="member-status" [class]="badgeClass(member.status)">{{ statusLabel(member.status) }}</span>
-          </button>
-          @if (isAdmin) {
-            <button class="pilar-btn-secondary" (click)="viewResults(member.id)">Hasil</button>
-          }
-        </div>
-      }
+    <div class="border border-border-secondary rounded-xl overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full text-body-m text-text-primary">
+          <thead>
+            <tr class="bg-background-primary text-body-s uppercase tracking-wider text-text-primary">
+              <th class="px-4 py-3 text-left font-semibold">Nama</th>
+              <th class="px-4 py-3 text-left font-semibold">Role</th>
+              <th class="px-4 py-3 text-left font-semibold">Status</th>
+              <th class="px-4 py-3 text-center font-semibold">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (member of members(); track member.id) {
+              <tr class="odd:bg-background-secondary hover:bg-background-tertiary">
+                <td class="px-4 py-3 font-medium">{{ member.name }}</td>
+                <td class="px-4 py-3">{{ member.job_role_name || '-' }}</td>
+                <td class="px-4 py-3">
+                  <span class="inline-flex items-center rounded-full px-250 py-50 text-body-s font-medium" [class]="badgeClass(member.status)">{{ statusLabel(member.status) }}</span>
+                </td>
+                <td class="px-4 py-3 text-center whitespace-nowrap">
+                  <div class="inline-flex items-center gap-200">
+                    <button (click)="openAssessment(member.id)" class="h-8 inline-flex items-center px-300 rounded-m bg-brand-600 text-white text-body-s font-semibold">Nilai</button>
+                    @if (isAdmin) {
+                      <button (click)="viewResults(member.id)" class="h-8 inline-flex items-center px-300 rounded-m border border-border-secondary text-body-s text-text-primary">Hasil</button>
+                    }
+                  </div>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="4" class="px-4 py-8 text-center text-text-secondary">Belum ada data</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
   }
 </div>

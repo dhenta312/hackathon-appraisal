@@ -64,11 +64,11 @@ export class TeamListComponent implements OnInit {
   badgeClass(status: TeamMember['status']): string {
     switch (status) {
       case 'submitted':
-        return 'pilar-badge badge-submitted';
+        return 'bg-green-50 text-green-800';
       case 'draft':
-        return 'pilar-badge badge-draft';
+        return 'bg-[#fef3c7] text-[#92400e]';
       default:
-        return 'pilar-badge badge-not-started';
+        return 'bg-background-tertiary text-text-tertiary';
     }
   }
 

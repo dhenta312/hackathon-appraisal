@@ -1,119 +1,141 @@
-<div class="app-shell">
-  <header class="topbar">
-    <div class="topbar-strip">
-      <div class="strip-item">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 2h2l1 3.5L4.5 7a11 11 0 0 0 4.5 4.5L10.5 10 14 11v2a2 2 0 0 1-2 2A13 13 0 0 1 1 4a2 2 0 0 1 2-2z" />
-        </svg>
-        <span>IT Support</span>
+<div class="min-h-screen bg-background-secondary font-inter">
+  <!-- Topbar -->
+  <div class="fixed top-0 left-0 right-0 z-50">
+    <header class="w-full">
+      <div class="bg-brand-600 flex items-center justify-end h-5 px-5 gap-4">
+        <div class="flex items-center gap-1">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="#ccddff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 2h2l1 3.5L4.5 7a11 11 0 0 0 4.5 4.5L10.5 10 14 11v2a2 2 0 0 1-2 2A13 13 0 0 1 1 4a2 2 0 0 1 2-2z" />
+          </svg>
+          <span class="text-[10px] text-brand-100 leading-[14px] font-normal">IT Support</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="#ccddff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 4h12v9H2zM2 5l6 5 6-5" />
+          </svg>
+          <span class="text-[10px] text-brand-100 leading-[14px] font-normal">IT Support</span>
+        </div>
+        <div class="flex items-center gap-1">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="#ccddff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8" cy="8" r="6" />
+            <path d="M2 8h12M8 2c2.5 2.5 2.5 9.5 0 12M8 2c-2.5 2.5-2.5 9.5 0 12" />
+          </svg>
+          <span class="text-[10px] text-brand-100 leading-[14px] font-normal">bsi.uii.ac.id</span>
+        </div>
       </div>
-      <div class="strip-item">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M2 4h12v9H2zM2 5l6 5 6-5" />
-        </svg>
-        <span>IT Support</span>
+
+      <div class="bg-white flex items-center h-16 px-5 gap-5 shadow-sm">
+        <div class="flex-1 flex items-center">
+          <div class="h-8 relative w-[97.427px]">
+            <img src="logo-mark-2.svg" alt="UII" class="absolute inset-[0_75.03%_-0.01%_0] w-auto h-full max-w-none" />
+            <img src="logo-mark-1.svg" alt="" class="absolute top-[12.68%] bottom-[12.7%] left-[32.42%] right-0 h-[74.62%] w-auto max-w-none" />
+          </div>
+        </div>
+
+        <button class="flex items-center justify-center w-5 h-5 text-text-primary" aria-label="Menu">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+            <rect x="3" y="3" width="6" height="6" rx="1" />
+            <rect x="11" y="3" width="6" height="6" rx="1" />
+            <rect x="3" y="11" width="6" height="6" rx="1" />
+            <rect x="11" y="11" width="6" height="6" rx="1" />
+          </svg>
+        </button>
+
+        <div class="relative flex items-center">
+          <button class="flex items-center justify-center w-5 h-5 text-text-primary" aria-label="Notifikasi">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 6.7a5 5 0 0 0-10 0c0 6-2.5 7.5-2.5 7.5h15S15 12.7 15 6.7z" />
+              <path d="M11.4 17.5a2 2 0 0 1-3.8-.5" />
+            </svg>
+          </button>
+          <div class="absolute -top-2.5 -right-2.5 bg-red-100 rounded-full w-5 h-5 flex items-center justify-center">
+            <span class="text-[12px] font-medium text-red-800 leading-[16px]">9</span>
+          </div>
+        </div>
+
+        <div class="bg-background-tertiary rounded-full flex items-center p-1 gap-1.5">
+          <div class="bg-white rounded-full flex items-center px-1 py-0.5 gap-0.5">
+            <img src="flag-id.svg" alt="ID" class="w-3 h-3" />
+            <span class="text-[12px] text-text-primary leading-[16px] font-normal">ID</span>
+          </div>
+          <div class="rounded-full flex items-center px-1 py-0.5 gap-0.5">
+            <img src="flag-us.svg" alt="EN" class="w-3 h-3" />
+            <span class="text-[12px] text-text-primary-2 leading-[16px] font-normal">EN</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <div class="bg-brand-50 border-2 border-white rounded-full w-8 h-8 flex items-center justify-center">
+            <span class="text-[14px] font-semibold text-brand-600 leading-[16px]">{{ userInitial }}</span>
+          </div>
+          <span class="text-body-m font-medium text-text-primary">{{ userName }}</span>
+          <button (click)="logout()" class="text-body-s font-medium text-text-tertiary hover:text-text-primary">Keluar</button>
+        </div>
       </div>
-      <div class="strip-item">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="8" cy="8" r="6" />
-          <path d="M2 8h12M8 2c2.5 2.5 2.5 9.5 0 12M8 2c-2.5 2.5-2.5 9.5 0 12" />
-        </svg>
-        <span>bsi.uii.ac.id</span>
-      </div>
+    </header>
+  </div>
+
+  <!-- Body -->
+  <div class="flex gap-5 px-5 items-start pt-[104px]">
+    <div class="hidden lg:block shrink-0 sticky self-start top-[104px]">
+      <aside class="bg-white flex items-start relative rounded-xl shadow-sm">
+        <!-- Icon rail -->
+        <div class="bg-gradient-to-b from-[#0044cd] to-[#003399] flex flex-col items-center px-2 py-3 rounded-xl shrink-0 gap-2">
+          <a routerLink="/welcome" [ngClass]="activeLevel === 'welcome' ? 'bg-white' : 'hover:bg-white/10'" class="flex items-center justify-center p-2 rounded-lg transition-colors">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" [attr.stroke]="activeLevel === 'welcome' ? '#0044cd' : '#ccddff'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 10l7-7 7 7" />
+              <path d="M5 9v9h10V9" />
+            </svg>
+          </a>
+          <a routerLink="/team" [ngClass]="activeLevel === 'team' ? 'bg-white' : 'hover:bg-white/10'" class="flex items-center justify-center p-2 rounded-lg transition-colors">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" [attr.stroke]="activeLevel === 'team' ? '#0044cd' : '#ccddff'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="3" width="12" height="14" rx="2" />
+              <path d="M8 3v3h4V3" />
+            </svg>
+          </a>
+        </div>
+
+        <!-- Expanded labels -->
+        <div class="flex flex-col gap-0.5 p-2 w-[216px]">
+          <a routerLink="/welcome" [ngClass]="activeLevel === 'welcome' ? 'bg-brand-50' : 'hover:bg-gray-50'" class="flex gap-1.5 items-start p-[10px] rounded-xl w-full transition-colors">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#0044cd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 10l7-7 7 7" />
+              <path d="M5 9v9h10V9" />
+            </svg>
+            <div class="flex-1 flex flex-col justify-center min-w-px">
+              <span [ngClass]="activeLevel === 'welcome' ? 'text-brand-600' : 'text-text-primary-2'" class="text-[14px] font-semibold leading-[20px]">Beranda</span>
+            </div>
+          </a>
+          <a routerLink="/team" [ngClass]="activeLevel === 'team' ? 'bg-brand-50' : 'hover:bg-gray-50'" class="flex gap-1.5 items-start p-[10px] rounded-xl w-full transition-colors">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#0044cd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="3" width="12" height="14" rx="2" />
+              <path d="M8 3v3h4V3" />
+            </svg>
+            <div class="flex-1 flex flex-col justify-center min-w-px">
+              <span [ngClass]="activeLevel === 'team' ? 'text-brand-600' : 'text-text-primary-2'" class="text-[14px] font-semibold leading-[20px]">Penilaian</span>
+            </div>
+          </a>
+        </div>
+      </aside>
     </div>
 
-    <div class="topbar-main">
-      <div class="topbar-logo">
-        <img class="logo-mark-2" src="logo-mark-2.svg" alt="UII" />
-        <img class="logo-mark-1" src="logo-mark-1.svg" alt="" />
-      </div>
-
-      <button class="icon-btn" aria-label="Menu">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-          <rect x="3" y="3" width="6" height="6" rx="1" />
-          <rect x="11" y="3" width="6" height="6" rx="1" />
-          <rect x="3" y="11" width="6" height="6" rx="1" />
-          <rect x="11" y="11" width="6" height="6" rx="1" />
-        </svg>
-      </button>
-
-      <button class="icon-btn" aria-label="Notifikasi">
-        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M15 6.7a5 5 0 0 0-10 0c0 6-2.5 7.5-2.5 7.5h15S15 12.7 15 6.7z" />
-          <path d="M11.4 17.5a2 2 0 0 1-3.8-.5" />
-        </svg>
-        <span class="bell-badge">9</span>
-      </button>
-
-      <div class="lang-switch">
-        <span class="lang lang-active">
-          <img src="flag-id.svg" alt="ID" />
-          <span>ID</span>
-        </span>
-        <span class="lang lang-idle">
-          <img src="flag-us.svg" alt="EN" />
-          <span>EN</span>
-        </span>
-      </div>
-
-      <div class="user-area">
-        <div class="avatar">{{ userInitial }}</div>
-        <span class="user-name">{{ userName }}</span>
-        <button class="logout-btn" (click)="logout()">Keluar</button>
-      </div>
-    </div>
-  </header>
-
-  <div class="app-body">
-    <aside class="sidebar">
-      <div class="sidebar-rail">
-        <a class="rail-item" routerLink="/welcome" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 10l7-7 7 7" />
-            <path d="M5 9v9h10V9" />
-          </svg>
-        </a>
-        <a class="rail-item" routerLink="/team" routerLinkActive="active">
-          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="4" y="3" width="12" height="14" rx="2" />
-            <path d="M8 3v3h4V3" />
-          </svg>
-        </a>
-      </div>
-      <div class="sidebar-labels">
-        <a class="menu-item" routerLink="/welcome" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 10l7-7 7 7" />
-            <path d="M5 9v9h10V9" />
-          </svg>
-          <span>Beranda</span>
-        </a>
-        <a class="menu-item" routerLink="/team" routerLinkActive="active">
-          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="4" y="3" width="12" height="14" rx="2" />
-            <path d="M8 3v3h4V3" />
-          </svg>
-          <span>Penilaian</span>
-        </a>
-      </div>
-    </aside>
-
-    <main class="app-main">
-      <div class="breadcrumb">
-        <span class="breadcrumb-root">
-          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Main content -->
+    <div class="flex-1 min-w-0 flex flex-col gap-5 pb-5">
+      <div class="flex gap-2 items-center">
+        <div class="flex gap-2 items-center">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#0044cd" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M2.5 8l.83-.83L8 2.5l4.67 4.67L13.5 8" />
             <path d="M4 5.5V13.5h8V5.5" />
             <path d="M7 13.5V9h2v4.5" />
           </svg>
-          <span>Penilaian Kinerja</span>
-        </span>
-        <svg class="breadcrumb-sep" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+          <span class="text-[12px] font-normal text-brand-600 leading-[16px] whitespace-nowrap">Penilaian Kinerja</span>
+        </div>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#94a3b8" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M6 4l4 4-4 4" />
         </svg>
-        <span class="breadcrumb-current">{{ pageLabel }}</span>
+        <span class="text-[12px] font-normal text-slate-500 leading-[16px] whitespace-nowrap">{{ pageLabel }}</span>
       </div>
       <router-outlet></router-outlet>
-    </main>
+    </div>
   </div>
 </div>
