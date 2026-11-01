@@ -81,6 +81,13 @@
       <aside class="bg-white flex items-start relative rounded-xl shadow-sm">
         <!-- Icon rail -->
         <div class="bg-gradient-to-b from-[#0044cd] to-[#003399] flex flex-col items-center px-2 py-3 rounded-xl shrink-0 gap-2">
+          @if (!expanded()) {
+            <button (click)="expanded.set(true)" class="flex items-center justify-center p-2 rounded-lg hover:bg-white/10 text-brand-100">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M7.5 5L12.5 10L7.5 15" />
+              </svg>
+            </button>
+          }
           <a routerLink="/welcome" [ngClass]="activeLevel === 'welcome' ? 'bg-white' : 'hover:bg-white/10'" class="flex items-center justify-center p-2 rounded-lg transition-colors">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" [attr.stroke]="activeLevel === 'welcome' ? '#0044cd' : '#ccddff'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M3 10l7-7 7 7" />
@@ -104,7 +111,14 @@
         </div>
 
         <!-- Expanded labels -->
-        <div class="flex flex-col gap-0.5 p-2 w-[216px]">
+        <div [class]="labelsClasses()">
+          @if (expanded()) {
+            <button (click)="expanded.set(false)" class="self-end flex items-center justify-center w-8 h-8 rounded-lg hover:bg-gray-50 text-text-secondary">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12.5 15L7.5 10L12.5 5" />
+              </svg>
+            </button>
+          }
           <a routerLink="/welcome" [ngClass]="activeLevel === 'welcome' ? 'bg-brand-50' : 'hover:bg-gray-50'" class="flex gap-1.5 items-start p-[10px] rounded-xl w-full transition-colors">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="#0044cd" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M3 10l7-7 7 7" />

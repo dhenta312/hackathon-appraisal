@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 
 import { AuthService } from '../services/auth.service';
@@ -45,6 +45,15 @@ export class LayoutComponent {
       return 'team';
     }
     return 'welcome';
+  }
+
+  readonly expanded = signal(true);
+
+  labelsClasses(): string {
+    return (
+      'flex flex-col gap-0.5 overflow-hidden transition-all duration-300 rounded-r-xl' +
+      (this.expanded() ? ' w-[216px] opacity-100 p-2' : ' w-0 opacity-0 p-0')
+    );
   }
 
   logout(): void {
