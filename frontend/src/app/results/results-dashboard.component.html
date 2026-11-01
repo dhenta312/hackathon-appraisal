@@ -2,7 +2,16 @@
   <div class="bg-white rounded-xl p-5 shadow-sm">
     <h1 class="text-heading-m font-semibold text-text-primary mb-1">Hasil Penilaian</h1>
     @if (result()?.total !== null) {
-      <p class="text-body-m text-text-secondary">Total: <span class="text-metric-l font-semibold text-brand-600">{{ result()?.total }}</span> / 100</p>
+      <p class="text-body-m text-text-secondary">Total: <span class="text-metric-l font-semibold text-brand-600">{{ result()?.total }}</span> / 100
+        @if (gradeFor(result()?.total ?? null); as grade) {
+          <span class="inline-flex items-center rounded-full px-250 py-50 text-body-s font-semibold ml-2" [class]="grade.classes">{{ grade.label }}</span>
+        }
+      </p>
+      <div class="flex flex-wrap gap-2 mt-3">
+        @for (band of gradeBands; track band.label) {
+          <span class="inline-flex items-center rounded-full px-250 py-50 text-body-s font-semibold" [class]="band.classes">{{ band.label }} · {{ band.range }}</span>
+        }
+      </div>
     } @else {
       <p class="text-body-m text-text-tertiary">Belum dinilai</p>
     }

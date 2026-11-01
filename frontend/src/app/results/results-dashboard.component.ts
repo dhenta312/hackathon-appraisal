@@ -33,6 +33,23 @@ export class ResultsDashboardComponent implements OnInit {
     return this.auth.currentUser()?.id === userId;
   }
 
+  readonly gradeBands = [
+    { label: 'Istimewa (A)', range: '90–100', classes: 'bg-green-50 text-green-800' },
+    { label: 'Sangat Baik (B)', range: '80–89', classes: 'bg-brand-50 text-brand-600' },
+    { label: 'Baik (C)', range: '70–79', classes: 'bg-[#ecfeff] text-cyan-800' },
+    { label: 'Cukup (D)', range: '60–69', classes: 'bg-[#fef3c7] text-[#92400e]' },
+    { label: 'Perlu Pengembangan (E)', range: '<60', classes: 'bg-red-100 text-red-800' },
+  ];
+
+  gradeFor(score: number | null): { label: string; classes: string } | null {
+    if (score === null) return null;
+    if (score >= 90) return { label: 'Istimewa (A)', classes: 'bg-green-50 text-green-800' };
+    if (score >= 80) return { label: 'Sangat Baik (B)', classes: 'bg-brand-50 text-brand-600' };
+    if (score >= 70) return { label: 'Baik (C)', classes: 'bg-[#ecfeff] text-cyan-800' };
+    if (score >= 60) return { label: 'Cukup (D)', classes: 'bg-[#fef3c7] text-[#92400e]' };
+    return { label: 'Perlu Pengembangan (E)', classes: 'bg-red-100 text-red-800' };
+  }
+
   ngOnInit(): void {
     const userId = Number(this.route.snapshot.paramMap.get('id'));
 
