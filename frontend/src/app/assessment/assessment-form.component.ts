@@ -22,6 +22,7 @@ export class AssessmentFormComponent implements OnInit {
   readonly reasons = signal<Record<number, string>>({});
   readonly loading = signal(true);
   readonly saving = signal(false);
+  readonly showWarningDialog = signal(false);
   error: string | null = null;
 
   relationship: string | null = null;
@@ -42,6 +43,37 @@ export class AssessmentFormComponent implements OnInit {
   );
 
   readonly answeredCount = computed(() => Object.keys(this.scores()).length);
+
+  readonly warnings = computed(() => {
+    const warnings: string[] = [];
+
+    const values = Object.values(this.scores());
+
+    if (values.length >= 2 && new Set(values).size === 1) {
+      warnings.push('Skor yang Anda berikan seragam (semua sama).');
+    }
+
+    if (values.length > 0 && values.every((v) => v === 5)) {
+      warnings.push('Semua aspek diberi nilai maksimal — kemungkinan diisi asal (rata kanan).');
+    }
+
+    const reasons = Object.values(this.reasons()).filter((t) => t.trim().length > 0);
+    const seen = new Set<string>();
+    let copied = false;
+    for (const reason of reasons) {
+      const key = reason.trim().toLowerCase();
+      if (seen.has(key)) {
+        copied = true;
+        break;
+      }
+      seen.add(key);
+    }
+    if (copied) {
+      warnings.push('Beberapa contoh perilaku terindikasi sama (copas).');
+    }
+
+    return warnings;
+  });
 
   get progressPercent(): number {
     const total = this.totalQuestions();
@@ -82,6 +114,24 @@ export class AssessmentFormComponent implements OnInit {
   }
 
   save(action: 'draft' | 'submit'): void {
+    if (action === 'submit' && this.warnings().length > 0) {
+      this.showWarningDialog.set(true);
+      return;
+    }
+
+    this.doSave(action);
+  }
+
+  confirmSubmit(): void {
+    this.showWarningDialog.set(false);
+    this.doSave('submit');
+  }
+
+  cancelSubmit(): void {
+    this.showWarningDialog.set(false);
+  }
+
+  private doSave(action: 'draft' | 'submit'): void {
     const template = this.assessmentTemplate();
 
     if (!template) {

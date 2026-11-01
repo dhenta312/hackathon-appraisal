@@ -78,6 +78,17 @@
       </section>
     }
 
+    @if (warnings().length > 0) {
+      <div class="mb-4 p-4 rounded-m bg-[#fffbeb] border border-[#f59e0b]">
+        <p class="text-body-s font-semibold text-[#92400e] mb-1">Peringatan — penilaian terindikasi asal:</p>
+        <ul class="list-disc pl-5 text-body-s text-[#92400e]">
+          @for (w of warnings(); track $index) {
+            <li>{{ w }}</li>
+          }
+        </ul>
+      </div>
+    }
+
     <div class="sticky bottom-0 -mx-5 -mb-5 px-5 py-4 bg-white border-t border-border-secondary rounded-b-xl flex items-center justify-between gap-3">
       <span class="text-body-s text-text-tertiary">{{ answeredCount() }} dari {{ totalQuestions() }} terisi</span>
       <div class="flex gap-200">
@@ -97,3 +108,16 @@
     </div>
   }
 </div>
+
+@if (showWarningDialog()) {
+  <div class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-xl p-5 shadow-lg max-w-md w-full">
+      <h3 class="text-heading-xxs font-semibold text-text-primary mb-2">Yakin ingin mengirim?</h3>
+      <p class="text-body-m text-text-secondary mb-4">Penilaian Anda terindikasi diisi asal (skor seragam / alasan copas). Pastikan penilaian sudah objektif sebelum dikirim.</p>
+      <div class="flex justify-end gap-2">
+        <button (click)="cancelSubmit()" class="h-10 inline-flex items-center px-4 rounded-m border border-border-secondary text-body-m text-text-primary">Periksa ulang</button>
+        <button (click)="confirmSubmit()" class="h-10 inline-flex items-center px-4 rounded-m bg-brand-600 text-white text-body-m font-semibold">Tetap kirim</button>
+      </div>
+    </div>
+  </div>
+}

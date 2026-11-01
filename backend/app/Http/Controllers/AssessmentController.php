@@ -156,9 +156,12 @@ class AssessmentController extends Controller
             ]);
         }
 
+        $assessment->update(['flag' => $this->computeFlag($data['scores'], $data['reasons'])]);
+
         return response()->json([
             'id' => $assessment->id,
             'status' => $assessment->status,
+            'flag' => $assessment->flag,
         ]);
     }
 
@@ -168,6 +171,34 @@ class AssessmentController extends Controller
     private function periodName(): string
     {
         return Period::open()?->name ?? '2026-Q4';
+    }
+
+    /**
+     * Detect careless filling: uniform scores, all-max scores, or copied reasons.
+     */
+    private function computeFlag(array $scores, array $reasons): ?string
+    {
+        $values = array_values(array_column($scores, 'value'));
+        $flags = [];
+
+        if (count($values) >= 2 && count(array_unique($values)) === 1) {
+            $flags[] = 'skor_seragam';
+        }
+
+        if (count($values) > 0 && count(array_unique($values)) === 1 && (int) $values[0] === 5) {
+            $flags[] = 'semua_maksimal';
+        }
+
+        $reasonTexts = array_map(
+            fn ($reason) => mb_strtolower(trim((string) ($reason['text'] ?? ''))),
+            array_filter($reasons, fn ($reason) => trim((string) ($reason['text'] ?? '')) !== ''),
+        );
+
+        if (count($reasonTexts) >= 2 && count($reasonTexts) !== count(array_unique($reasonTexts))) {
+            $flags[] = 'alasan_copas';
+        }
+
+        return $flags ? implode(',', $flags) : null;
     }
 
     /**
