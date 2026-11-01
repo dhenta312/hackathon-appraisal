@@ -1,4 +1,5 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { AssessmentComponent, AssessmentTemplate, SaveAssessmentPayload } from '../models/assessment';
@@ -7,6 +8,7 @@ import { AssessmentService } from '../services/assessment.service';
 @Component({
   selector: 'app-assessment-form',
   standalone: true,
+  imports: [FormsModule],
   templateUrl: './assessment-form.component.html',
   styleUrl: './assessment-form.component.css',
 })
@@ -21,6 +23,16 @@ export class AssessmentFormComponent implements OnInit {
   readonly loading = signal(true);
   readonly saving = signal(false);
   error: string | null = null;
+
+  relationship: string | null = null;
+
+  readonly relationshipOptions = [
+    { value: 'self', label: 'Diri sendiri' },
+    { value: 'atasan', label: 'Atasan langsung' },
+    { value: 'rekan', label: 'Rekan sejawat' },
+    { value: 'bawahan', label: 'Bawahan' },
+    { value: 'lainnya', label: 'Lainnya' },
+  ];
 
   readonly totalQuestions = computed(() =>
     (this.assessmentTemplate()?.components ?? []).reduce(
@@ -60,13 +72,13 @@ export class AssessmentFormComponent implements OnInit {
     this.scores.update((current) => ({ ...current, [questionId]: value }));
   }
 
-  setReason(componentId: number, event: Event): void {
+  setReason(questionId: number, event: Event): void {
     const text = (event.target as HTMLTextAreaElement).value;
-    this.reasons.update((current) => ({ ...current, [componentId]: text }));
+    this.reasons.update((current) => ({ ...current, [questionId]: text }));
   }
 
-  reasonFor(componentId: number): string {
-    return this.reasons()[componentId] ?? '';
+  reasonFor(questionId: number): string {
+    return this.reasons()[questionId] ?? '';
   }
 
   save(action: 'draft' | 'submit'): void {
@@ -81,12 +93,13 @@ export class AssessmentFormComponent implements OnInit {
 
     const payload: SaveAssessmentPayload = {
       action,
+      relationship: this.relationship,
       scores: Object.entries(this.scores()).map(([questionId, value]) => ({
         question_id: Number(questionId),
         value,
       })),
-      reasons: Object.entries(this.reasons()).map(([componentId, text]) => ({
-        component_id: Number(componentId),
+      reasons: Object.entries(this.reasons()).map(([questionId, text]) => ({
+        question_id: Number(questionId),
         text,
       })),
     };
@@ -105,6 +118,8 @@ export class AssessmentFormComponent implements OnInit {
       return;
     }
 
+    this.relationship = template.draft.relationship;
+
     const scores: Record<number, number> = {};
     for (const score of template.draft.scores) {
       scores[score.question_id] = score.value;
@@ -112,7 +127,7 @@ export class AssessmentFormComponent implements OnInit {
 
     const reasons: Record<number, string> = {};
     for (const reason of template.draft.reasons) {
-      reasons[reason.component_id] = reason.text;
+      reasons[reason.question_id] = reason.text;
     }
 
     this.scores.set(scores);

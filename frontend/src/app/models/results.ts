@@ -1,7 +1,13 @@
+export interface AssessorReason {
+  question_id: number;
+  question_text: string;
+  text: string;
+}
+
 export interface AssessorScore {
   label: string;
   score: number | null;
-  reason: string;
+  reasons: AssessorReason[];
 }
 
 export interface ResultComponent {

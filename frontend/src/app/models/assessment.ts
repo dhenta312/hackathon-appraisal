@@ -25,11 +25,12 @@ export interface DraftScore {
 }
 
 export interface DraftReason {
-  component_id: number;
+  question_id: number;
   text: string;
 }
 
 export interface AssessmentDraft {
+  relationship: string | null;
   scores: DraftScore[];
   reasons: DraftReason[];
 }
@@ -39,6 +40,7 @@ export interface AssessmentTemplate {
     id: number;
     name: string;
     job_role_name: string | null;
+    is_self: boolean;
   };
   components: AssessmentComponent[];
   draft: AssessmentDraft | null;
@@ -46,6 +48,7 @@ export interface AssessmentTemplate {
 
 export interface SaveAssessmentPayload {
   action: 'draft' | 'submit';
+  relationship?: string | null;
   scores: DraftScore[];
   reasons: DraftReason[];
 }

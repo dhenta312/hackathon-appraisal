@@ -27,8 +27,12 @@
             <div class="border-t border-border-secondary py-2.5">
               <span class="font-semibold text-text-primary">{{ assessor.label }}</span>
               <span class="ml-2 text-text-secondary">{{ assessor.score ?? '-' }}</span>
-              @if (assessor.reason) {
-                <p class="text-body-s text-text-tertiary italic mt-0.5">&ldquo;{{ assessor.reason }}&rdquo;</p>
+              @for (reason of assessor.reasons; track reason.question_id) {
+                @if (reason.text) {
+                  <div class="mt-1 text-body-s text-text-tertiary">
+                    <span class="font-semibold text-text-secondary">{{ reason.question_text }}:</span> {{ reason.text }}
+                  </div>
+                }
               }
             </div>
           }
@@ -37,9 +41,30 @@
 
       <section class="bg-background-tertiary rounded-xl p-5 shadow-sm">
         <div class="flex items-center justify-between">
-          <h2 class="text-heading-xxs font-semibold text-text-primary">Presensi</h2>
+          <h2 class="text-heading-xxs font-semibold text-text-primary">Kehadiran &amp; Kedisiplinan</h2>
           <span class="text-body-m font-semibold text-brand-600">{{ result.attendance.points }} / {{ result.attendance.max }}</span>
         </div>
+      </section>
+    }
+
+    @if (isSelf) {
+      <section class="bg-white rounded-xl p-5 shadow-sm">
+        <h2 class="text-heading-xxs font-semibold text-text-primary mb-2">Ajukan Banding</h2>
+        @if (appealSent()) {
+          <p class="text-body-s text-green-800">Banding Anda telah dikirim dan akan diproses oleh Human Capital.</p>
+        } @else {
+          <p class="text-body-s text-text-tertiary mb-2">Merasa ada yang perlu diklarifikasi atas hasil penilaian ini? Ajukan peninjauan ulang (maks. 2 hari kerja setelah hasil diterima).</p>
+          <textarea
+            rows="3"
+            [(ngModel)]="appealReason"
+            placeholder="Tulis alasan dan data pendukung banding Anda..."
+            class="border border-border-secondary rounded-m p-250 text-body-m text-text-primary w-full mb-2"
+          ></textarea>
+          @if (appealError) {
+            <p class="text-body-s text-text-destructive mb-2">{{ appealError }}</p>
+          }
+          <button (click)="submitAppeal()" [disabled]="!appealReason.trim()" class="h-10 inline-flex items-center px-400 rounded-m bg-brand-600 text-white text-body-m font-semibold disabled:opacity-50">Kirim banding</button>
+        }
       </section>
     }
   }

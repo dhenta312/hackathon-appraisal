@@ -1,6 +1,6 @@
 <div class="bg-white rounded-xl p-5 shadow-sm">
   <div class="flex items-center justify-between flex-wrap gap-2 mb-4">
-    <h1 class="text-heading-m font-semibold text-text-primary">Tim saya</h1>
+    <h1 class="text-heading-m font-semibold text-text-primary">Daftar Karyawan</h1>
     <a routerLink="/results/{{ myId }}" class="h-10 inline-flex items-center px-400 rounded-m border border-border-secondary text-body-m text-text-primary font-semibold">Lihat hasil saya</a>
   </div>
 
@@ -22,6 +22,7 @@
             <tr class="bg-background-primary text-body-s uppercase tracking-wider text-text-primary">
               <th class="px-4 py-3 text-left font-semibold">Nama</th>
               <th class="px-4 py-3 text-left font-semibold">Role</th>
+              <th class="px-4 py-3 text-left font-semibold">Hubungan</th>
               <th class="px-4 py-3 text-left font-semibold">Status</th>
               <th class="px-4 py-3 text-center font-semibold">Aksi</th>
             </tr>
@@ -31,6 +32,7 @@
               <tr class="odd:bg-background-secondary hover:bg-background-tertiary">
                 <td class="px-4 py-3 font-medium">{{ member.name }}</td>
                 <td class="px-4 py-3">{{ member.job_role_name || '-' }}</td>
+                <td class="px-4 py-3 text-text-secondary">{{ contextLabel(member) }}</td>
                 <td class="px-4 py-3">
                   <span class="inline-flex items-center gap-150 rounded-full px-300 py-100 text-body-s font-semibold" [class]="badgeClass(member.status)">
                     <span class="size-2 rounded-full" [class]="dotClass(member.status)"></span>
@@ -39,7 +41,7 @@
                 </td>
                 <td class="px-4 py-3 text-center whitespace-nowrap">
                   <div class="inline-flex items-center gap-200">
-                    <button (click)="openAssessment(member.id)" class="h-8 inline-flex items-center px-300 rounded-m bg-brand-600 text-white text-body-s font-semibold">Nilai</button>
+                    <button (click)="openAssessment(member.id)" class="h-8 inline-flex items-center px-300 rounded-m bg-brand-600 text-white text-body-s font-semibold">{{ member.is_self ? 'Nilai diri' : 'Nilai' }}</button>
                     @if (isAdmin) {
                       <button (click)="viewResults(member.id)" class="h-8 inline-flex items-center px-300 rounded-m border border-border-secondary text-body-s text-text-primary">Hasil</button>
                     }
@@ -48,7 +50,7 @@
               </tr>
             } @empty {
               <tr>
-                <td colspan="4" class="px-4 py-8 text-center text-text-secondary">Belum ada data</td>
+                <td colspan="5" class="px-4 py-8 text-center text-text-secondary">Belum ada data</td>
               </tr>
             }
           </tbody>

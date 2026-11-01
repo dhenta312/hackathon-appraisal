@@ -83,6 +83,12 @@ export class TeamListComponent implements OnInit {
     }
   }
 
+  contextLabel(member: TeamMember): string {
+    if (member.is_self) return 'Diri sendiri';
+    if (member.is_teammate) return 'Rekan setim';
+    return 'Rekan kerja';
+  }
+
   openAssessment(memberId: number): void {
     this.router.navigate(['/assess', memberId]);
   }

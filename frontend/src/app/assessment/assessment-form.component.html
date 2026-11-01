@@ -4,6 +4,16 @@
 
   <div class="h-px w-full bg-[#FFF67A] mb-4" aria-hidden="true"></div>
 
+  <label class="flex flex-col gap-1 mb-5 max-w-xs">
+    <span class="text-body-s font-semibold text-text-secondary">Hubungan Anda dengan yang dinilai</span>
+    <select [(ngModel)]="relationship" class="h-10 border border-border-secondary rounded-m px-3 text-body-m text-text-primary">
+      <option [ngValue]="null">— pilih —</option>
+      @for (opt of relationshipOptions; track opt.value) {
+        <option [ngValue]="opt.value">{{ opt.label }}</option>
+      }
+    </select>
+  </label>
+
   <div class="mb-5">
     <div class="flex items-center justify-between mb-1">
       <span class="text-body-s font-semibold text-text-secondary">Progres penilaian</span>
@@ -38,7 +48,7 @@
         @for (question of component.questions; track question.id) {
           <div class="mb-5">
             <p class="text-body-m text-text-primary mb-2">{{ question.text }}</p>
-            <div class="flex flex-wrap gap-2">
+            <div class="flex flex-wrap gap-2 mb-3">
               @for (choice of question.choices; track choice.id) {
                 <button
                   type="button"
@@ -56,19 +66,15 @@
                 </button>
               }
             </div>
+            <textarea
+              rows="2"
+              [value]="reasonFor(question.id)"
+              placeholder="Contoh perilaku / kejadian nyata yang mendasari skor (opsional)"
+              (input)="setReason(question.id, $event)"
+              class="border border-border-secondary rounded-m p-250 text-body-m text-text-primary w-full placeholder:text-text-muted"
+            ></textarea>
           </div>
         }
-
-        <label class="flex flex-col gap-1">
-          <span class="text-body-s font-semibold text-text-secondary">Alasan untuk {{ component.name }}</span>
-          <textarea
-            rows="2"
-            [value]="reasonFor(component.id)"
-            placeholder="Tulis alasan singkat (opsional), mis. 'menyelesaikan tugas tepat waktu'"
-            (input)="setReason(component.id, $event)"
-            class="border border-border-secondary rounded-m p-250 text-body-m text-text-primary w-full placeholder:text-text-muted"
-          ></textarea>
-        </label>
       </section>
     }
 
