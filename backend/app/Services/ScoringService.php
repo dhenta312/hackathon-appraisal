@@ -15,7 +15,7 @@ class ScoringService
      */
     public function compute(int $userId, string $period): array
     {
-        $assessments = Assessment::with(['scores.question', 'reasons'])
+        $assessments = Assessment::with(['scores.question', 'reasons.question'])
             ->where('assessed_id', $userId)
             ->where('period', $period)
             ->where('status', 'submitted')
@@ -23,7 +23,7 @@ class ScoringService
             ->orderBy('id')
             ->get();
 
-        $components = Component::where('code', '!=', 'presensi')->orderBy('id')->get();
+        $components = Component::where('code', '!=', 'kehadiran')->orderBy('id')->get();
 
         $componentResults = $components->map(function (Component $component) use ($assessments) {
             $perAssessor = $assessments->values()->map(function (Assessment $assessment, int $index) use ($component) {
@@ -31,15 +31,21 @@ class ScoringService
                     ->filter(fn ($score) => $score->question?->component_id === $component->id)
                     ->pluck('value');
 
-                $reason = $assessment->reasons
-                    ->first(fn ($reason) => $reason->component_id === $component->id);
+                $reasons = $assessment->reasons
+                    ->filter(fn ($reason) => $reason->question?->component_id === $component->id)
+                    ->map(fn ($reason) => [
+                        'question_id' => $reason->question_id,
+                        'question_text' => $reason->question?->text,
+                        'text' => $reason->text,
+                    ])
+                    ->values();
 
                 return [
                     'label' => 'Penilai ' . chr(65 + $index),
                     'score' => $values->isEmpty()
                         ? null
                         : round($values->avg() / 5 * $component->weight, 1),
-                    'reason' => $reason?->text ?? '',
+                    'reasons' => $reasons,
                 ];
             })->values();
 

@@ -13,20 +13,21 @@ use Illuminate\Http\Request;
 class AssessmentController extends Controller
 {
     /**
-     * List the caller's teammates with their assessment status.
+     * List all employees (for 360° assessment) with their assessment status.
      */
     public function team(Request $request): JsonResponse
     {
         $assessor = $request->user();
 
-        $members = User::where('team_id', $assessor->team_id)
-            ->where('id', '!=', $assessor->id)
+        $members = User::orderBy('name')
             ->get()
-            ->map(fn (User $teammate) => [
-                'id' => $teammate->id,
-                'name' => $teammate->name,
-                'job_role_name' => $teammate->jobRole?->name,
-                'status' => $this->assessmentStatus($assessor->id, $teammate->id),
+            ->map(fn (User $u) => [
+                'id' => $u->id,
+                'name' => $u->name,
+                'job_role_name' => $u->jobRole?->name,
+                'is_self' => $u->id === $assessor->id,
+                'is_teammate' => $u->team_id === $assessor->team_id && $u->id !== $assessor->id,
+                'status' => $this->assessmentStatus($assessor->id, $u->id),
             ]);
 
         return response()->json(['members' => $members]);
@@ -38,9 +39,9 @@ class AssessmentController extends Controller
     public function template(Request $request, int $assessedId): JsonResponse
     {
         $assessor = $request->user();
-        $assessed = $this->resolveTeammate($assessor, $assessedId);
+        $assessed = User::findOrFail($assessedId);
 
-        $components = Component::where('code', '!=', 'presensi')
+        $components = Component::where('code', '!=', 'kehadiran')
             ->orderBy('id')
             ->get()
             ->map(fn (Component $component) => [
@@ -78,6 +79,7 @@ class AssessmentController extends Controller
                 'id' => $assessed->id,
                 'name' => $assessed->name,
                 'job_role_name' => $assessed->jobRole?->name,
+                'is_self' => $assessed->id === $assessor->id,
             ],
             'components' => $components,
             'draft' => $this->draftPayload($assessor->id, $assessed->id),
@@ -85,12 +87,12 @@ class AssessmentController extends Controller
     }
 
     /**
-     * Save a draft or submit an assessment for a teammate.
+     * Save a draft or submit an assessment (360°: any user, including self).
      */
     public function store(Request $request, int $assessedId): JsonResponse
     {
         $assessor = $request->user();
-        $assessed = $this->resolveTeammate($assessor, $assessedId);
+        $assessed = User::findOrFail($assessedId);
 
         $existing = Assessment::where('assessor_id', $assessor->id)
             ->where('assessed_id', $assessed->id)
@@ -103,11 +105,12 @@ class AssessmentController extends Controller
 
         $data = $request->validate([
             'action' => ['required', 'in:draft,submit'],
+            'relationship' => ['nullable', 'string'],
             'scores' => ['array'],
             'scores.*.question_id' => ['required', 'integer'],
-            'scores.*.value' => ['required', 'integer', 'min:0'],
+            'scores.*.value' => ['required', 'integer', 'between:0,5'],
             'reasons' => ['array'],
-            'reasons.*.component_id' => ['required', 'integer'],
+            'reasons.*.question_id' => ['required', 'integer'],
             'reasons.*.text' => ['nullable', 'string'],
         ]);
 
@@ -132,6 +135,7 @@ class AssessmentController extends Controller
             ],
             [
                 'status' => $submitting ? 'submitted' : 'draft',
+                'relationship' => $data['relationship'] ?? null,
                 'submitted_at' => $submitting ? now() : null,
             ],
         );
@@ -147,7 +151,7 @@ class AssessmentController extends Controller
         $assessment->reasons()->delete();
         foreach ($data['reasons'] as $reason) {
             $assessment->reasons()->create([
-                'component_id' => $reason['component_id'],
+                'question_id' => $reason['question_id'],
                 'text' => $reason['text'] ?? '',
             ]);
         }
@@ -163,7 +167,7 @@ class AssessmentController extends Controller
      */
     private function periodName(): string
     {
-        return Period::open()?->name ?? '2026-Q4';
+        return Period::open()?->name ?? '2026-S1';
     }
 
     /**
@@ -180,21 +184,7 @@ class AssessmentController extends Controller
     }
 
     /**
-     * Resolve a teammate, forbidding self-assessment or cross-team targets.
-     */
-    private function resolveTeammate(User $assessor, int $assessedId): User
-    {
-        $assessed = User::findOrFail($assessedId);
-
-        if ($assessed->team_id !== $assessor->team_id || $assessed->id === $assessor->id) {
-            abort(403, 'Bukan anggota tim kamu');
-        }
-
-        return $assessed;
-    }
-
-    /**
-     * Determine the assessment status for a given assessor/teammate pair.
+     * Determine the assessment status for a given assessor/assessed pair.
      */
     private function assessmentStatus(int $assessorId, int $assessedId): string
     {
@@ -207,7 +197,7 @@ class AssessmentController extends Controller
     }
 
     /**
-     * Build the draft payload for a given assessor/teammate pair, or null.
+     * Build the draft payload for a given assessor/assessed pair, or null.
      */
     private function draftPayload(int $assessorId, int $assessedId): ?array
     {
@@ -222,12 +212,13 @@ class AssessmentController extends Controller
         }
 
         return [
+            'relationship' => $assessment->relationship,
             'scores' => $assessment->scores->map(fn ($score) => [
                 'question_id' => $score->question_id,
                 'value' => $score->value,
             ]),
             'reasons' => $assessment->reasons->map(fn ($reason) => [
-                'component_id' => $reason->component_id,
+                'question_id' => $reason->question_id,
                 'text' => $reason->text,
             ]),
         ];

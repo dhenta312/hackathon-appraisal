@@ -6,16 +6,11 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['assessment_id', 'component_id', 'text'])]
+#[Fillable(['assessment_id', 'question_id', 'text'])]
 class Reason extends Model
 {
-    public function assessment(): BelongsTo
+    public function question(): BelongsTo
     {
-        return $this->belongsTo(Assessment::class);
-    }
-
-    public function component(): BelongsTo
-    {
-        return $this->belongsTo(Component::class);
+        return $this->belongsTo(Question::class);
     }
 }

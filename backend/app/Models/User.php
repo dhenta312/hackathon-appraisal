@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Assessment::class, 'assessed_id');
     }
+
+    public function appeals(): HasMany
+    {
+        return $this->hasMany(Appeal::class);
+    }
 }

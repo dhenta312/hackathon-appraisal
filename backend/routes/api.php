@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppealController;
 use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ResultController;
@@ -13,9 +14,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/assessments/{assessedId}', [AssessmentController::class, 'template']);
     Route::post('/assessments/{assessedId}', [AssessmentController::class, 'store']);
     Route::get('/results/{userId}', [ResultController::class, 'show']);
+
+    Route::post('/appeals', [AppealController::class, 'store']);
 });
 
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+    Route::get('/appeals', [AppealController::class, 'index']);
+
     Route::get('/settings/periods', [SettingsController::class, 'periods']);
     Route::post('/settings/periods', [SettingsController::class, 'storePeriod']);
     Route::post('/settings/periods/{periodId}/toggle', [SettingsController::class, 'togglePeriod']);

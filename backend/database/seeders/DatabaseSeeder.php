@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             ['code' => 'soft_skill', 'name' => 'Soft Skill', 'weight' => 25],
             ['code' => 'hard_skill', 'name' => 'Hard Skill', 'weight' => 30],
             ['code' => 'growth_innovation', 'name' => 'Growth & Innovation', 'weight' => 15],
-            ['code' => 'presensi', 'name' => 'Presensi', 'weight' => 20],
+            ['code' => 'kehadiran', 'name' => 'Kehadiran & Kedisiplinan', 'weight' => 20],
         ] as $component) {
             Component::create($component);
         }
@@ -34,9 +34,9 @@ class DatabaseSeeder extends Seeder
         }
 
         Period::create([
-            'name' => '2026-Q4',
-            'start_date' => '2026-11-01',
-            'end_date' => '2026-11-30',
+            'name' => '2026-S1',
+            'start_date' => '2026-01-01',
+            'end_date' => '2026-06-30',
             'is_open' => true,
         ]);
 
@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
 
             Attendance::create([
                 'user_id' => $user->id,
-                'period' => '2026-Q4',
+                'period' => '2026-S1',
                 'points' => $userData['attendance'],
             ]);
         }
@@ -78,21 +78,20 @@ class DatabaseSeeder extends Seeder
     {
         foreach ([
             'core_value' => [
-                'Menunjukkan integritas dalam bekerja',
-                'Bertanggung jawab atas hasil kerja',
-                'Kolaborasi dan saling mendukung dalam tim',
+                'Commitment — Menunjukkan komitmen terhadap tanggung jawab dan tujuan organisasi',
+                'Adaptive — Mampu beradaptasi dengan perubahan dan situasi baru',
+                'Resilience — Tangguh menghadapi tekanan dan mampu bangkit dari kegagalan',
+                'Empathy — Memahami dan peduli terhadap perasaan serta kebutuhan orang lain',
             ],
             'soft_skill' => [
-                'Komunikasi yang efektif',
-                'Kerja sama dalam tim',
-                'Adaptasi terhadap perubahan',
-                'Manajemen waktu',
+                'Komunikasi efektif',
+                'Kerja sama tim',
+                'Adaptabilitas',
+                'Manajemen emosi',
                 'Inisiatif dan proaktif',
             ],
             'growth_innovation' => [
-                'Kemauan untuk belajar hal baru',
-                'Kontribusi ide atau inovasi',
-                'Berbagi pengetahuan kepada tim',
+                'Kontribusi inovasi — berikan penilaian atas inisiatif, ide segar, atau kontribusi tambahan di luar job description',
             ],
         ] as $componentCode => $texts) {
             $component = Component::where('code', $componentCode)->firstOrFail();
@@ -141,16 +140,17 @@ class DatabaseSeeder extends Seeder
     }
 
     /**
-     * Seed default 1–5 answer choices for every question.
+     * Seed 0–5 answer choices (level descriptor) for every question.
      */
     private function seedAnswerChoices(): void
     {
         $labels = [
-            1 => 'Sangat kurang',
-            2 => 'Kurang',
-            3 => 'Cukup',
-            4 => 'Baik',
-            5 => 'Sangat baik',
+            0 => 'Tidak menunjukkan perilaku ini sama sekali',
+            1 => 'Jarang menunjukkan; masih perlu banyak pengembangan',
+            2 => 'Kadang menunjukkan; konsisten namun perlu bimbingan',
+            3 => 'Cukup sering menunjukkan; konsisten pada situasi umum',
+            4 => 'Sering menunjukkan; menjadi contoh bagi rekan',
+            5 => 'Selalu menunjukkan; menjadi teladan dan menginspirasi',
         ];
 
         foreach (Question::all() as $question) {
