@@ -22,7 +22,7 @@ class AppealController extends Controller
 
         $appeal = Appeal::create([
             'user_id' => $user->id,
-            'period' => Period::open()?->name ?? '2026-S1',
+            'period' => Period::open()?->name ?? '2026-Q4',
             'reason' => $data['reason'],
             'status' => 'pending',
         ]);

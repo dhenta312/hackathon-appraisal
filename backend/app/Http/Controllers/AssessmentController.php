@@ -167,7 +167,7 @@ class AssessmentController extends Controller
      */
     private function periodName(): string
     {
-        return Period::open()?->name ?? '2026-S1';
+        return Period::open()?->name ?? '2026-Q4';
     }
 
     /**

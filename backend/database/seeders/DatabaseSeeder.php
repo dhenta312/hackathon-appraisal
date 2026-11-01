@@ -34,9 +34,9 @@ class DatabaseSeeder extends Seeder
         }
 
         Period::create([
-            'name' => '2026-S1',
-            'start_date' => '2026-01-01',
-            'end_date' => '2026-06-30',
+            'name' => '2026-Q4',
+            'start_date' => '2026-11-01',
+            'end_date' => '2026-11-30',
             'is_open' => true,
         ]);
 
@@ -62,7 +62,7 @@ class DatabaseSeeder extends Seeder
 
             Attendance::create([
                 'user_id' => $user->id,
-                'period' => '2026-S1',
+                'period' => '2026-Q4',
                 'points' => $userData['attendance'],
             ]);
         }
