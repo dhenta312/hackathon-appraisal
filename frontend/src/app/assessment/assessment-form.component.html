@@ -24,6 +24,17 @@
     </div>
   </div>
 
+  @if (warnings().length > 0) {
+    <div class="mb-4 p-4 rounded-m bg-[#fffbeb] border border-[#f59e0b]">
+      <p class="text-body-s font-semibold text-[#92400e] mb-1">Peringatan — penilaian terindikasi asal:</p>
+      <ul class="list-disc pl-5 text-body-s text-[#92400e]">
+        @for (w of warnings(); track $index) {
+          <li>{{ w }}</li>
+        }
+      </ul>
+    </div>
+  }
+
   @if (error) {
     <p class="text-body-s text-text-destructive mb-4">{{ error }}</p>
   }
@@ -76,17 +87,6 @@
           </div>
         }
       </section>
-    }
-
-    @if (warnings().length > 0) {
-      <div class="mb-4 p-4 rounded-m bg-[#fffbeb] border border-[#f59e0b]">
-        <p class="text-body-s font-semibold text-[#92400e] mb-1">Peringatan — penilaian terindikasi asal:</p>
-        <ul class="list-disc pl-5 text-body-s text-[#92400e]">
-          @for (w of warnings(); track $index) {
-            <li>{{ w }}</li>
-          }
-        </ul>
-      </div>
     }
 
     <div class="sticky bottom-0 -mx-5 -mb-5 px-5 py-4 bg-white border-t border-border-secondary rounded-b-xl flex items-center justify-between gap-3">
