@@ -1,57 +1,64 @@
-# Pitch — AI-Native Workflow
+# Pitch — AI-Native Development Workflow (skill.md)
+
+## Inti yang diajukan
+
+**Bukan aplikasi penilaian pegawai — melainkan `skill.md`**: dokumentasi workflow AI-native
+yang bisa diadopsi tim lain untuk membangun software lebih cepat, cerdas, dan aman.
+
+**Penilaian pegawai = bukti** bahwa skill.md ini benar-benar bekerja (38 commit, ±2 hari, end-to-end).
+
+```
+skill.md (yang diajukan)  ←———  dibuktikan oleh  ———→  Sistem Penilaian Pegawai (studi kasus)
+```
 
 ## Headline
 
-> **Metode membangun software berbantu AI — dari dokumen ke produk jalan. Bisa dipakai ulang untuk proyek apa pun.**
+> **skill.md — panduan reusable membangun software: dari dokumen kebutuhan ke produk jalan,
+> lebih cepat, cerdas, dan aman. Dibuktikan oleh sistem penilaian pegawai.**
 
-## Inti: 3 tahap + 1 prinsip (metode yang reusable)
+## Workflow 8 langkah (isi skill.md)
 
-Setiap tahap punya pola yang sama: **Input → AI membantu → Output artefak**.
-Karena polanya berulang, metode ini bisa diterapkan ke domain/proyek lain.
+| # | Langkah | AI membantu | Skill Claude Code |
+|---|---|---|---|
+| 1 | Menggali kebutuhan lewat diskusi | merangkum diskusi | superpowers:brainstorming |
+| 2 | Kumpulkan aturan, dokumen, standar | membedah dokumen acuan | deep-research |
+| 3 | PRD — dokumen kebutuhan bisnis | menyusun draf PRD | brainstorming + writing-plans |
+| 4 | FSD — desain fungsional & teknis | menyusun draf FSD | writing-plans |
+| 5 | Struktur database MySQL | generate migration | test-driven-development |
+| 6 | Backend Laravel best practice | generate controller/model/test | TDD + executing-plans |
+| 7 | Frontend Angular + framework UI | generate komponen | figma-design-to-code + figma-use + code-connect |
+| 8 | Deployment ke gateway UII | otomasi deploy | devops standar |
 
-### Tahap 1 — Analisis
-- **Input:** dokumen proses lama (mis. *guide pengisian penilaian*).
-- **AI membantu:** membedah alur & memetakan masalah.
-- **Output:** rancangan — intent, solusi, model data, rumus skoring.
+## Prinsip inti
 
-### Tahap 2 — Brainstorming Fitur
-- **Input:** rancangan + daftar masalah.
-- **AI membantu:** mengeksplorasi & memprioritaskan fitur (wajib vs stretch).
-- **Output:** daftar fitur yang disepakati.
+- **AI menghasilkan, manusia memutuskan & memverifikasi.**
+- **Tiap tahap punya artefak masuk → artefak keluar** (bisa diaudit).
 
-### Tahap 3 — Development
-- **Input:** daftar fitur + rencana task.
-- **AI membantu:** generate kode + test (TDD); manusia review di tiap gate.
-- **Output:** produk jalan.
+## Kenapa bisa dipakai tim lain
 
-### Prinsip inti
-- **AI mengerjakan, manusia memutuskan.**
-- **Tiap tahap berakhir dengan artefak yang bisa diperiksa** (gate verifikasi).
-
-## Kenapa bisa dipakai orang lain
-
+- `skill.md` + 3 skill pendukung (`dev-workflow`, `editing-powerpoint-with-python`,
+  `screenshotting-web-app`) = paket siap pakai.
+- Mapping **37 skill Claude Code** (Figma + superpowers + lainnya) → tim tahu persis
+  skill mana yang dipanggil di tiap langkah.
 - Bukan alat khusus satu kasus — ini **metode**, berlaku untuk proyek apa pun.
-- Pola "Input → AI membantu → Output artefak" bisa diulang di domain berbeda.
-- Gate verifikasi menjamin **kualitas terjaga, bukan cuma kecepatan**.
-- Cocok untuk tim kecil, hackathon, maupun inisiatif internal.
 
-## Bukti (studi kasus: Platform Penilaian Kinerja)
+## Bukti (sistem penilaian pegawai)
 
-- **±2 hari / 38 commit** → sistem penilaian kinerja end-to-end (Laravel + Angular).
+- **38 commit, ±2 hari kerja** → produk end-to-end (Laravel + Angular + PILAR).
 - 6 fitur utama + 3 fitur berbantuan AI (deteksi pengisian asal, grade band A–E, 360°).
-- Semua bisa diaudit dari git history + demo live.
+- Bisa diaudit dari git history + demo live.
 
 ## Struktur slide (10)
 
-1. Judul — AI-Native Workflow
-2. Tahap 1 — Analisis
-3. Tahap 2 — Brainstorming Fitur
-4. Tahap 3 — Development
-5. Prinsip — AI Mengerjakan, Manusia Memutuskan
+1. Judul — AI-Native Development Workflow (skill.md)
+2. Langkah 1–2 — Analisis Kebutuhan
+3. Langkah 3–4 — PRD & FSD (dengan AI)
+4. Langkah 5–8 — Build & Deploy
+5. Ringkasan — 8 Langkah 📷
 6. Bukti Terukur — ±2 Hari, 38 Commit 📷
-7. Yang Dihasilkan Workflow Ini 📷
+7. 3 Pilar — Faster, Smarter, Safer
 8. Demo Live — Dari PILAR ke Form Multi-Step 📷
-9. Bisa Dipakai Tim Lain
+9. Output — skill.md + Tools
 10. Terima Kasih
 
 ## Skrip demo live (±1 menit)
