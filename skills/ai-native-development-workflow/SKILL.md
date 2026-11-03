@@ -8,28 +8,60 @@ description: Use when building software end-to-end (gathering requirements, writ
 ## Overview
 
 Workflow 8 langkah untuk membangun software end-to-end dengan bantuan AI: **lebih cepat**
-(otomasi), **lebih cerdas** (AI di tiap tahap), dan **lebih aman** (standar + verifikasi di tiap
+(otomasi), **lebih cerdas** (AI di tiap tahap), **lebih aman** (standar + verifikasi di tiap
 gate). Cocok untuk stack Laravel + Angular + MySQL.
 
 ## Prinsip inti
 
 - **AI menghasilkan draf, manusia memutuskan & memverifikasi.** AI mempercepat tiap tahap,
   tapi keputusan arah, prioritas, dan approval tetap di manusia.
-- **Tiap tahap punya artefak masuk → artefak keluar.** Hasil tiap tahap bisa diaudit,
-  bukan sekadar "dikerjakan AI".
+- **Tiap tahap punya artefak masuk → artefak keluar** yang bisa diaudit.
 
-## 8 Langkah
+## 8 Langkah + Skill Claude Code
 
-| # | Langkah | AI membantu | Output (artefak) | Gate / verifikasi |
+| # | Langkah | AI membantu | Output (artefak) | Skill yang dipakai |
 |---|---|---|---|---|
-| 1 | Diskusi kebutuhan (user & stakeholder) | merangkum hasil diskusi | catatan kebutuhan | dikonfirmasi user |
-| 2 | Kumpulkan aturan, dokumen, standar kerja | membedah dokumen acuan | daftar aturan & standar | dicek kelengkapannya |
-| 3 | PRD — dokumen kebutuhan bisnis | menyusun draf PRD | PRD | ditinjau pemilik |
-| 4 | FSD — desain fungsional & teknis | menyusun draf FSD | FSD + rencana task | builder-check |
-| 5 | Struktur database MySQL | generate migration & schema | schema sesuai standar | migrasi jalan + seed |
-| 6 | Backend Laravel (best practice) | generate controller/model/test | API + test | test lulus |
-| 7 | Frontend Angular (framework UI) | generate komponen | UI sesuai desain | visual match desain |
-| 8 | Deployment ke gateway UII | otomasi langkah deploy | app live | smoke test |
+| 1 | Diskusi kebutuhan (user & stakeholder) | merangkum hasil diskusi | catatan kebutuhan | superpowers:brainstorming |
+| 2 | Kumpulkan aturan, dokumen, standar kerja | membedah dokumen acuan | daftar aturan & standar | deep-research (bila riset standar eksternal) |
+| 3 | PRD — dokumen kebutuhan bisnis | menyusun draf PRD | PRD | superpowers:brainstorming · superpowers:writing-plans |
+| 4 | FSD — desain fungsional & teknis | menyusun draf FSD | FSD + rencana task | superpowers:writing-plans |
+| 5 | Struktur database (MySQL) | generate migration & schema | schema sesuai standar | superpowers:test-driven-development |
+| 6 | Backend (Laravel best practice) | generate controller/model/test | API + test | superpowers:test-driven-development · superpowers:executing-plans |
+| 7 | Frontend (Angular + framework UI) | generate komponen | UI sesuai desain | figma:figma-design-to-code · figma:figma-use · figma:figma-code-connect |
+| 8 | Deployment ke gateway UII | otomasi langkah deploy | app live | (devops standar) |
+
+## Daftar skill Claude Code
+
+### Figma — desain ↔ kode (langkah 7)
+
+**Inti:**
+- `figma:figma-design-to-code` — implementasi desain Figma → kode (wajib sebelum `get_design_context`)
+- `figma:figma-use` — menulis/mengedit desain di Figma (wajib sebelum `use_figma`)
+- `figma:figma-code-connect` — memetakan komponen kode ↔ desain
+- `figma:figma-generate-design` — mendorong halaman/app → Figma
+- `figma:figma-generate-library` — membangun design system (token, komponen, variant)
+- `figma:figma-generate-diagram` — diagram alur/arsitektur di FigJam
+- `figma:figma-create-new-file` — membuat file Figma baru
+
+**Pendukung (sesuai kebutuhan):**
+- `figma:figma-implement-motion` · `figma:figma-use-motion` — animasi
+- `figma:figma-spec` — PRD/RFC di Figma spec
+- `figma:figma-use-figjam` · `figma:figma-use-slides` — konteks FigJam / Slides
+- `figma:figma-code-workflows` — impor project lokal → Figma Code
+- `figma:figma-shaders` · `figma:figma-generative-plugins` · `figma:figma-swiftui` — kasus khusus
+
+### Superpowers — proses & kualitas
+
+- `superpowers:brainstorming` — menggali kebutuhan & ide (langkah 1, 3)
+- `superpowers:writing-plans` — menulis spec/rencana (langkah 3, 4)
+- `superpowers:writing-skills` — menulis skill
+- `superpowers:test-driven-development` — test dulu, implementasi (langkah 5, 6)
+- `superpowers:executing-plans` · `superpowers:subagent-driven-development` — eksekusi rencana
+- `superpowers:dispatching-parallel-agents` — paralelkan tugas independen
+- `superpowers:systematic-debugging` — telusuri bug sistematis
+- `superpowers:verification-before-completion` — verifikasi sebelum klaim selesai
+- `superpowers:requesting-code-review` · `superpowers:receiving-code-review` — review sebelum merge
+- `superpowers:using-git-worktrees` — isolasi pekerjaan fitur
 
 ## Kapan dipakai / tidak
 
@@ -41,17 +73,17 @@ dokumentasi/standar internal.
 
 ## Kesalahan umum
 
-- **Loncat ke coding sebelum PRD/FSD jelas** → hasil menyimpang dari kebutuhan. Mulai dari
-  langkah 1–2 dulu.
-- **AI dipakai tanpa gate verifikasi** → output tak terkontrol. Selalu ada gate di tiap langkah.
-- **Database dibuat tanpa standar** → susah maintain. Ikuti aturan internal di langkah 5.
-- **Deploy dilupakan** → produk tak sampai ke user. Langkah 8 bagian dari workflow, bukan opsional.
+- **Loncat ke coding sebelum PRD/FSD jelas** → hasil menyimpang. Mulai dari langkah 1–2 dulu.
+- **AI dipakai tanpa gate verifikasi** → output tak terkontrol.
+- **Desain & kode tidak dihubungkan** → pakai `figma:figma-design-to-code` + `figma:figma-code-connect`.
+- **Database dibuat tanpa standar** → susah maintain.
+- **Deploy dilupakan** → langkah 8 bagian dari workflow, bukan opsional.
 
 ## Studi kasus (bukti workflow ini jalan)
 
-Sistem **Penilaian Kinerja Pegawai** dibangun dengan workflow ini:
-38 commit, ±2 hari kerja. PRD = dokumen spec (204 baris), FSD = dokumen plan (382 baris),
-backend Laravel + frontend Angular (design system PILAR UII) + test otomatis.
+Dipakai di beberapa proyek UII (mis. sistem penilaian kinerja pegawai, kelola data
+purna tugas): produk end-to-end selesai dalam hitungan hari, dengan PRD = dokumen spec,
+FSD = dokumen plan, backend Laravel + frontend Angular (design system PILAR) + test otomatis.
 
 ## Tools
 
