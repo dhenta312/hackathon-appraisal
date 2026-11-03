@@ -62,6 +62,24 @@ gate). Cocok untuk stack Laravel + Angular + MySQL.
 - `superpowers:verification-before-completion` — verifikasi sebelum klaim selesai
 - `superpowers:requesting-code-review` · `superpowers:receiving-code-review` — review sebelum merge
 - `superpowers:using-git-worktrees` — isolasi pekerjaan fitur
+- `superpowers:finishing-a-development-branch` — merapikan & menggabungkan saat selesai
+- `superpowers:using-superpowers` — meta-skill: cara menemukan & memakai skill lain
+- `superpowers:diagnosing-superpowers` — mendiagnosa saat sesi superpowers bermasalah (kerja berulang, plan diabaikan, dst.)
+
+### Skill Claude Code lainnya
+
+- `deep-research` — riset multi-sumber dengan verifikasi (langkah 2, riset standar eksternal)
+- `dataviz` — chart/grafik/dashboard yang konsisten (laporan & halaman hasil)
+- `security-review` — review keamanan perubahan (pilar "safer")
+- `simplify` — refactor/simplify kode yang baru diubah (kualitas)
+- `review` — review pull request / diff kerja
+- `run` — jalankan & screenshot app untuk melihat perubahan nyata (lihat juga `screenshotting-web-app`)
+- `init` — buat CLAUDE.md dokumentasi codebase
+- `claude-api` — referensi Claude API (untuk membangun app berbasis AI/LLM)
+- `update-config` — konfigurasi harness: settings.json, hooks, permissions
+- `fewer-permission-prompts` — kurangi prompt permission berulang (tim)
+- `keybindings-help` — kustomisasi shortcut keyboard (personal)
+- `loop` — tugas berulang/berjadwal
 
 ## Kapan dipakai / tidak
 
