@@ -1,5 +1,13 @@
 <div class="bg-white rounded-xl p-5 shadow-sm">
-  <h1 class="text-heading-m font-semibold text-text-primary mb-1">Menilai: {{ assessmentTemplate()?.assessed?.name }}</h1>
+  <div class="flex items-start justify-between gap-4 mb-1">
+    <h1 class="text-heading-m font-semibold text-text-primary">Menilai: {{ assessmentTemplate()?.assessed?.name }}</h1>
+    <button
+      type="button"
+      class="shrink-0 text-body-s font-semibold text-brand-600 hover:underline disabled:opacity-50"
+      (click)="onDraft()"
+      [disabled]="saving()"
+    >Simpan draf</button>
+  </div>
   <p class="text-body-m text-text-tertiary mb-4">{{ assessmentTemplate()?.assessed?.job_role_name }}</p>
 
   <div class="h-px w-full bg-[#FFF67A] mb-4" aria-hidden="true"></div>
@@ -24,6 +32,26 @@
     </div>
   </div>
 
+  <div class="flex items-center gap-2 mb-5 overflow-x-auto">
+    @for (component of components(); track component.id; let i = $index) {
+      <button
+        type="button"
+        class="shrink-0 inline-flex items-center gap-2 rounded-full px-300 py-1 text-body-s font-semibold border transition-colors"
+        [class.bg-brand-600]="i === currentStep()"
+        [class.border-brand-600]="i === currentStep()"
+        [class.text-white]="i === currentStep()"
+        [class.bg-white]="i !== currentStep()"
+        [class.border-border-secondary]="i !== currentStep()"
+        [class.text-text-secondary]="i !== currentStep()"
+        [class.hover:bg-background-secondary]="i !== currentStep()"
+        (click)="goToStep(i)"
+      >
+        <span>{{ i + 1 }}</span>
+        <span>{{ component.name }}</span>
+      </button>
+    }
+  </div>
+
   @if (warnings().length > 0) {
     <div class="mb-4 p-4 rounded-m bg-[#fffbeb] border border-[#f59e0b]">
       <p class="text-body-s font-semibold text-[#92400e] mb-1">Peringatan — penilaian terindikasi asal:</p>
@@ -42,7 +70,7 @@
   @if (loading()) {
     <p class="text-body-m text-text-tertiary">Memuat...</p>
   } @else {
-    @for (component of assessmentTemplate()?.components ?? []; track component.id) {
+    @if (currentComponent(); as component) {
       <section class="mb-6">
         <div class="flex items-center gap-2 mb-3">
           <h2 class="text-heading-xxs font-semibold text-text-primary">{{ component.name }}</h2>
@@ -91,20 +119,14 @@
 
     <div class="sticky bottom-0 -mx-5 -mb-5 px-5 py-4 bg-white border-t border-border-secondary rounded-b-xl flex items-center justify-between gap-3">
       <span class="text-body-s text-text-tertiary">{{ answeredCount() }} dari {{ totalQuestions() }} terisi</span>
-      <div class="flex gap-200">
-        <button
-          type="button"
-          class="h-10 inline-flex items-center px-400 rounded-m border border-border-secondary text-body-m text-text-primary font-semibold disabled:opacity-50"
-          (click)="save('draft')"
-          [disabled]="saving()"
-        >Simpan draf</button>
-        <button
-          type="button"
-          class="h-10 inline-flex items-center px-400 rounded-m bg-brand-600 text-white text-body-m font-semibold disabled:opacity-50"
-          (click)="save('submit')"
-          [disabled]="saving()"
-        >Kirim</button>
-      </div>
+      <app-stepper-button-set
+        [type]="stepperType()"
+        (draft)="onDraft()"
+        (cancel)="cancel()"
+        (previous)="prevStep()"
+        (next)="nextStep()"
+        (save)="onSave()"
+      />
     </div>
   }
 </div>

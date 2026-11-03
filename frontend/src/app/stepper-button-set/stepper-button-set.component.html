@@ -1,0 +1,55 @@
+<div class="flex items-center justify-end gap-400">
+  @if (showDraftSet() && isFirst) {
+    <button
+      type="button"
+      class="h-10 inline-flex items-center gap-150 px-400 rounded-m bg-[#e17100] text-white text-body-m font-semibold disabled:opacity-50"
+      (click)="draft.emit()"
+    >
+      <img src="file-half-dashed.svg" alt="" class="size-[20px]" />
+      <span>Draf</span>
+    </button>
+    <div class="w-px h-10 bg-[#d1d5dc]" aria-hidden="true"></div>
+  }
+
+  <button
+    type="button"
+    class="h-10 inline-flex items-center gap-150 px-400 rounded-m text-text-primary text-body-m font-semibold disabled:opacity-50"
+    (click)="cancel.emit()"
+  >
+    <img [src]="isLast ? 'arrow-left.svg' : 'xmark.svg'" alt="" class="size-[20px]" />
+    <span>Batal</span>
+  </button>
+
+  @if (isMiddleOrLast) {
+    <button
+      type="button"
+      class="h-10 inline-flex items-center gap-150 px-400 rounded-m bg-white border border-[#d1d5dc] text-text-primary text-body-m font-semibold disabled:opacity-50"
+      (click)="previous.emit()"
+    >
+      <img src="angle-left.svg" alt="" class="size-[20px]" />
+      <span>Sebelumnya</span>
+    </button>
+  }
+
+  @if (isFirst || isMiddle) {
+    <button
+      type="button"
+      class="h-10 inline-flex items-center gap-150 px-400 rounded-m bg-brand-600 text-white text-body-m font-semibold disabled:opacity-50"
+      (click)="next.emit()"
+    >
+      <span>Selanjutnya</span>
+      <img src="angle-right.svg" alt="" class="size-[20px]" />
+    </button>
+  }
+
+  @if (isLast) {
+    <button
+      type="button"
+      class="h-10 inline-flex items-center gap-150 px-400 rounded-m bg-green-600 text-white text-body-m font-semibold disabled:opacity-50"
+      (click)="save.emit()"
+    >
+      <img src="floppy-disk.svg" alt="" class="size-[20px]" />
+      <span>Simpan</span>
+    </button>
+  }
+</div>

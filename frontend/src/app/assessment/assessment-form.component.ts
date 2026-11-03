@@ -4,11 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { AssessmentComponent, AssessmentTemplate, SaveAssessmentPayload } from '../models/assessment';
 import { AssessmentService } from '../services/assessment.service';
+import { StepperButtonSetComponent, StepperStepType } from '../stepper-button-set/stepper-button-set.component';
 
 @Component({
   selector: 'app-assessment-form',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, StepperButtonSetComponent],
   templateUrl: './assessment-form.component.html',
   styleUrl: './assessment-form.component.css',
 })
@@ -23,6 +24,7 @@ export class AssessmentFormComponent implements OnInit {
   readonly loading = signal(true);
   readonly saving = signal(false);
   readonly showWarningDialog = signal(false);
+  readonly currentStep = signal(0);
   error: string | null = null;
 
   relationship: string | null = null;
@@ -43,6 +45,21 @@ export class AssessmentFormComponent implements OnInit {
   );
 
   readonly answeredCount = computed(() => Object.keys(this.scores()).length);
+
+  readonly components = computed(() => this.assessmentTemplate()?.components ?? []);
+
+  readonly currentComponent = computed(() => this.components()[this.currentStep()] ?? null);
+
+  readonly stepCount = computed(() => this.components().length);
+
+  readonly stepperType = computed<StepperStepType>(() => {
+    const total = this.stepCount();
+    const current = this.currentStep();
+    if (total <= 1 || current === total - 1) {
+      return 'lastStep';
+    }
+    return current === 0 ? 'firstStep' : 'middleStep';
+  });
 
   readonly warnings = computed(() => {
     const warnings: string[] = [];
@@ -129,6 +146,36 @@ export class AssessmentFormComponent implements OnInit {
 
   cancelSubmit(): void {
     this.showWarningDialog.set(false);
+  }
+
+  goToStep(step: number): void {
+    if (step >= 0 && step < this.stepCount()) {
+      this.currentStep.set(step);
+    }
+  }
+
+  nextStep(): void {
+    if (this.currentStep() < this.stepCount() - 1) {
+      this.currentStep.update((value) => value + 1);
+    }
+  }
+
+  prevStep(): void {
+    if (this.currentStep() > 0) {
+      this.currentStep.update((value) => value - 1);
+    }
+  }
+
+  cancel(): void {
+    this.router.navigate(['/team']);
+  }
+
+  onDraft(): void {
+    this.save('draft');
+  }
+
+  onSave(): void {
+    this.save('submit');
   }
 
   private doSave(action: 'draft' | 'submit'): void {
