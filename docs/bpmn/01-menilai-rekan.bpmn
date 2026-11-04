@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  id="Definitions_Penilaian"
+                  targetNamespace="http://bpmn.io/schema/bpmn">
+
+  <bpmn:collaboration id="Collaboration_Penilaian">
+    <bpmn:participant id="Participant_Penilaian" name="Platform Penilaian Kinerja — Menilai Rekan" processRef="Process_Penilaian" />
+  </bpmn:collaboration>
+
+  <bpmn:process id="Process_Penilaian" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_Penilaian">
+      <bpmn:lane id="Lane_Penilai" name="Penilai">
+        <bpmn:flowNodeRef>Start_Mulai</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Login</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_PilihRekan</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_PilihHubungan</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_IsiSkor</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_Konfirmasi</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Sistem" name="Sistem">
+        <bpmn:flowNodeRef>S_MuatTemplate</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>G_Aksi</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>S_SimpanDraf</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_DrafTersimpan</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>S_DeteksiAsal</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>G_Terindikasi</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>S_SimpanHitung</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Tersimpan</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <bpmn:startEvent id="Start_Mulai" name="Mulai">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+
+    <bpmn:userTask id="T_Login" name="Login aplikasi">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:userTask>
+
+    <bpmn:userTask id="T_PilihRekan" name="Pilih rekan yang dinilai">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:userTask>
+
+    <bpmn:serviceTask id="S_MuatTemplate" name="Muat template sesuai role">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:userTask id="T_PilihHubungan" name="Pilih hubungan penilaian">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:userTask>
+
+    <bpmn:userTask id="T_IsiSkor" name="Isi skor 0–5 + alasan per komponen">
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:userTask>
+
+    <bpmn:exclusiveGateway id="G_Aksi" name="Draf atau kirim?">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+      <bpmn:outgoing>Flow_8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:serviceTask id="S_SimpanDraf" name="Simpan draf">
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_9</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:endEvent id="End_DrafTersimpan" name="Draf tersimpan">
+      <bpmn:incoming>Flow_9</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:serviceTask id="S_DeteksiAsal" name="Deteksi pengisian asal">
+      <bpmn:incoming>Flow_8</bpmn:incoming>
+      <bpmn:outgoing>Flow_10</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:exclusiveGateway id="G_Terindikasi" name="Terindikasi asal?">
+      <bpmn:incoming>Flow_10</bpmn:incoming>
+      <bpmn:outgoing>Flow_11</bpmn:outgoing>
+      <bpmn:outgoing>Flow_12</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:userTask id="T_Konfirmasi" name="Konfirmasi tetap kirim">
+      <bpmn:incoming>Flow_11</bpmn:incoming>
+      <bpmn:outgoing>Flow_13</bpmn:outgoing>
+    </bpmn:userTask>
+
+    <bpmn:serviceTask id="S_SimpanHitung" name="Simpan &amp; hitung skor">
+      <bpmn:incoming>Flow_12</bpmn:incoming>
+      <bpmn:incoming>Flow_13</bpmn:incoming>
+      <bpmn:outgoing>Flow_14</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:endEvent id="End_Tersimpan" name="Penilaian tersimpan">
+      <bpmn:incoming>Flow_14</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start_Mulai" targetRef="T_Login" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="T_Login" targetRef="T_PilihRekan" />
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="T_PilihRekan" targetRef="S_MuatTemplate" />
+    <bpmn:sequenceFlow id="Flow_4" sourceRef="S_MuatTemplate" targetRef="T_PilihHubungan" />
+    <bpmn:sequenceFlow id="Flow_5" sourceRef="T_PilihHubungan" targetRef="T_IsiSkor" />
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="T_IsiSkor" targetRef="G_Aksi" />
+    <bpmn:sequenceFlow id="Flow_7" name="Draf" sourceRef="G_Aksi" targetRef="S_SimpanDraf" />
+    <bpmn:sequenceFlow id="Flow_8" name="Kirim" sourceRef="G_Aksi" targetRef="S_DeteksiAsal" />
+    <bpmn:sequenceFlow id="Flow_9" sourceRef="S_SimpanDraf" targetRef="End_DrafTersimpan" />
+    <bpmn:sequenceFlow id="Flow_10" sourceRef="S_DeteksiAsal" targetRef="G_Terindikasi" />
+    <bpmn:sequenceFlow id="Flow_11" name="Ya" sourceRef="G_Terindikasi" targetRef="T_Konfirmasi" />
+    <bpmn:sequenceFlow id="Flow_12" name="Tidak" sourceRef="G_Terindikasi" targetRef="S_SimpanHitung" />
+    <bpmn:sequenceFlow id="Flow_13" sourceRef="T_Konfirmasi" targetRef="S_SimpanHitung" />
+    <bpmn:sequenceFlow id="Flow_14" sourceRef="S_SimpanHitung" targetRef="End_Tersimpan" />
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_Penilaian">
+      <bpmndi:BPMNShape id="Start_Mulai_di" bpmnElement="Start_Mulai">
+        <dc:Bounds x="180" y="60" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Login_di" bpmnElement="T_Login">
+        <dc:Bounds x="150" y="140" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_PilihRekan_di" bpmnElement="T_PilihRekan">
+        <dc:Bounds x="150" y="260" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_MuatTemplate_di" bpmnElement="S_MuatTemplate">
+        <dc:Bounds x="620" y="260" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_PilihHubungan_di" bpmnElement="T_PilihHubungan">
+        <dc:Bounds x="150" y="400" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_IsiSkor_di" bpmnElement="T_IsiSkor">
+        <dc:Bounds x="150" y="520" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G_Aksi_di" bpmnElement="G_Aksi">
+        <dc:Bounds x="645" y="520" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_SimpanDraf_di" bpmnElement="S_SimpanDraf">
+        <dc:Bounds x="620" y="640" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_DrafTersimpan_di" bpmnElement="End_DrafTersimpan">
+        <dc:Bounds x="652" y="760" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_DeteksiAsal_di" bpmnElement="S_DeteksiAsal">
+        <dc:Bounds x="780" y="640" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G_Terindikasi_di" bpmnElement="G_Terindikasi">
+        <dc:Bounds x="805" y="760" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_Konfirmasi_di" bpmnElement="T_Konfirmasi">
+        <dc:Bounds x="150" y="760" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_SimpanHitung_di" bpmnElement="S_SimpanHitung">
+        <dc:Bounds x="780" y="880" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Tersimpan_di" bpmnElement="End_Tersimpan">
+        <dc:Bounds x="812" y="1000" width="36" height="36" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1"><di:waypoint x="198" y="96" /><di:waypoint x="198" y="140" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2"><di:waypoint x="200" y="220" /><di:waypoint x="200" y="260" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3"><di:waypoint x="250" y="300" /><di:waypoint x="620" y="300" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4"><di:waypoint x="670" y="340" /><di:waypoint x="250" y="440" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5"><di:waypoint x="200" y="480" /><di:waypoint x="200" y="520" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6"><di:waypoint x="250" y="560" /><di:waypoint x="645" y="560" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7"><di:waypoint x="670" y="570" /><di:waypoint x="670" y="640" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8"><di:waypoint x="695" y="545" /><di:waypoint x="830" y="640" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_9_di" bpmnElement="Flow_9"><di:waypoint x="670" y="720" /><di:waypoint x="670" y="760" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10_di" bpmnElement="Flow_10"><di:waypoint x="830" y="720" /><di:waypoint x="830" y="760" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_11_di" bpmnElement="Flow_11"><di:waypoint x="805" y="785" /><di:waypoint x="250" y="785" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12_di" bpmnElement="Flow_12"><di:waypoint x="830" y="810" /><di:waypoint x="830" y="880" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_13_di" bpmnElement="Flow_13"><di:waypoint x="250" y="840" /><di:waypoint x="830" y="920" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_14_di" bpmnElement="Flow_14"><di:waypoint x="830" y="960" /><di:waypoint x="830" y="1000" /></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
