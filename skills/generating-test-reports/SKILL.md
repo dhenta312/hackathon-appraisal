@@ -38,10 +38,12 @@ cd frontend && npx playwright test --reporter=html 2>&1 | tee /tmp/test-e2e.log
   ```
 - Screenshot saat gagal otomatis tertangkap oleh reporter html.
 
-### 3. Buat report HTML ringkasan
-Report HTML memuat:
+### 3. Buat report HTML ringkasan (untuk PDF)
+Report bawaan Playwright (`playwright-report/index.html`) bagus untuk **browser**, tapi itu
+**JS SPA** — tidak bisa langsung di-print ke PDF. Untuk PDF, buat **HTML ringkasan sendiri**
+yang self-contained:
 1. **Ringkasan** — total test, lolos, gagal.
-2. **Per fitur** — nama fitur, status (✅/❌), screenshot alur, penjelasan apa yang diverifikasi.
+2. **Per fitur** — nama fitur, status (✅/❌), screenshot alur (base64 inline), penjelasan apa yang diverifikasi.
 
 ### 4. Konversi HTML → PDF
 ```bash
@@ -57,7 +59,7 @@ Report HTML memuat:
 | E2E gagal semua "connection refused" | Backend/frontend tidak hidup — nyalakan dulu (lihat `dev-workflow`). |
 | Screenshot tidak muncul di report | Pakai `--reporter=html` (bukan `list`) atau `testInfo.attach()`. |
 | Data duplikat bikin E2E gagal | Reset sebelum run: `php artisan migrate:fresh --seed`. |
-| PDF kosong/berantakan | Pastikan HTML self-contained (inline CSS + gambar base64). |
+| PDF berisi "No tests found" | Report bawaan Playwright itu JS SPA — tak ter-render saat print-to-pdf. Buat HTML ringkasan custom (inline base64 + CSS), jangan print report bawaan. |
 | Screenshot terminal hilang | Redirect output ke file (`tee /tmp/test-e2e.log`) lalu sertakan di report. |
 
 ## Studi kasus
