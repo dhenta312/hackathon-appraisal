@@ -98,6 +98,7 @@ project App Purnatugas):
 - `fewer-permission-prompts` — kurangi prompt permission berulang (tim)
 - `keybindings-help` — kustomisasi shortcut keyboard (personal)
 - `loop` — tugas berulang/berjadwal
+- `generating-test-reports` — generate laporan hasil test (HTML + PDF) + screenshot + penjelasan per fitur
 
 ## Kapan dipakai / tidak
 
