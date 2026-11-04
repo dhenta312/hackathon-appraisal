@@ -52,6 +52,8 @@ project App Purnatugas):
 
 ### Figma — desain ↔ kode (langkah 7)
 
+**Sumber desain:** design-to-code & code-to-design wajib memakai **PILAR Design System UII** — file Figma `AYHhj3V2tSnZleViFsIjEx` (https://www.figma.com/design/AYHhj3V2tSnZleViFsIjEx/PILAR-DESIGN-SYSTEM), badge/token https://pilarng.github.io/badge.
+
 **Inti:**
 - `figma:figma-design-to-code` — implementasi desain Figma → kode (wajib sebelum `get_design_context`)
 - `figma:figma-use` — menulis/mengedit desain di Figma (wajib sebelum `use_figma`)

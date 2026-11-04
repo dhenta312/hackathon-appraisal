@@ -71,6 +71,8 @@ cd backend && php artisan migrate:fresh --seed
 
 ## 4. Konvensi UI (PILAR)
 
+**Sumber desain:** design-to-code & code-to-design wajib memakai **PILAR Design System UII** — file Figma `AYHhj3V2tSnZleViFsIjEx` (https://www.figma.com/design/AYHhj3V2tSnZleViFsIjEx/PILAR-DESIGN-SYSTEM), badge/token https://pilarng.github.io/badge.
+
 Token ada di `frontend/tailwind.config.js`. **Jangan** menulis hex warna langsung —
 kecuali pengecualian terdokumentasi.
 
