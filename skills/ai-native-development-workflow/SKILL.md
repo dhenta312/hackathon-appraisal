@@ -30,6 +30,24 @@ gate). Cocok untuk stack Laravel + Angular + MySQL.
 | 7 | Frontend (Angular + framework UI) | generate komponen | UI sesuai desain | figma:figma-design-to-code · figma:figma-use · figma:figma-code-connect |
 | 8 | Deployment ke gateway UII | otomasi langkah deploy | app live | (devops standar) |
 
+## Deliverable (artefak dokumentasi)
+
+Selain kode, workflow menghasilkan artefak dokumentasi standar (template mengikuti
+project App Purnatugas):
+
+| Artefak | Lokasi | Template / isi |
+|---|---|---|
+| **PRD** | `docs/PRD.md` | 18 seksi: ringkasan eksekutif, latar & masalah, tujuan & ukuran, pengguna & peran, ruang lingkup, alur pengguna, kebutuhan fungsional, model data, aturan bisnis, referensi nilai, API, validasi, non-fungsional, asumsi, kriteria penerimaan, roadmap, glosarium, lampiran |
+| **FSD / SPEC** | `docs/SPEC.md` | 11 seksi: arsitektur, stack, struktur repo, backend, kontrak API, frontend, alur data, cara menjalankan, pengujian, keterbatasan, glosarium |
+| **Document Spec** | `docs/DOCUMENT-SPEC.md` | Feature Description + Specification Details + tabel "UI Design Specifications Flow" (kolom: No / UI Design / Specifications / Flow, satu baris per layar + screenshot) |
+| **BPMN** | `docs/bpmn/*.bpmn` + `.png` | XML BPMN 2.0 (swimlane, konvensi id `T_` userTask / `S_` serviceTask / `G_` gateway / `Flow_N`) + diagram visual flowchart |
+| **User manual** | `.pdf` / `.md` | Cover ("User Manual / [Sistem] / Sisi Pengguna") + bab per alur + langkah bernomor + screenshot ber-anotasi merah |
+
+**Skill/tool per artefak:**
+- **PRD & FSD** → `superpowers:writing-plans` (langkah 3–4).
+- **BPMN** → tulis XML BPMN 2.0 manual, atau `figma:figma-generate-diagram` untuk flowchart.
+- **Document Spec & user manual** → `screenshotting-web-app` (screenshot ber-anotasi) + HTML → PDF via Chrome print-to-pdf.
+
 ## Daftar skill Claude Code
 
 ### Figma — desain ↔ kode (langkah 7)
@@ -64,18 +82,18 @@ gate). Cocok untuk stack Laravel + Angular + MySQL.
 - `superpowers:using-git-worktrees` — isolasi pekerjaan fitur
 - `superpowers:finishing-a-development-branch` — merapikan & menggabungkan saat selesai
 - `superpowers:using-superpowers` — meta-skill: cara menemukan & memakai skill lain
-- `superpowers:diagnosing-superpowers` — mendiagnosa saat sesi superpowers bermasalah (kerja berulang, plan diabaikan, dst.)
+- `superpowers:diagnosing-superpowers` — mendiagnosa saat sesi superpowers bermasalah
 
 ### Skill Claude Code lainnya
 
-- `deep-research` — riset multi-sumber dengan verifikasi (langkah 2, riset standar eksternal)
+- `deep-research` — riset multi-sumber dengan verifikasi (langkah 2)
 - `dataviz` — chart/grafik/dashboard yang konsisten (laporan & halaman hasil)
 - `security-review` — review keamanan perubahan (pilar "safer")
 - `simplify` — refactor/simplify kode yang baru diubah (kualitas)
 - `review` — review pull request / diff kerja
-- `run` — jalankan & screenshot app untuk melihat perubahan nyata (lihat juga `screenshotting-web-app`)
+- `run` — jalankan & screenshot app (lihat juga `screenshotting-web-app`)
 - `init` — buat CLAUDE.md dokumentasi codebase
-- `claude-api` — referensi Claude API (untuk membangun app berbasis AI/LLM)
+- `claude-api` — referensi Claude API (untuk app berbasis AI/LLM)
 - `update-config` — konfigurasi harness: settings.json, hooks, permissions
 - `fewer-permission-prompts` — kurangi prompt permission berulang (tim)
 - `keybindings-help` — kustomisasi shortcut keyboard (personal)
@@ -100,8 +118,9 @@ dokumentasi/standar internal.
 ## Studi kasus (bukti workflow ini jalan)
 
 Dipakai di beberapa proyek UII (mis. sistem penilaian kinerja pegawai, kelola data
-purna tugas): produk end-to-end selesai dalam hitungan hari, dengan PRD = dokumen spec,
-FSD = dokumen plan, backend Laravel + frontend Angular (design system PILAR) + test otomatis.
+purna tugas): produk end-to-end selesai dalam hitungan hari, lengkap dengan PRD, FSD,
+BPMN, Document Spec, dan user manual — backend Laravel + frontend Angular (design system
+PILAR) + test otomatis.
 
 ## Tools
 
