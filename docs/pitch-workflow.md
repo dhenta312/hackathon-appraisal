@@ -1,69 +1,59 @@
-# Pitch — AI-Native Development Workflow (skill.md)
+# Pitch — Skill Set Claude Code
 
 ## Inti yang diajukan
 
-**Bukan aplikasi penilaian pegawai — melainkan `skill.md`**: dokumentasi workflow AI-native
-yang bisa diadopsi tim lain untuk membangun software lebih cepat, cerdas, dan aman.
+**5 skill Claude Code yang reusable** — mempermudah workflow pengembangan software,
+dari analisis kebutuhan sampai delivery.
 
-**Penilaian pegawai = bukti** bahwa skill.md ini benar-benar bekerja (38 commit, ±2 hari, end-to-end).
+**Platform Penilaian Pegawai = bukti** bahwa skill set ini benar-benar bekerja
+(38 commit, ±2 hari, end-to-end, dokumentasi lengkap).
 
-```
-skill.md (yang diajukan)  ←———  dibuktikan oleh  ———→  Sistem Penilaian Pegawai (studi kasus)
-```
+## 5 Skill
 
-## Headline
+| Skill | Fungsi |
+|---|---|
+| `ai-native-development-workflow` | memandu 8 langkah (diskusi → PRD → FSD → build → deploy) |
+| `dev-workflow` | konvensi stack Laravel + Angular + SQLite + PILAR + jebakan |
+| `generating-test-reports` | automated test (Playwright E2E) + laporan HTML + PDF |
+| `editing-powerpoint-with-python` | otomasi deck presentasi (inspect/edit/diagram) |
+| `screenshotting-web-app` | screenshot SPA ber-login untuk dokumentasi |
 
-> **skill.md — panduan reusable membangun software: dari dokumen kebutuhan ke produk jalan,
-> lebih cepat, cerdas, dan aman. Dibuktikan oleh sistem penilaian pegawai.**
+## Workflow 8 langkah (di-encode oleh `ai-native-development-workflow`)
 
-## Workflow 8 langkah (isi skill.md)
+1. Diskusi kebutuhan → 2. Kumpulkan aturan/dokumen → 3. PRD (AI) → 4. FSD (AI) →
+5. MySQL → 6. Laravel → 7. Angular + PILAR → 8. Deploy gateway UII.
 
-| # | Langkah | AI membantu | Skill Claude Code |
-|---|---|---|---|
-| 1 | Menggali kebutuhan lewat diskusi | merangkum diskusi | superpowers:brainstorming |
-| 2 | Kumpulkan aturan, dokumen, standar | membedah dokumen acuan | deep-research |
-| 3 | PRD — dokumen kebutuhan bisnis | menyusun draf PRD | brainstorming + writing-plans |
-| 4 | FSD — desain fungsional & teknis | menyusun draf FSD | writing-plans |
-| 5 | Struktur database MySQL | generate migration | test-driven-development |
-| 6 | Backend Laravel best practice | generate controller/model/test | TDD + executing-plans |
-| 7 | Frontend Angular + framework UI | generate komponen | figma-design-to-code + figma-use + code-connect |
-| 8 | Deployment ke gateway UII | otomasi deploy | devops standar |
+Tiap tahap: AI menghasilkan draf, manusia memutuskan & memverifikasi.
 
-## Prinsip inti
+## 3 Pilar
 
-- **AI menghasilkan, manusia memutuskan & memverifikasi.**
-- **Tiap tahap punya artefak masuk → artefak keluar** (bisa diaudit).
+- **Faster** — otomasi proses dari hulu ke hilir.
+- **Smarter** — AI di tiap tahap (PRD, FSD, kode, test).
+- **Safer** — standar internal + gate verifikasi + automated test.
 
-## Kenapa bisa dipakai tim lain
-
-- `skill.md` + 3 skill pendukung (`dev-workflow`, `editing-powerpoint-with-python`,
-  `screenshotting-web-app`) = paket siap pakai.
-- Mapping **37 skill Claude Code** (Figma + superpowers + lainnya) → tim tahu persis
-  skill mana yang dipanggil di tiap langkah.
-- Bukan alat khusus satu kasus — ini **metode**, berlaku untuk proyek apa pun.
-
-## Bukti (sistem penilaian pegawai)
+## Bukti (Platform Penilaian Pegawai)
 
 - **38 commit, ±2 hari kerja** → produk end-to-end (Laravel + Angular + PILAR).
-- 6 fitur utama + 3 fitur berbantuan AI (deteksi pengisian asal, grade band A–E, 360°).
-- Bisa diaudit dari git history + demo live.
+- Dokumentasi lengkap: **PRD, FSD/SPEC, BPMN, Document Spec, User Manual**.
+- **Test E2E (Playwright) lolos** + report HTML + PDF.
+- Semua bisa diaudit dari git history + demo live.
 
 ## Struktur slide (10)
 
-1. Judul — AI-Native Development Workflow (skill.md)
-2. Langkah 1–2 — Analisis Kebutuhan
-3. Langkah 3–4 — PRD & FSD (dengan AI)
-4. Langkah 5–8 — Build & Deploy
-5. Ringkasan — 8 Langkah 📷
-6. Bukti Terukur — ±2 Hari, 38 Commit 📷
-7. 3 Pilar — Faster, Smarter, Safer
-8. Demo Live — Dari PILAR ke Form Multi-Step 📷
-9. Output — skill.md + Tools
-10. Terima Kasih
+1. Judul — Skill Set Claude Code
+2. Masalah — Development Manual & Lambat
+3. Solusi — 5 Skill Claude Code (Reusable)
+4. Skill 1 — ai-native-development-workflow 📷 (diagram 8 langkah)
+5. Skill 2 — dev-workflow
+6. Skill 3 — generating-test-reports
+7. Skill 4 & 5 — Deliverable & Dokumentasi
+8. Bukti — Platform Penilaian Pegawai 📷
+9. Demo — Dari PILAR ke Form Multi-Step 📷
+10. Output + 3 Pilar
 
 ## Skrip demo live (±1 menit)
 
 1. Buka PILAR (Figma) → tarik komponen `stepperButtonSet`.
-2. Analisis token (`#0044cd`, `#00a63e`, `#e17100`, radius 10px) → petakan ke kode.
-3. Implementasi jadi komponen Angular → form penilaian berubah jadi multi-step.
-4. Tutup loop: desain di Figma = kode yang jalan.
+2. Analisis token → implementasi jadi komponen Angular → form multi-step.
+3. Tutup loop: desain di Figma = kode yang jalan.
+4. Jalankan `npx playwright test` → report HTML + PDF otomatis.
