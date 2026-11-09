@@ -15,6 +15,9 @@ cd <repo>
 
 Selesai — skill terpasang di `~/.claude/skills/` dan langsung dikenali Claude Code.
 
+Untuk **update** ke versi terbaru, tinggal jalankan `./setup.sh` lagi — script ini otomatis
+`git pull` dulu, lalu menyalin ulang skill.
+
 ## Prasyarat
 
 | Kebutuhan | Untuk apa |
