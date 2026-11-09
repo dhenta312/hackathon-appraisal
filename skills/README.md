@@ -45,6 +45,7 @@ konteks ikut ter-clone dan tidak bergantung pada ingatan individu.
 
 | Skill | Fungsi |
 |---|---|
+| `nano` | **pintu masuk** — baca memori, tawarkan 3 pekerjaan, orkestrasi skill di bawah |
 | `ai-native-development-workflow` | memandu 8 langkah (diskusi → PRD → FSD → build → deploy) |
 | `dev-workflow` | konvensi stack Laravel + Angular + SQLite + PILAR |
 | `generating-test-reports` | automated test + laporan HTML + PDF |
