@@ -19,23 +19,23 @@ end-to-end, dokumentasi lengkap).
 
 ## Solusi — nano
 
-- **Satu pintu masuk, tiga pekerjaan:** PRD · Sistem · Dokumentasi.
+- **Satu pintu masuk, tiga pekerjaan:** Diskusi & Analisis · Pengembangan Sistem · Dokumentasi.
 - **Ingatan antar-sesi** — tidak mulai dari nol (baca `docs/nano/state.md`).
 - **Kontrol manusia** di tiap langkah — AI tidak memutuskan sendiri.
 - **Mengenal Pilar** (design system UII) secara otomatis.
 
 ## Alur kerja
 
-Tim memanggil nano → nano baca memori → pilih pekerjaan (PRD/Sistem/Dokumentasi) →
+Tim memanggil nano → nano baca memori → pilih pekerjaan (Diskusi & Analisis / Pengembangan Sistem / Dokumentasi) →
 kerjakan → konfirmasi manusia → catat kemajuan.
 
 ## Tiga pekerjaan
 
 | Pekerjaan | Masukan → Hasil |
 |---|---|
-| **PRD** | catatan rapat/transkrip → dokumen kebutuhan terstruktur + pertanyaan terbuka |
-| **Sistem** | kebutuhan → rencana (stack, arsitektur, Pilar) + prototype cepat |
-| **Dokumentasi** | aplikasi jalan → panduan pengguna bergambar |
+| **Diskusi & Analisis** | catatan rapat → PRD + FSD + BPMN |
+| **Pengembangan Sistem** | kebutuhan → design Figma + document spec + prototype (Angular + Laravel) |
+| **Dokumentasi** | aplikasi jalan → automated test + report + user manual |
 
 ## 4 kendali kualitas
 
@@ -61,8 +61,8 @@ kerjakan → konfirmasi manusia → catat kemajuan.
 2. Masalah — Konteks Hilang & Dokumen Tidak Konsisten
 3. Solusi — nano: Satu AI Asisten
 4. Alur Kerja nano 📷
-5. Pekerjaan 1 — PRD
-6. Pekerjaan 2 — Sistem
+5. Pekerjaan 1 — Diskusi & Analisis
+6. Pekerjaan 2 — Pengembangan Sistem
 7. Pekerjaan 3 — Dokumentasi
 8. Bukti — Platform Penilaian Pegawai 📷
 9. Demo — Dari PILAR ke Form Multi-Step 📷

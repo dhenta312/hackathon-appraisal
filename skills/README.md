@@ -30,10 +30,9 @@ Selesai — skill terpasang di `~/.claude/skills/` dan langsung dikenali Claude 
 
 ## Tiga pekerjaan nano
 
-1. **PRD** — catatan rapat / transkrip → dokumen kebutuhan terstruktur (latar, tujuan,
-   ruang lingkup, kebutuhan fungsional, alur, risiko) + daftar pertanyaan terbuka.
-2. **Sistem** — rencana pembangunan (stack, arsitektur, Pilar) + prototype cepat.
-3. **Dokumentasi** — panduan pengguna bergambar (langkah + screenshot + penjelasan).
+1. **Diskusi & Analisis** — catatan rapat → PRD + FSD + BPMN.
+2. **Pengembangan Sistem** — design Figma + document spec + prototype (Angular + Laravel).
+3. **Dokumentasi** — automated test + report (Playwright) + user manual.
 
 ## Memori (di dalam repo)
 
