@@ -1,59 +1,75 @@
-# Pitch — Skill Set Claude Code
+# Pitch — nano (AI Asisten untuk Manajemen Proyek)
 
 ## Inti yang diajukan
 
-**5 skill Claude Code yang reusable** — mempermudah workflow pengembangan software,
-dari analisis kebutuhan sampai delivery.
+**nano** — satu AI asisten (skill Claude Code) yang membantu tim menyelesaikan siklus
+pengembangan sistem secara utuh dan konsisten: dari **ide → PRD → rencana sistem →
+dokumentasi pengguna**.
 
-**Platform Penilaian Pegawai = bukti** bahwa skill set ini benar-benar bekerja
-(38 commit, ±2 hari, end-to-end, dokumentasi lengkap).
+**Platform Penilaian Pegawai = bukti** bahwa nano benar-benar bekerja (38 commit, ±2 hari,
+end-to-end, dokumentasi lengkap).
 
-## 5 Skill
+## Masalah yang diselesaikan
 
-| Skill | Fungsi |
+- Konteks hilang antar-sesi & antar-orang → pekerjaan terulang.
+- Dokumen kebutuhan & rencana teknis tidak seragam antar-tim.
+- Standar desain (Pilar) tidak selalu dipakai → tampilan beda sendiri.
+- Dokumentasi pengguna jadi prioritas terakhir.
+- AI dipakai tanpa kendali → hasil "meyakinkan" padahal karangan.
+
+## Solusi — nano
+
+- **Satu pintu masuk, tiga pekerjaan:** PRD · Sistem · Dokumentasi.
+- **Ingatan antar-sesi** — tidak mulai dari nol (baca `docs/nano/state.md`).
+- **Kontrol manusia** di tiap langkah — AI tidak memutuskan sendiri.
+- **Mengenal Pilar** (design system UII) secara otomatis.
+
+## Alur kerja
+
+Tim memanggil nano → nano baca memori → pilih pekerjaan (PRD/Sistem/Dokumentasi) →
+kerjakan → konfirmasi manusia → catat kemajuan.
+
+## Tiga pekerjaan
+
+| Pekerjaan | Masukan → Hasil |
 |---|---|
-| `ai-native-development-workflow` | memandu 8 langkah (diskusi → PRD → FSD → build → deploy) |
-| `dev-workflow` | konvensi stack Laravel + Angular + SQLite + PILAR + jebakan |
-| `generating-test-reports` | automated test (Playwright E2E) + laporan HTML + PDF |
-| `editing-powerpoint-with-python` | otomasi deck presentasi (inspect/edit/diagram) |
-| `screenshotting-web-app` | screenshot SPA ber-login untuk dokumentasi |
+| **PRD** | catatan rapat/transkrip → dokumen kebutuhan terstruktur + pertanyaan terbuka |
+| **Sistem** | kebutuhan → rencana (stack, arsitektur, Pilar) + prototype cepat |
+| **Dokumentasi** | aplikasi jalan → panduan pengguna bergambar |
 
-## Workflow 8 langkah (di-encode oleh `ai-native-development-workflow`)
+## 4 kendali kualitas
 
-1. Diskusi kebutuhan → 2. Kumpulkan aturan/dokumen → 3. PRD (AI) → 4. FSD (AI) →
-5. MySQL → 6. Laravel → 7. Angular + PILAR → 8. Deploy gateway UII.
-
-Tiap tahap: AI menghasilkan draf, manusia memutuskan & memverifikasi.
-
-## 3 Pilar
-
-- **Faster** — otomasi proses dari hulu ke hilir.
-- **Smarter** — AI di tiap tahap (PRD, FSD, kode, test).
-- **Safer** — standar internal + gate verifikasi + automated test.
+1. Konfirmasi manusia di tiap tahap.
+2. Kejujuran atas ketidaktahuan (info tanpa sumber ditandai).
+3. Satu sumber resmi (dokumen di repo).
+4. Riwayat terjaga (versi baru, tidak menimpa).
 
 ## Bukti (Platform Penilaian Pegawai)
 
 - **38 commit, ±2 hari kerja** → produk end-to-end (Laravel + Angular + PILAR).
 - Dokumentasi lengkap: **PRD, FSD/SPEC, BPMN, Document Spec, User Manual**.
 - **Test E2E (Playwright) lolos** + report HTML + PDF.
-- Semua bisa diaudit dari git history + demo live.
+
+## Output (untuk tim lain)
+
+- **6 skill** + `setup.sh` + `docs/nano/state.md` (memori).
+- Tim lain tinggal: `git clone` → `./setup.sh` → panggil "nano, kita lanjut dari mana?".
 
 ## Struktur slide (10)
 
-1. Judul — Skill Set Claude Code
-2. Masalah — Development Manual & Lambat
-3. Solusi — 5 Skill Claude Code (Reusable)
-4. Skill 1 — ai-native-development-workflow 📷 (diagram 8 langkah)
-5. Skill 2 — dev-workflow
-6. Skill 3 — generating-test-reports
-7. Skill 4 & 5 — Deliverable & Dokumentasi
+1. Judul — nano (AI Asisten untuk Manajemen Proyek)
+2. Masalah — Konteks Hilang & Dokumen Tidak Konsisten
+3. Solusi — nano: Satu AI Asisten
+4. Alur Kerja nano 📷
+5. Pekerjaan 1 — PRD
+6. Pekerjaan 2 — Sistem
+7. Pekerjaan 3 — Dokumentasi
 8. Bukti — Platform Penilaian Pegawai 📷
 9. Demo — Dari PILAR ke Form Multi-Step 📷
 10. Output + 3 Pilar
 
 ## Skrip demo live (±1 menit)
 
-1. Buka PILAR (Figma) → tarik komponen `stepperButtonSet`.
-2. Analisis token → implementasi jadi komponen Angular → form multi-step.
-3. Tutup loop: desain di Figma = kode yang jalan.
-4. Jalankan `npx playwright test` → report HTML + PDF otomatis.
+1. Panggil nano → tunjukkan memori (`docs/nano/state.md`) terbaca.
+2. Demo "Pekerjaan Sistem": tarik komponen PILAR → implementasi → form multi-step.
+3. Demo "Dokumentasi": `npx playwright test` → report HTML + PDF otomatis.
