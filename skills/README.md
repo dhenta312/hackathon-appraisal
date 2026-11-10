@@ -18,6 +18,9 @@ Selesai — skill terpasang di `~/.claude/skills/` dan langsung dikenali Claude 
 Untuk **update** ke versi terbaru, tinggal jalankan `./setup.sh` lagi — script ini otomatis
 `git pull` dulu, lalu menyalin ulang skill.
 
+> **Panduan lengkap & detail** (prasyarat, troubleshooting, langkah demi langkah):
+> lihat [`INSTALL.md`](../INSTALL.md).
+
 ## Prasyarat
 
 | Kebutuhan | Untuk apa |
