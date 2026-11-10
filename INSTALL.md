@@ -1,7 +1,7 @@
 # Panduan Instalasi nano
 
 Panduan lengkap memasang **nano** — AI Asisten untuk Manajemen Proyek — di perangkat lain,
-dari nol sampai bisa dipakai.
+dari nol sampai bisa dipakai. Cocok untuk pemula.
 
 ---
 
@@ -15,34 +15,62 @@ nano **bukan aplikasi terpisah** — ia bekerja di dalam **Claude Code**.
 
 ---
 
-## 2. Prasyarat
+## 2. Pasang Claude Code (wajib, sekali saja)
 
-### 2.1 Wajib
+nano adalah skill yang dibaca oleh Claude Code. Jadi langkah pertama: pasang Claude Code.
 
-| Kebutuhan | Keterangan |
-|---|---|
-| **Claude Code CLI** | wajib — nano adalah skill yang dibaca Claude Code |
-| **Git** | untuk clone repo & update |
-| **Node.js** | untuk Angular & Playwright |
-| **Python 3** | untuk script (diagram, PDF, dll.) |
-| **Google Chrome** | untuk screenshot & konversi PDF |
+### 2.1 Install Claude Code
 
-### 2.2 Opsional (untuk fitur penuh)
+```bash
+# macOS / Linux — via npm
+npm install -g @anthropic-ai/claude-code
 
-| Kebutuhan | Untuk fitur |
-|---|---|
-| **Figma MCP + login Figma** | design-to-code / code-to-design (`figma:*`) |
-| **Superpowers skills** (plugin) | brainstorming, writing-plans, TDD (`superpowers:*`) |
-| **Playwright + Chromium** | automated test + report |
-| **python-pptx + Pillow** | otomasi deck presentasi + diagram |
-| **Akses PILAR** | sumber desain resmi UII |
+# atau installer resmi
+curl -fsSL https://claude.ai/install.sh | bash
+```
 
-> Tanpa yang "opsional", nano tetap bisa dipakai untuk PRD, FSD, BPMN, dan penyusunan
-> dokumen. Fitur desain & testing membutuhkan dependency di atas.
+> **Windows:** gunakan WSL, atau ikuti panduan resmi di
+> https://docs.anthropic.com/claude-code.
+
+### 2.2 Login
+
+```bash
+claude
+```
+
+Saat pertama dijalankan, Claude Code meminta login (akun Anthropic). Ikuti sampai masuk.
 
 ---
 
-## 3. Langkah instalasi
+## 3. Prasyarat lainnya
+
+### 3.1 Wajib
+
+| Kebutuhan | Cara pasang (macOS) | Catatan |
+|---|---|---|
+| Git | `brew install git` (biasanya sudah ada) | untuk clone & update |
+| Node.js | `brew install node` (atau nvm) | untuk Angular / Playwright |
+| Python 3 | sudah ada, atau `brew install python` | untuk script |
+| Google Chrome | unduh dari google.com/chrome | untuk screenshot & PDF |
+
+> **Windows/Linux:** pakai package manager masing-masing (scoop/choco untuk Windows; apt/dnf
+> untuk Linux). Perintah `setup.sh` berbasis bash — di Windows jalankan lewat WSL/Git Bash.
+
+### 3.2 Opsional (untuk fitur penuh)
+
+| Kebutuhan | Cara pasang | Untuk fitur |
+|---|---|---|
+| Figma MCP | konfigurasi di Claude Code settings + login Figma | design-to-code / code-to-design |
+| Superpowers skills | plugin Claude Code | brainstorming, TDD, dst. |
+| Playwright + Chromium | `npm i -D @playwright/test && npx playwright install chromium` | automated test |
+| python-pptx + Pillow | `pip3 install python-pptx pillow` | deck + diagram |
+| Akses PILAR | https://www.figma.com/design/AYHhj3V2tSnZleViFsIjEx/PILAR-DESIGN-SYSTEM | sumber desain resmi |
+
+> Tanpa yang "opsional", nano tetap bisa dipakai untuk PRD, FSD, BPMN, dan penyusunan dokumen.
+
+---
+
+## 4. Langkah instalasi nano
 
 ### Langkah 1 — Clone repo
 
@@ -59,10 +87,12 @@ cd hackathon-appraisal
 
 Script ini otomatis: `git pull` → menyalin semua skill ke `~/.claude/skills/` → cek prasyarat.
 
+![Output setup.sh](docs/install-images/install-1-setup.png)
+
 ### Langkah 3 — Restart Claude Code
 
-Tutup terminal/session Claude Code, lalu **buka lagi**. Claude Code mengenali skill baru
-setelah dijalankan ulang.
+Tutup terminal/session Claude Code, lalu buka lagi. Claude Code mengenali skill baru setelah
+dijalankan ulang.
 
 ### Langkah 4 — Verifikasi
 
@@ -70,32 +100,53 @@ setelah dijalankan ulang.
 ls ~/.claude/skills/
 ```
 
-Hasilnya harus memuat folder-folder ini:
+![Hasil ls](docs/install-images/install-2-verify.png)
 
-```
-nano  ai-native-development-workflow  dev-workflow
-generating-test-reports  editing-powerpoint-with-python  screenshotting-web-app
-```
+Pastikan folder `nano` (dan skill lain) muncul di daftar.
 
 ### Langkah 5 — Coba
 
-Ketik di Claude Code:
+```bash
+claude
+> hai nano
+```
 
-```
-/nano
-```
-
-atau cukup sapaan:
-
-```
-hai nano
-```
+![hai nano](docs/install-images/install-3-nano.png)
 
 nano akan menjawab dan menawarkan tiga pekerjaan.
 
 ---
 
-## 4. Cara pakai
+## 5. Memulai proyek baru dengan nano
+
+1. Buat folder proyek baru.
+
+2. Salin template memori (sekali saja per proyek):
+
+   ```bash
+   mkdir -p proyek-baru/docs/nano
+   cp hackathon-appraisal/docs/nano/state.md proyek-baru/docs/nano/state.md
+   ```
+
+3. Buka Claude Code di proyek baru:
+
+   ```bash
+   cd proyek-baru
+   claude
+   ```
+
+4. Panggil nano:
+
+   ```
+   > hai nano
+   ```
+
+   nano membaca memori (`docs/nano/state.md`) lalu menawarkan: **Diskusi & Analisis**,
+   **Pengembangan Sistem**, atau **Dokumentasi**.
+
+---
+
+## 6. Cara pakai
 
 Tiga pekerjaan nano:
 
@@ -105,12 +156,9 @@ Tiga pekerjaan nano:
 | **Pengembangan Sistem** | design Figma + document spec + prototype (Angular + Laravel) |
 | **Dokumentasi** | automated test + report + user manual |
 
-nano membaca/memperbarui **`docs/nano/state.md`** (memori antar-sesi) di dalam repo proyek,
-sehingga "kita lanjut dari mana?" selalu terjawab.
-
 ---
 
-## 5. Cara update ke versi terbaru
+## 7. Cara update ke versi terbaru
 
 ```bash
 cd <folder-repo>
@@ -121,7 +169,7 @@ Satu perintah cukup — `setup.sh` otomatis `git pull` dulu, lalu menyalin ulang
 
 ---
 
-## 6. Troubleshooting
+## 8. Troubleshooting
 
 | Masalah | Penyebab | Solusi |
 |---|---|---|
@@ -134,14 +182,14 @@ Satu perintah cukup — `setup.sh` otomatis `git pull` dulu, lalu menyalin ulang
 ### Cek cepat bila masih bermasalah
 
 ```bash
-ls ~/.claude/skills/nano/SKILL.md    # file skill ada?
-head -4 ~/.claude/skills/nano/SKILL.md  # name: nano cocok?
+ls ~/.claude/skills/nano/SKILL.md     # file skill ada?
+head -4 ~/.claude/skills/nano/SKILL.md   # name: nano cocok?
 ```
 
 ---
 
-## 7. Catatan
+## 9. Catatan
 
 - **Memori (`docs/nano/state.md`) bersifat per-proyek.** Untuk proyek baru, salin template-nya
-  dari repo ini ke proyek kamu, atau biarkan nano membuatkannya di run pertama.
+  (lihat bagian 5), atau biarkan nano membuatkannya di run pertama.
 - **nano butuh Claude Code** — dia "otak" yang dibaca Claude Code, bukan program yang diklik.
