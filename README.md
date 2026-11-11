@@ -24,8 +24,7 @@ dan kontrol manusia di tiap langkah.
 
 | Folder | Isi |
 |---|---|
-| `skills/` | source skill nano: `nano` (pintu masuk) + skill pendukung (`dev-workflow`, `ai-native-development-workflow`, `generating-test-reports`, `screenshotting-web-app`, `editing-powerpoint-with-python`) |
-| `references/` | knowledge bawaan nano — token PILAR Design System UII |
+| `skills/` | source skill nano: `nano` (pintu masuk, termasuk knowledge bawaan di `nano/references/` — token PILAR Design System UII) + skill pendukung (`dev-workflow`, `ai-native-development-workflow`, `generating-test-reports`, `screenshotting-web-app`, `editing-powerpoint-with-python`) |
 | `docs/` | memori kerja (`nano/state.md`) + dokumen contoh (PRD, SPEC, BPMN, test report, user manual) |
 | `backend/`, `frontend/` | aplikasi demo hasil nano (lihat bagian [Aplikasi demo](#aplikasi-demo)) |
 
