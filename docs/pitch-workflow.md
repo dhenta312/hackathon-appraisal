@@ -34,7 +34,7 @@ kerjakan → konfirmasi manusia → catat kemajuan.
 | Pekerjaan | Masukan → Hasil |
 |---|---|
 | **Diskusi & Analisis** | catatan rapat → PRD + FSD + BPMN |
-| **Pengembangan Sistem** | kebutuhan → design Figma + document spec + prototype (Angular + Laravel) |
+| **Pengembangan Sistem** | kebutuhan → design Figma + document spec + prototype (Full Angular+Laravel / Lite Vite) |
 | **Dokumentasi** | aplikasi jalan → automated test + report + user manual |
 
 ## 4 kendali kualitas

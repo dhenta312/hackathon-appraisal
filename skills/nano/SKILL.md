@@ -35,7 +35,7 @@ baca `state.md` dulu sebelum menjawab.
 1. **Baca memori** — `docs/nano/state.md` untuk tahu "kita lanjut dari mana".
 2. **Tawarkan menu** — tiga pekerjaan, tim memilih:
    - **Diskusi & Analisis** — catatan rapat → PRD + FSD + BPMN.
-   - **Pengembangan Sistem** — design Figma + document spec + prototype (Angular + Laravel).
+   - **Pengembangan Sistem** — design Figma + document spec + prototype (pilihan stack: Full Angular+Laravel, atau Lite Vite).
    - **Dokumentasi** — automated test + report + user manual.
 3. **Kerjakan** — panggil skill yang sesuai (lihat tabel di bawah).
 4. **Konfirmasi + catat** — minta persetujuan, lalu perbarui `docs/nano/state.md`.
@@ -53,8 +53,10 @@ baca `state.md` dulu sebelum menjawab.
 ### 2. Pengembangan Sistem
 - **Design Figma** — menyusun/membangun desain memakai **Pilar** (design system UII).
 - **Document Spec** — spesifikasi UI-flow (template `DOCUMENT-SPEC.md`).
-- **Prototype sistem** — aplikasi berjalan dengan **Angular + Laravel**.
-- **Hasil:** design Figma · `docs/DOCUMENT-SPEC.md` · prototype (backend + frontend).
+- **Prototype sistem** — tawarkan pilihan stack dulu:
+  - **Full (Angular + Laravel)** — frontend Angular + backend Laravel (SQLite), untuk sistem yang butuh backend/data.
+  - **Lite (Vite)** — frontend saja pakai **Vite** (vite.dev), tanpa backend, untuk prototype cepat / UI murni.
+- **Hasil:** design Figma · `docs/DOCUMENT-SPEC.md` · prototype (sesuai pilihan stack).
 
 ### 3. Dokumentasi
 - **Automated test + report** — Playwright E2E + laporan HTML + PDF (screenshot + penjelasan).
@@ -72,8 +74,23 @@ baca `state.md` dulu sebelum menjawab.
 | Pekerjaan | Skill |
 |---|---|
 | Diskusi & Analisis | superpowers:brainstorming · superpowers:writing-plans · ai-native-development-workflow |
-| Pengembangan Sistem | dev-workflow · figma:figma-generate-design · figma:figma-design-to-code · figma:figma-generate-library |
+| Pengembangan Sistem | dev-workflow (Full: Angular+Laravel) · figma:figma-generate-design · figma:figma-design-to-code · figma:figma-generate-library |
 | Dokumentasi | generating-test-reports · screenshotting-web-app · editing-powerpoint-with-python |
+
+## Knowledge bawaan (self-contained)
+
+nano membawa knowledge desain & konvensi pengembangan **terbundel** di repo ini,
+bukan bergantung pada skill/memory mesin tertentu:
+
+- **`references/pilar-design-tokens.md`** — nilai token PILAR Design System UII
+  (palet teks, tipografi, fokus) + daftar yang masih hilang. Baca ini sebelum menyusun
+  desain/koding UI dengan PILAR.
+- **`skills/dev-workflow/SKILL.md`** — konvensi pengembangan UII (stack Laravel+Angular,
+  token Tailwind PILAR, commit, stepper, jebakan). Bisa dibaca langsung sebagai referensi,
+  atau diaktifkan sebagai skill standalone (lihat README).
+
+Saat mengerjakan **Pengembangan Sistem**, baca kedua file di atas **sebelum** memakai
+`dev-workflow`/`figma:*` agar desain & kode konsisten dengan PILAR.
 
 ## Kontrol kualitas (4 kendali)
 

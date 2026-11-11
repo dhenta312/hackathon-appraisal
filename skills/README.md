@@ -37,7 +37,7 @@ Untuk **update** ke versi terbaru, tinggal jalankan `./setup.sh` lagi — script
 ## Tiga pekerjaan nano
 
 1. **Diskusi & Analisis** — catatan rapat → PRD + FSD + BPMN.
-2. **Pengembangan Sistem** — design Figma + document spec + prototype (Angular + Laravel).
+2. **Pengembangan Sistem** — design Figma + document spec + prototype (pilihan: Full Angular+Laravel, atau Lite Vite).
 3. **Dokumentasi** — automated test + report (Playwright) + user manual.
 
 ## Memori (di dalam repo)
