@@ -27,7 +27,9 @@ echo "[2/4] Menyalin skill ke ${SKILLS_DIR} ..."
 mkdir -p "${SKILLS_DIR}"
 for d in "${REPO_DIR}"/skills/*/; do
   name="$(basename "$d")"
-  cp -r "$d" "${SKILLS_DIR}/"
+  # "$d." bukan "$d": trailing slash membuat cp menyalin ISI folder ke parent,
+  # sehingga references/ nano tumpah ke ${SKILLS_DIR} dan tidak ikut ter-update.
+  cp -R "$d." "${SKILLS_DIR}/${name}/"
   echo "      ✓ ${name}"
 done
 
