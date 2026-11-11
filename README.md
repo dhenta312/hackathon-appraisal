@@ -106,11 +106,18 @@ jalan penuh, lengkapi dependensi berikut sekali di tiap mesin.
 
 ### MCP server
 
-| MCP | Untuk | Cara pasang | Wajib? |
+| MCP | Untuk | Cara pasang | Status |
 |---|---|---|---|
 | **Figma** | design-to-code & code-to-design (`figma:*`) | konfigurasi di Claude Code + login Figma | Wajib bila memakai `figma:*` |
 | **Context7** | dokumentasi library terkini (Angular/Laravel/Vite/Tailwind) | `/plugin marketplace add upstash/context7` | Opsional |
+| **Confluence** | penulisan dokumen terpusat — PRD, FSD, SPEC, user manual tersimpan di satu tempat | konfigurasi MCP Confluence + login Atlassian | 🚧 Coming soon |
+| **ClickUp** | penulisan task — backlog & sprint hasil nano langsung tercatat sebagai task | konfigurasi MCP ClickUp + API token | 🚧 Coming soon |
 | *(tanpa MCP)* | screenshot & PDF | Google Chrome + Playwright | Wajib untuk Dokumentasi |
+
+> **Arah ke depan (Scrum):** Confluence + ClickUp akan terhubung dengan nano agar seluruh
+> alur — diskusi → PRD/FSD (dokumen terpusat) → backlog & sprint (task) → pengembangan →
+> dokumentasi — berjalan nyambung dan mendukung **budaya Scrum** tim. Keduanya **belum
+> tersedia (coming soon)**; nano tetap jalan penuh tanpa keduanya.
 
 ### Tool CLI tambahan
 
