@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://api.iconify.design/lucide/atom.svg?color=%23024d3b&width=96" width="96" alt="nano logo" />
+  <img src="https://api.iconify.design/lucide/atom.svg?color=%23ffffff&width=160" width="160" alt="nano logo" />
 </p>
 
 # nano — AI Asisten untuk Manajemen Proyek (Ide → Dokumentasi)
