@@ -62,6 +62,7 @@ Saat pertama dijalankan, Claude Code meminta login (akun Anthropic). Ikuti sampa
 |---|---|---|
 | Figma MCP | konfigurasi di Claude Code settings + login Figma | design-to-code / code-to-design |
 | Superpowers skills | plugin Claude Code | brainstorming, TDD, dst. |
+| Context7 (opsional) | `/plugin marketplace add upstash/context7` (di Claude Code) | doc library terkini |
 | Playwright + Chromium | `npm i -D @playwright/test && npx playwright install chromium` | automated test |
 | python-pptx + Pillow | `pip3 install python-pptx pillow` | deck + diagram |
 | Akses PILAR | https://www.figma.com/design/AYHhj3V2tSnZleViFsIjEx/PILAR-DESIGN-SYSTEM | sumber desain resmi |

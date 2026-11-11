@@ -31,6 +31,7 @@ Untuk **update** ke versi terbaru, tinggal jalankan `./setup.sh` lagi — script
 | Akses PILAR (Figma + badge) | sumber desain resmi UII |
 | Node.js + Python 3 | tooling |
 | Playwright + Chromium | automated test + report |
+| Context7 (opsional) | doc library/framework terkini (Angular, Laravel, Vite, Tailwind) |
 | python-pptx + Pillow | otomasi deck + diagram |
 | Google Chrome | screenshot & konversi PDF |
 

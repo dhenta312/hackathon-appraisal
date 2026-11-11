@@ -56,6 +56,7 @@ baca `state.md` dulu sebelum menjawab.
 - **Prototype sistem** — tawarkan pilihan stack dulu:
   - **Full (Angular + Laravel)** — frontend Angular + backend Laravel (SQLite), untuk sistem yang butuh backend/data.
   - **Lite (Vite)** — frontend saja pakai **Vite** (vite.dev), tanpa backend, untuk prototype cepat / UI murni.
+- **Dokumentasi terkini (opsional):** bila Context7 terpasang, pakai untuk doc Angular / Laravel / Vite / Tailwind yang up-to-date (`resolve-library-id` + `query-docs`).
 - **Hasil:** design Figma · `docs/DOCUMENT-SPEC.md` · prototype (sesuai pilihan stack).
 
 ### 3. Dokumentasi
@@ -76,6 +77,10 @@ baca `state.md` dulu sebelum menjawab.
 | Diskusi & Analisis | superpowers:brainstorming · superpowers:writing-plans · ai-native-development-workflow |
 | Pengembangan Sistem | dev-workflow (Full: Angular+Laravel) · figma:figma-generate-design · figma:figma-design-to-code · figma:figma-generate-library |
 | Dokumentasi | generating-test-reports · screenshotting-web-app · editing-powerpoint-with-python |
+
+## Dependency opsional
+
+- **Context7** — dokumentasi library/framework terkini (Angular, Laravel, Vite, Tailwind, dll.) via MCP. Dipakai di **Pengembangan Sistem** supaya API & praktik terbaik tidak basi. **Opsional** — tanpa Context7, nano tetap jalan memakai pengetahuan bawaan.
 
 ## Knowledge bawaan (self-contained)
 
