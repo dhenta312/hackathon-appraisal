@@ -1,84 +1,146 @@
-# Platform Penilaian Kinerja (Performance Appraisal)
+# nano — AI Asisten untuk Manajemen Proyek (Ide → Dokumentasi)
 
-MVP hackathon inovasi IT: mengganti penilaian kinerja berbasis Google Form + rekap
-manual HR menjadi aplikasi dengan **alur menilai yang ringan** dan **skor yang
-transparan**.
+**nano** adalah AI asisten berbasis Claude Code yang membantu tim menyelesaikan siklus
+pengembangan sistem secara utuh dan konsisten — dari **ide → PRD → rencana sistem →
+prototype → dokumentasi pengguna** — dengan Pilar (design system UII), memori antar-sesi,
+dan kontrol manusia di tiap langkah.
 
-## Stack
+> nano **bukan aplikasi terpisah** — ia bekerja di dalam **Claude Code** sebagai kumpulan
+> skill. Repo ini adalah **sumber skill nano**, bukan folder proyek kerja.
 
-- **Backend:** Laravel (PHP 8.5), SQLite, Sanctum token auth — folder `backend/`
-- **Frontend:** Angular 18 (standalone components) — folder `frontend/`
+## Tiga pekerjaan nano
 
-## Cara menjalankan
+| Pekerjaan | Fungsi |
+|---|---|
+| **Diskusi & Analisis** | catatan rapat → PRD + FSD + BPMN |
+| **Pengembangan Sistem** | design Figma + document spec + prototype (Full Angular+Laravel, atau Lite Vite) |
+| **Dokumentasi** | automated test + report + user manual |
 
-### 1. Backend (port 8000)
+## Isi repo
+
+| Folder | Isi |
+|---|---|
+| `skills/` | source skill nano: `nano` (pintu masuk) + skill pendukung (`dev-workflow`, `ai-native-development-workflow`, `generating-test-reports`, `screenshotting-web-app`, `editing-powerpoint-with-python`) |
+| `references/` | knowledge bawaan nano — token PILAR Design System UII |
+| `docs/` | memori kerja (`nano/state.md`) + dokumen contoh (PRD, SPEC, BPMN, test report, user manual) |
+| `backend/`, `frontend/` | aplikasi demo hasil nano (lihat bagian [Aplikasi demo](#aplikasi-demo)) |
+
+## Instalasi
+
+Panduan lengkap, prasyarat per-OS, dan troubleshooting: **[INSTALL.md](INSTALL.md)**.
+
+### Prasyarat singkat
+
+- **Claude Code** — `npm install -g @anthropic-ai/claude-code` lalu login (`claude`)
+- **Git**, **Node.js**, **Python 3**, **Google Chrome**
+- Opsional (fitur penuh): Figma MCP, Superpowers, Context7, ngrok, Playwright,
+  python-pptx, akses PILAR
+
+### 5 langkah
+
+1. **Clone repo**
+   ```bash
+   git clone https://github.com/dhenta312/hackathon-appraisal.git
+   cd hackathon-appraisal
+   ```
+2. **Jalankan setup** — otomatis `git pull`, menyalin skill ke `~/.claude/skills/`,
+   lalu cek prasyarat.
+   ```bash
+   ./setup.sh
+   ```
+3. **Restart Claude Code** — tutup lalu buka lagi agar skill baru terbaca.
+4. **Verifikasi**
+   ```bash
+   ls ~/.claude/skills/
+   ```
+   Pastikan folder `nano` muncul.
+5. **Coba**
+   ```bash
+   claude
+   > hai nano
+   ```
+   nano akan menjawab dan menawarkan tiga pekerjaan.
+
+## Memulai proyek baru dengan nano
+
+1. **Buat folder proyek baru** di luar repo ini, lalu salin template memori:
+   ```bash
+   mkdir -p proyek-baru/docs/nano
+   cp hackathon-appraisal/docs/nano/state.md proyek-baru/docs/nano/state.md
+   ```
+2. **Buka Claude Code di proyek baru** dan panggil nano:
+   ```bash
+   cd proyek-baru
+   claude
+   > hai nano
+   ```
+
+Memori (`docs/nano/state.md`) bersifat **per-proyek** — nano membacanya untuk tahu
+"kita lanjut dari mana" dan memperbaruinya di akhir sesi.
+
+## Cara update ke versi terbaru
 
 ```bash
-cd backend
-composer install
-cp .env.example .env      # jika .env belum ada
-php artisan key:generate  # jika belum
-php artisan migrate --seed
-php artisan serve
+cd hackathon-appraisal
+./setup.sh
 ```
 
-### 2. Frontend (port 4200)
+Satu perintah cukup — `setup.sh` otomatis `git pull` dulu, lalu menyalin ulang skill.
+
+## Skill & MCP yang harus ada
+
+`./setup.sh` hanya memasang skill nano dari repo ini. Supaya **semua pekerjaan** nano
+jalan penuh, lengkapi dependensi berikut sekali di tiap mesin.
+
+### Skill (wajib untuk pekerjaan terkait)
+
+| Skill | Asal | Dipakai oleh | Cara pasang |
+|---|---|---|---|
+| `superpowers:brainstorming`, `superpowers:writing-plans`, dll. | plugin **Superpowers** | Diskusi & Analisis | `/plugin marketplace add obra/superpowers` lalu `/plugin install superpowers` |
+| `figma:figma-generate-design`, `figma:figma-design-to-code`, `figma:figma-generate-library` | plugin **Figma** (butuh MCP Figma) | Pengembangan Sistem (design ↔ code) | pasang plugin Figma + login akun Figma |
+| `pilar-design-system` | skill global (bukan dari repo ini) | Pengembangan Sistem (token/komponen PILAR) | pasang skill `pilar-design-system` ke `~/.claude/skills/` |
+| `dev-workflow`, `ai-native-development-workflow`, `generating-test-reports`, `screenshotting-web-app`, `editing-powerpoint-with-python` | **repo ini** | semua pekerjaan | otomatis via `./setup.sh` |
+
+> Tanpa Superpowers/Figma, nano tetap jalan — hanya bagian yang butuh skill itu yang
+> tidak tersedia (mis. brainstorming terstruktur, design-to-code).
+
+### MCP server
+
+| MCP | Untuk | Cara pasang | Wajib? |
+|---|---|---|---|
+| **Figma** | design-to-code & code-to-design (`figma:*`) | konfigurasi di Claude Code + login Figma | Wajib bila memakai `figma:*` |
+| **Context7** | dokumentasi library terkini (Angular/Laravel/Vite/Tailwind) | `/plugin marketplace add upstash/context7` | Opsional |
+| *(tanpa MCP)* | screenshot & PDF | Google Chrome + Playwright | Wajib untuk Dokumentasi |
+
+### Tool CLI tambahan
+
+| Tool | Untuk | Cara pasang | Wajib? |
+|---|---|---|---|
+| Playwright + Chromium | automated test (`npm i -D @playwright/test && npx playwright install chromium`) | Dokumentasi | Wajib untuk Dokumentasi |
+| python-pptx + Pillow | `pip3 install python-pptx pillow` | Dokumentasi (deck) | Opsional |
+| ngrok | `brew install ngrok` + authtoken | publish prototype (URL publik) | Opsional |
+
+### Cek cepat
 
 ```bash
-cd frontend
-npm install
-npm start
+ls ~/.claude/skills/                 # nano + skill repo ini terpasang?
+claude                                # lalu di dalam sesi: /plugin (cek Superpowers, Figma)
 ```
 
-Buka `http://localhost:4200`.
+## Aplikasi demo
 
-## Akun demo (password semua: `password`)
+**Platform Penilaian Kinerja** — aplikasi web (Laravel + Angular) yang dibangun memakai
+nano sebagai contoh hasil "Pengembangan Sistem". Aplikasi ini menggantikan penilaian
+kinerja berbasis Google Form + rekap manual HR dengan alur menilai yang ringan dan skor
+yang transparan.
 
-| Nama  | Email              | Role     | Keterangan    |
-| ----- | ------------------ | -------- | ------------- |
-| Andi  | andi@example.com   | UX       | Penilai demo  |
-| Budi  | budi@example.com   | Frontend | Penilai demo  |
-| Citra | citra@example.com  | Backend  | Pegawai       |
-| Dewi  | dewi@example.com   | UX       | Pegawai       |
-| Eko   | eko@example.com    | Frontend | Pegawai       |
-| Fajar | fajar@example.com  | Backend  | Admin/HR      |
+→ Cara menjalankan (stack, seeder akun demo, skrip demo): **[DEMO.md](DEMO.md)**
 
-## Skrip demo (±3 menit)
+## Panduan lain
 
-### Bagian 1 — Menilai ringan (login sebagai Andi)
-
-1. Login `andi@example.com` / `password` → masuk "Tim saya".
-2. Tunjukkan **progres**: "sudah X dari 5 dinilai" + status per rekan.
-3. Klik **Citra** → form muncul **otomatis sesuai role Backend** — penilai tidak
-   perlu memilih role (bandingkan: di Google Form harus pilih manual).
-4. Isi beberapa pertanyaan (skala 1–5) → klik **Simpan draf** → tunjukkan bisa
-   dilanjutkan kapan saja (fitur yang tidak ada di Google Form).
-5. Masuk lagi ke Citra → draf sudah terisi → lanjutkan sampai selesai → tulis
-   **satu alasan per komponen** (bukan per jawaban) → **Kirim**.
-6. Kembali ke "Tim saya" → status Citra "Selesai", progres naik.
-
-### Bagian 2 — Skor transparan (login sebagai Fajar/admin)
-
-1. Logout → login `fajar@example.com` / `password`.
-2. Di "Tim saya", klik tombol **Hasil** pada Citra.
-3. Tunjukkan: total (misal 90.4/100), rincian per komponen dengan bobotnya,
-   kontribusi **"Penilai A/B" (anonim)** lengkap dengan alasannya, dan presensi
-   sebagai baris data terpisah — bukan "dinilai".
-
-## Klaim inovasi (untuk pitch)
-
-1. **Mengubah metode menilai** — role auto-load, alasan per komponen, save draft
-   & resume, progres. Mengisi 9 rekan berubah dari beban jadi ringan.
-2. **Dari black box ke explainable** — rumus terlihat, rata-rata antar penilai
-   ditampilkan transparan, identitas penilai dianonimkan.
-3. **Presensi jadi data** — 20 poin ditarik dari catatan kehadiran, bukan
-   "dinilai" oleh rekan.
-
-## Catatan teknis
-
-- Komponen skor: Core value (10), Soft skill (25), Hard skill (30), Growth &
-  Innovation (15), Presensi (20) — total 100.
-- Rumus per penilai: `skor komponen = rata-rata nilai pertanyaan ÷ 5 × bobot`;
-  skor final komponen = rata-rata semua penilai yang sudah submit.
-- Hanya penilaian berstatus `submitted` yang dihitung; draf tidak berpengaruh.
-- Pegawai hanya bisa melihat hasil sendiri; admin (HR) melihat semua.
+| Dokumen | Isi |
+|---|---|
+| [INSTALL.md](INSTALL.md) | panduan instalasi lengkap (peserta baru, troubleshooting) |
+| [DEMO.md](DEMO.md) | menjalankan aplikasi demo penilaian kinerja |
+| [skills/README.md](skills/README.md) | ringkasan skill yang menyusun nano |
+| [docs/](docs/) | PRD, SPEC, BPMN, test report, user manual contoh |
