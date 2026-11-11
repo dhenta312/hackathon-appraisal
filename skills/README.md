@@ -32,6 +32,7 @@ Untuk **update** ke versi terbaru, tinggal jalankan `./setup.sh` lagi — script
 | Node.js + Python 3 | tooling |
 | Playwright + Chromium | automated test + report |
 | Context7 (opsional) | doc library/framework terkini (Angular, Laravel, Vite, Tailwind) |
+| ngrok (opsional) | tunnel URL publik untuk prototype (demo ke stakeholder) |
 | python-pptx + Pillow | otomasi deck + diagram |
 | Google Chrome | screenshot & konversi PDF |
 

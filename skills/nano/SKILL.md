@@ -58,6 +58,9 @@ baca `state.md` dulu sebelum menjawab.
   - **Lite (Vite)** — frontend saja pakai **Vite** (vite.dev), tanpa backend, untuk prototype cepat / UI murni.
 - **Dokumentasi terkini (opsional):** bila Context7 terpasang, pakai untuk doc Angular / Laravel / Vite / Tailwind yang up-to-date (`resolve-library-id` + `query-docs`).
 - **Hasil:** design Figma · `docs/DOCUMENT-SPEC.md` · prototype (sesuai pilihan stack).
+- **Publish prototype (opsional):** di akhir, tawarkan apakah prototype mau dipublish ke URL publik (via ngrok) atau tetap lokal. Bila ya:
+  - **Lite (Vite):** tunnel 1 port (mis. `5173`).
+  - **Full (Angular + Laravel):** tunnel 2 port (frontend `4200` + backend `8000`); bila tidak bisa, cukup frontend saja.
 
 ### 3. Dokumentasi
 - **Automated test + report** — Playwright E2E + laporan HTML + PDF (screenshot + penjelasan).
@@ -81,6 +84,7 @@ baca `state.md` dulu sebelum menjawab.
 ## Dependency opsional
 
 - **Context7** — dokumentasi library/framework terkini (Angular, Laravel, Vite, Tailwind, dll.) via MCP. Dipakai di **Pengembangan Sistem** supaya API & praktik terbaik tidak basi. **Opsional** — tanpa Context7, nano tetap jalan memakai pengetahuan bawaan.
+- **ngrok** — tunnel URL publik untuk prototype lokal (berbagi/demo ke stakeholder). **Opsional** — dipakai bila user memilih "publish prototype" di akhir Pengembangan Sistem.
 
 ## Knowledge bawaan (self-contained)
 
