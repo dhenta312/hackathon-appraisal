@@ -7,3 +7,8 @@
 # Playwright
 playwright-report/
 test-results/
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
