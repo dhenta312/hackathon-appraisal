@@ -54,6 +54,7 @@ baca `state.md` dulu sebelum menjawab.
 - **FSD / SPEC** — spesifikasi teknis (arsitektur, stack, kontrak API, struktur, pengujian).
 - **BPMN** — diagram proses bisnis (swimlane, `.bpmn` XML + visual).
 - **Hasil:** `docs/PRD.md` · `docs/SPEC.md` · `docs/bpmn/*.bpmn` (+ `.png`).
+- **Publish ke Confluence (opsional):** tawarkan publish dokumen (PRD/FSD/BPMN) ke Confluence Cloud — bila kredensial + space/parent tersedia. Lihat skill `generating-confluence-docs`.
 
 ### 2. Pengembangan Sistem
 - **Design Figma** — menyusun/membangun desain memakai **Pilar** (design system UII).
@@ -82,6 +83,7 @@ baca `state.md` dulu sebelum menjawab.
 - **Automated test + report** — Playwright E2E + laporan HTML + PDF (screenshot + penjelasan).
 - **User manual** — panduan pengguna bergambar (alur langkah + screenshot).
 - **Hasil:** test report · user manual (PDF + markdown).
+- **Publish ke Confluence (opsional):** tawarkan publish panduan/report ke Confluence Cloud. Lihat skill `generating-confluence-docs`.
 
 ## Memori — docs/nano/state.md
 
@@ -101,6 +103,7 @@ baca `state.md` dulu sebelum menjawab.
 
 - **Context7** — dokumentasi library/framework terkini (Angular, Laravel, Vite, Tailwind, dll.) via MCP. Dipakai di **Pengembangan Sistem** supaya API & praktik terbaik tidak basi. **Opsional** — tanpa Context7, nano tetap jalan memakai pengetahuan bawaan.
 - **ngrok** — tunnel URL publik untuk prototype lokal (berbagi/demo ke stakeholder). **Opsional** — dipakai bila user memilih "publish prototype" di akhir Pengembangan Sistem.
+- **Confluence** — publish dokumen ke Confluence Cloud (skill `generating-confluence-docs` + kredensial `.env.confluence` yang gitignored). **Opsional** — dipakai bila user memilih "publish ke Confluence".
 
 ## Knowledge bawaan (self-contained)
 

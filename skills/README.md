@@ -33,6 +33,7 @@ Untuk **update** ke versi terbaru, tinggal jalankan `./setup.sh` lagi — script
 | Playwright + Chromium | automated test + report |
 | Context7 (opsional) | doc library/framework terkini (Angular, Laravel, Vite, Tailwind) |
 | ngrok (opsional) | tunnel URL publik untuk prototype (demo ke stakeholder) |
+| Confluence (opsional) | publish dokumen ke Confluence Cloud (skill + kredensial) |
 | python-pptx + Pillow | otomasi deck + diagram |
 | Google Chrome | screenshot & konversi PDF |
 
