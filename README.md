@@ -115,6 +115,7 @@ jalan penuh, lengkapi dependensi berikut sekali di tiap mesin.
 |---|---|---|---|
 | **Figma** | design-to-code & code-to-design (`figma:*`) | konfigurasi di Claude Code + login Figma | Wajib bila memakai `figma:*` |
 | **Context7** | dokumentasi library terkini (Angular/Laravel/Vite/Tailwind) | `/plugin marketplace add upstash/context7` | Opsional |
+| **Laravel Boost** | backend Laravel: guidelines + skill + MCP best-practice (anti-halu) | sudah terpasang di `backend/` (`composer require laravel/boost --dev && php artisan boost:install`) | Aktif — butuh `composer install` di `backend/` |
 | **Confluence** | penulisan dokumen terpusat — PRD, FSD, SPEC, user manual tersimpan di satu tempat | konfigurasi MCP Confluence + login Atlassian | 🚧 Coming soon |
 | **ClickUp** | penulisan task — backlog & sprint hasil nano langsung tercatat sebagai task | konfigurasi MCP ClickUp + API token | 🚧 Coming soon |
 | *(tanpa MCP)* | screenshot & PDF | Google Chrome + Playwright | Wajib untuk Dokumentasi |

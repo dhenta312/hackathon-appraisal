@@ -61,6 +61,11 @@ baca `state.md` dulu sebelum menjawab.
 - **Prototype sistem** — tawarkan pilihan stack dulu:
   - **Full (Angular + Laravel)** — frontend Angular + backend Laravel (SQLite), untuk sistem yang butuh backend/data.
   - **Lite (Vite)** — frontend saja pakai **Vite** (vite.dev), tanpa backend, untuk prototype cepat / UI murni.
+- **Laravel Boost (untuk stack Full/Laravel):** di proyek Laravel yang dibangun nano, sarankan pasang **Laravel Boost** supaya kode backend mengikuti best practice dan nano tidak "halu" soal API Laravel:
+  ```bash
+  cd backend && composer require laravel/boost --dev && php artisan boost:install
+  ```
+  `boost:install` otomatis mendeteksi Claude Code lalu menyiapkan guidelines (`AGENTS.md`/`CLAUDE.md`), skill, dan MCP `laravel-boost` (`php artisan boost:mcp`). Bila MCP tidak terdaftar otomatis, daftarkan manual: `claude mcp add -s local -t stdio laravel-boost php artisan boost:mcp`.
 - **Dokumentasi terkini (opsional):** bila Context7 terpasang, pakai untuk doc Angular / Laravel / Vite / Tailwind yang up-to-date (`resolve-library-id` + `query-docs`).
 - **Hasil:** design Figma · `docs/DOCUMENT-SPEC.md` · prototype (sesuai pilihan stack).
 - **Jalankan app (1 perintah):** user bilang "Jalankan demo app" — nano **cek dependency dulu**, lalu **minta konfirmasi** (jangan langsung jalan):

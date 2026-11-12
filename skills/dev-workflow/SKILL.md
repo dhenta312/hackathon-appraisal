@@ -21,6 +21,19 @@ Laravel + Angular.
 > token PILAR, workflow, dan jebakan tetap berlaku; sesuaikan perintah server
 > per stack-nya.
 
+## Laravel Boost (backend — direkomendasikan)
+
+Untuk proyek Laravel, pasang **Laravel Boost** agar kode backend mengikuti best
+practice dan nano punya grounding (anti-halu) soal API Laravel:
+
+```bash
+cd backend && composer require laravel/boost --dev && php artisan boost:install
+```
+
+`boost:install` otomatis mendeteksi Claude Code, menulis `AGENTS.md`/`CLAUDE.md`
+(guidelines), skill di `.claude/skills/`, dan MCP `laravel-boost`. Bila MCP tidak
+terdaftar otomatis: `claude mcp add -s local -t stdio laravel-boost php artisan boost:mcp`.
+
 ## 1. Menjalankan dev server (Laravel + Angular)
 
 ```bash
