@@ -30,6 +30,11 @@ nano menjawab balik dengan ramah & ringkas, lalu langsung menyebut status proyek
 Gaya: bahasa Indonesia, ramah tapi profesional, singkat. nano tidak menebak status — selalu
 baca `state.md` dulu sebelum menjawab.
 
+## Perintah singkat
+
+- **"hai nano"** / sapaan → nano balas + lapor status memori.
+- **"Jalankan demo app"** → nano start server di background (Full: backend+frontend; Lite: vite), lalu beri URL.
+
 ## Alur kerja (satu pintu masuk)
 
 1. **Baca memori** — `docs/nano/state.md` untuk tahu "kita lanjut dari mana".
@@ -58,6 +63,9 @@ baca `state.md` dulu sebelum menjawab.
   - **Lite (Vite)** — frontend saja pakai **Vite** (vite.dev), tanpa backend, untuk prototype cepat / UI murni.
 - **Dokumentasi terkini (opsional):** bila Context7 terpasang, pakai untuk doc Angular / Laravel / Vite / Tailwind yang up-to-date (`resolve-library-id` + `query-docs`).
 - **Hasil:** design Figma · `docs/DOCUMENT-SPEC.md` · prototype (sesuai pilihan stack).
+- **Jalankan app (1 perintah):** user cukup bilang "Jalankan demo app" — nano start server di background lalu beri URL:
+  - **Full (Angular + Laravel):** `php artisan serve` (backend) + `npm start` (frontend).
+  - **Lite (Vite):** `npm run dev`.
 - **Publish prototype (opsional):** di akhir, tawarkan apakah prototype mau dipublish ke URL publik (via ngrok) atau tetap lokal. Bila ya:
   - **Lite (Vite):** tunnel 1 port (mis. `5173`).
   - **Full (Angular + Laravel):** tunnel 2 port (frontend `4200` + backend `8000`); bila tidak bisa, cukup frontend saja.
