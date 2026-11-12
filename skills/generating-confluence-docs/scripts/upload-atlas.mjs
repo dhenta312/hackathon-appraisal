@@ -3,8 +3,8 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { mdToADF } from './convert.mjs';
 
 function loadEnv(p){const o={};for(const l of readFileSync(p,'utf8').split('\n')){const t=l.trim();if(!t||t.startsWith('#'))continue;const i=t.indexOf('=');if(i===-1)continue;o[t.slice(0,i).trim()]=t.slice(i+1).trim();}return o;}
-const { CONFLUENCE_BASE_URL, CONFLUENCE_EMAIL, CONFLUENCE_TOKEN } = loadEnv('../.env.confluence');
-const SPACE_ID='4849676', PARENT_ID='165675013';
+const { CONFLUENCE_BASE_URL, CONFLUENCE_EMAIL, CONFLUENCE_TOKEN, CONFLUENCE_SPACE_ID, CONFLUENCE_PARENT_PAGE_ID, CONFLUENCE_SPACE_KEY } = loadEnv('../.env.confluence');
+const SPACE_ID = CONFLUENCE_SPACE_ID, PARENT_ID = CONFLUENCE_PARENT_PAGE_ID, SPACE_KEY = CONFLUENCE_SPACE_KEY;
 const auth = 'Basic ' + Buffer.from(`${CONFLUENCE_EMAIL}:${CONFLUENCE_TOKEN}`).toString('base64');
 const REPR = 'atlas_doc_format';
 
@@ -98,4 +98,4 @@ for (const id of OLD) await del(id);
 
 writeFileSync('_results.json', JSON.stringify(results, null, 2));
 console.log('\n===== SELESAI =====');
-results.forEach(r => console.log(`- ${r.title}: ${CONFLUENCE_BASE_URL}/wiki/spaces/AT/pages/${r.id}`));
+results.forEach(r => console.log(`- ${r.title}: ${CONFLUENCE_BASE_URL}/wiki/spaces/${SPACE_KEY}/pages/${r.id}`));

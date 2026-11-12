@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import { mdToADF } from './convert.mjs';
 
 function loadEnv(p){const o={};for(const l of readFileSync(p,'utf8').split('\n')){const t=l.trim();if(!t||t.startsWith('#'))continue;const i=t.indexOf('=');if(i===-1)continue;o[t.slice(0,i).trim()]=t.slice(i+1).trim();}return o;}
-const { CONFLUENCE_BASE_URL, CONFLUENCE_EMAIL, CONFLUENCE_TOKEN } = loadEnv('../.env.confluence');
+const { CONFLUENCE_BASE_URL, CONFLUENCE_EMAIL, CONFLUENCE_TOKEN, CONFLUENCE_SPACE_ID, CONFLUENCE_SPACE_KEY } = loadEnv('../.env.confluence');
 const auth = 'Basic ' + Buffer.from(`${CONFLUENCE_EMAIL}:${CONFLUENCE_TOKEN}`).toString('base64');
 const PAGE_ID = '1404797056';
 const IMG_W = 700;
@@ -92,9 +92,9 @@ const adf = { version:1, type:'doc', content:[
 const cur = await api('GET', `/wiki/api/v2/pages/${PAGE_ID}`);
 const ver = cur.json?.version?.number ?? 1;
 const r = await api('PUT', `/wiki/api/v2/pages/${PAGE_ID}`, {
-  id: PAGE_ID, status:'current', title:'DOCUMENT-SPEC — App Purnatugas', spaceId:'4849676',
+  id: PAGE_ID, status:'current', title:'DOCUMENT-SPEC — App Purnatugas', spaceId: CONFLUENCE_SPACE_ID,
   version:{number: ver+1}, body:{ representation:'atlas_doc_format', value: JSON.stringify(adf) },
 });
 console.log('update ->', r.status, '| versi', r.json?.version?.number);
 if (r.status >= 300) { console.log(JSON.stringify(r.json).slice(0,800)); process.exit(1); }
-console.log('OK:', `${CONFLUENCE_BASE_URL}/wiki/spaces/AT/pages/${PAGE_ID}`);
+console.log('OK:', `${CONFLUENCE_BASE_URL}/wiki/spaces/${CONFLUENCE_SPACE_KEY}/pages/${PAGE_ID}`);

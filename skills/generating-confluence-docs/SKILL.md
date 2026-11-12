@@ -17,6 +17,7 @@ CONFLUENCE_TOKEN=
 CONFLUENCE_BASE_URL=
 CONFLUENCE_SPACE_ID=       # id numerik space
 CONFLUENCE_PARENT_PAGE_ID= # id numerik parent page
+CONFLUENCE_SPACE_KEY=      # key space (mis. "AT") untuk URL halaman
 ```
 
 > ⚠️ Token Confluence mengandung `=` (mis. `ATATT...=ECB40041`). Saat parsing `.env`,
