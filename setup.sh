@@ -44,8 +44,35 @@ check_cmd() {
   fi
 }
 check_cmd claude   "Claude Code CLI"
-check_cmd node     "Node.js"
 check_cmd python3  "Python 3"
+
+# Node harus mendukung Angular 18: ^18.19.1 || ^20.11.1 || >=22
+if command -v node >/dev/null 2>&1; then
+  node_v="$(node -p 'process.versions.node' 2>/dev/null || echo "?")"
+  IFS=. read -r node_major node_minor _ <<< "${node_v}"
+  if { [ "${node_major:-0}" -eq 18 ] && [ "${node_minor:-0}" -ge 19 ]; } \
+    || { [ "${node_major:-0}" -eq 20 ] && [ "${node_minor:-0}" -ge 11 ]; } \
+    || [ "${node_major:-0}" -ge 22 ]; then
+    echo "      ✓ Node.js ${node_v} (mendukung Angular 18)"
+  else
+    echo "      ✗ Node.js ${node_v} — Angular 18 butuh ^18.19.1, ^20.11.1, atau >=22"
+  fi
+else
+  echo "      ✗ Node.js — belum terpasang (frontend Angular butuh Node >= 18.19)"
+fi
+
+# PHP + Composer untuk aplikasi demo (backend Laravel)
+if command -v php >/dev/null 2>&1; then
+  if php -r 'exit(version_compare(PHP_VERSION, "8.3.0", ">=") ? 0 : 1);' 2>/dev/null; then
+    echo "      ✓ PHP $(php -r 'echo PHP_VERSION;' 2>/dev/null) (backend Laravel)"
+  else
+    echo "      ✗ PHP $(php -r 'echo PHP_VERSION;' 2>/dev/null) — backend demo butuh >= 8.3"
+  fi
+else
+  echo "      ✗ PHP — belum terpasang (backend demo butuh >= 8.3)"
+fi
+check_cmd composer "Composer (backend demo)"
+
 if [ -d "/Applications/Google Chrome.app" ]; then
   echo "      ✓ Google Chrome"
 else

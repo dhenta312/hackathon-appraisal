@@ -35,7 +35,9 @@ Panduan lengkap, prasyarat per-OS, dan troubleshooting: **[INSTALL.md](INSTALL.m
 ### Prasyarat singkat
 
 - **Claude Code** — `npm install -g @anthropic-ai/claude-code` lalu login (`claude`)
-- **Git**, **Node.js**, **Python 3**, **Google Chrome**
+- **Git**, **Node.js** (≥ 18.19 / 20.11 — Angular 18), **Python 3**, **Google Chrome**
+- **PHP ≥ 8.3** + **Composer** — hanya untuk **aplikasi demo** (backend Laravel).
+  `./setup.sh` mengecek versi PHP dan Node sekaligus.
 - Opsional (fitur penuh): Figma MCP, Superpowers, Context7, ngrok, Playwright,
   python-pptx, akses PILAR
 

@@ -49,10 +49,15 @@ Saat pertama dijalankan, Claude Code meminta login (akun Anthropic). Ikuti sampa
 | Kebutuhan | Cara pasang (macOS) | Catatan |
 |---|---|---|
 | Git | `brew install git` (biasanya sudah ada) | untuk clone & update |
-| Node.js | `brew install node` (atau nvm) | untuk Angular / Playwright |
+| Node.js | `brew install node` (atau nvm) | untuk Angular 18 (**≥ 18.19 / 20.11**) & Playwright |
 | Python 3 | sudah ada, atau `brew install python` | untuk script |
 | Google Chrome | unduh dari google.com/chrome | untuk screenshot & PDF |
+| PHP ≥ 8.3 | `brew install php` | **hanya aplikasi demo** — backend Laravel |
+| Composer | `brew install composer` | **hanya aplikasi demo** — dependency backend |
 
+> **Catatan:** PHP + Composer hanya dibutuhkan untuk menjalankan **aplikasi demo**
+> (`backend/`). Skill nano sendiri cukup dengan Claude Code + Node.js.
+>
 > **Windows/Linux:** pakai package manager masing-masing (scoop/choco untuk Windows; apt/dnf
 > untuk Linux). Perintah `setup.sh` berbasis bash — di Windows jalankan lewat WSL/Git Bash.
 
