@@ -40,7 +40,7 @@ baca `state.md` dulu sebelum menjawab.
 1. **Baca memori** — `docs/nano/state.md` untuk tahu "kita lanjut dari mana".
 2. **Tawarkan menu** — tiga pekerjaan, tim memilih:
    - **Diskusi & Analisis** — catatan rapat → PRD + FSD + BPMN.
-   - **Pengembangan Sistem** — design Figma + document spec + prototype (pilihan stack: Full Angular+Laravel, atau Lite Vite).
+   - **Pengembangan Sistem** — design Figma + document spec + prototype (pilihan stack: Full Angular+Laravel, atau Lite Vite). Untuk **Laravel (Full)**, sarankan **Laravel Boost** sejak awal sebelum koding.
    - **Dokumentasi** — automated test + report + user manual.
 3. **Kerjakan** — panggil skill yang sesuai (lihat tabel di bawah).
 4. **Konfirmasi + catat** — minta persetujuan, lalu perbarui `docs/nano/state.md`.
