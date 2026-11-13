@@ -152,6 +152,10 @@ nano akan menjawab dan menawarkan tiga pekerjaan.
    nano membaca memori (`docs/nano/state.md`) lalu menawarkan: **Diskusi & Analisis**,
    **Pengembangan Sistem**, atau **Dokumentasi**.
 
+> **Proyek Laravel?** Saat mulai membangun backend, pasang **Laravel Boost** lebih dulu:
+> `composer require laravel/boost --dev && php artisan boost:install` — agar kode
+> mengikuti best practice dan nano tidak menebak API Laravel.
+
 ---
 
 ## 6. Cara pakai

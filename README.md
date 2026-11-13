@@ -83,6 +83,10 @@ Panduan lengkap, prasyarat per-OS, dan troubleshooting: **[INSTALL.md](INSTALL.m
 Memori (`docs/nano/state.md`) bersifat **per-proyek** — nano membacanya untuk tahu
 "kita lanjut dari mana" dan memperbaruinya di akhir sesi.
 
+> **Proyek Laravel?** Saat mulai membangun backend, pasang **Laravel Boost** lebih dulu:
+> `composer require laravel/boost --dev && php artisan boost:install` — agar kode
+> mengikuti best practice dan nano tidak menebak API Laravel.
+
 ## Cara update ke versi terbaru
 
 ```bash
