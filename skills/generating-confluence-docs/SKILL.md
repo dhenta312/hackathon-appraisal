@@ -1,6 +1,6 @@
 ---
 name: generating-confluence-docs
-description: Use when publishing, updating, or re-publishing documentation (PRD, FSD/SPEC, BPMN diagrams, UI screenshots, user manuals) to Confluence Cloud, or when a Confluence page renders as raw JSON, images show "preview unavailable", or pages appear centered instead of full-width.
+description: Use when publishing, updating, re-publishing, or reading documentation (PRD, FSD/SPEC, BPMN diagrams, UI screenshots, user manuals) to/from Confluence Cloud, or when a Confluence page renders as raw JSON, images show "preview unavailable", or pages appear centered instead of full-width.
 ---
 
 # Generating Confluence Docs
@@ -71,8 +71,19 @@ CONFLUENCE_SPACE_KEY=      # key space (mis. "AT") untuk URL halaman
 | `render-bpmn.mjs` | BPMN `.bpmn` → PNG |
 | `shoot-app.mjs` | screenshot UI via Playwright |
 | `table-final.mjs` | rebuild tabel (bulletList di sel) |
+| `read-page.mjs` | baca halaman dari URL/ID → markdown |
 
 Dependency script: `npm install markdown-it` (untuk `convert.mjs`).
+
+## Membaca halaman (dari link)
+
+```bash
+node scripts/read-page.mjs "https://xxx.atlassian.net/wiki/spaces/AT/pages/1234567"
+```
+
+Output: markdown (judul + isi) — kebalikan dari `convert.mjs`. Berguna untuk menjadikan
+notulensi rapat / dokumen di Confluence sebagai **bahan diskusi & analisis** (mis. input
+"Diskusi & Analisis" di nano).
 
 ## Kesalahan umum
 

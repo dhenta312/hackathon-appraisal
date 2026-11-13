@@ -48,7 +48,9 @@ baca `state.md` dulu sebelum menjawab.
 ## Tiga pekerjaan
 
 ### 1. Diskusi & Analisis
-**Masukan:** catatan rapat, transkrip diskusi, dokumen apa pun.
+**Masukan:** catatan rapat, transkrip diskusi, dokumen apa pun. **Di awal, aktif tanyakan**
+apakah ada link dokumentasi (mis. notulensi di Confluence) — bila ada, baca isinya
+(`generating-confluence-docs` → `read-page.mjs`) sebagai bahan diskusi.
 - **PRD** — dokumen kebutuhan terstruktur (latar, tujuan, ukuran, ruang lingkup, fungsional,
   alur, risiko) + daftar pertanyaan terbuka.
 - **FSD / SPEC** — spesifikasi teknis (arsitektur, stack, kontrak API, struktur, pengujian).
