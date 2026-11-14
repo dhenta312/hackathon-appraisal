@@ -26,4 +26,5 @@ test('alur menilai rekan: login → tim → form multi-step → simpan draf', as
   // 5. Simpan draf → kembali ke halaman tim
   await page.getByRole('button', { name: 'Simpan draf' }).click();
   await page.waitForURL('**/team');
+  await page.screenshot({ path: 'test-results/04-simpan-draf.png', fullPage: true });
 });
