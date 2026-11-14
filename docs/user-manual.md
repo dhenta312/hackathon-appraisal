@@ -11,8 +11,8 @@ Platform Penilaian Kinerja menggantikan penilaian berbasis Google Form + rekap m
 Tujuannya: **alur menilai yang ringan** dan **skor yang transparan**.
 
 - Skor maksimum **100**, terdiri dari 5 komponen: Core Value (10), Soft Skill (25),
-  Hard Skill (30), Growth & Innovation (15), Presensi (20).
-- Presensi ditarik dari data kehadiran (bukan dinilai oleh rekan).
+  Hard Skill (30), Growth & Innovation (15), Kehadiran & Kedisiplinan (20).
+- Kehadiran ditarik dari data absensi (bukan dinilai oleh rekan).
 - Skor final = rata-rata dari semua penilai yang sudah mengirim.
 
 ## 2. Akses & Login
@@ -38,21 +38,21 @@ Tujuannya: **alur menilai yang ringan** dan **skor yang transparan**.
 
 | Peran | Yang bisa dilakukan |
 |---|---|
-| **Pegawai (penilai)** | Menilai rekan setim, melihat hasil **diri sendiri** |
+| **Pegawai (penilai)** | Menilai siapa saja (360°), melihat hasil **diri sendiri** |
 | **Admin/HR** | Melihat hasil **semua pegawai**, mengatur periode, pertanyaan, & bobot |
 
-## 4. Panduan Penilai — Alur Menilai Rekan
+## 4. Panduan Penilai — Alur Menilai (360°)
 
 ### 4.1 Melihat Tim & Progres
 
-Setelah login, masuk ke halaman **Tim saya**: daftar rekan setim + status tiap orang
+Setelah login, masuk ke halaman **Tim saya**: daftar semua pegawai + status tiap orang
 (Belum / Draf / Selesai) + progres "sudah X dari N dinilai".
 
 ![Tim saya](../screenshots/03-karyawan.png)
 
 ### 4.2 Mengisi Form Penilaian (multi-step)
 
-Klik nama rekan → form penilaian terbuka **otomatis sesuai role** rekan (tidak perlu
+Klik nama pegawai → form penilaian terbuka **otomatis sesuai role** orang tersebut (tidak perlu
 memilih role manual). Form terdiri dari beberapa langkah (komponen):
 
 1. **Hubungan Anda** — pilih Diri sendiri / Atasan langsung / Rekan sejawat / Bawahan / Lainnya.
@@ -111,9 +111,9 @@ Saat mengirim dengan indikasi ini, muncul dialog konfirmasi: **"Periksa ulang"**
 Tiap komponen menampilkan kontribusi masing-masing penilai secara **anonim**
 ("Penilai A", "Penilai B") lengkap dengan alasannya.
 
-### 6.4 Presensi
+### 6.4 Kehadiran
 
-Presensi ditampilkan sebagai **baris data terpisah** (mis. 18/20), bukan "dinilai" rekan.
+Kehadiran ditampilkan sebagai **baris data terpisah** (mis. 18/20), bukan "dinilai" rekan.
 
 ![Hasil](../screenshots/06-hasil.png)
 

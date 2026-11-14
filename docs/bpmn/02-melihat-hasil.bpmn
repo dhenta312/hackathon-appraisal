@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  id="Definitions_Hasil"
+                  targetNamespace="http://bpmn.io/schema/bpmn">
+
+  <bpmn:collaboration id="Collaboration_Hasil">
+    <bpmn:participant id="Participant_Hasil" name="Platform Penilaian Kinerja — Melihat Hasil" processRef="Process_Hasil" />
+  </bpmn:collaboration>
+
+  <bpmn:process id="Process_Hasil" isExecutable="false">
+    <bpmn:laneSet id="LaneSet_Hasil">
+      <bpmn:lane id="Lane_Pengguna" name="Pengguna (Pegawai / Admin)">
+        <bpmn:flowNodeRef>Start_Mulai</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_BukaHasil</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_LihatHasil</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>G_Banding</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>T_AjukanBanding</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Selesai</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Sistem" name="Sistem">
+        <bpmn:flowNodeRef>S_AmbilHasil</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>G_Otorisasi</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Ditolak</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>S_SimpanBanding</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Banding</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <bpmn:startEvent id="Start_Mulai" name="Mulai">
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+    </bpmn:startEvent>
+
+    <bpmn:userTask id="T_BukaHasil" name="Buka halaman hasil (admin: pilih pegawai; pegawai: diri sendiri)">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:userTask>
+
+    <bpmn:serviceTask id="S_AmbilHasil" name="Ambil hasil + cek otorisasi">
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:exclusiveGateway id="G_Otorisasi" name="Diizinkan?">
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:endEvent id="End_Ditolak" name="403 Ditolak">
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:userTask id="T_LihatHasil" name="Lihat dashboard hasil (total, grade, komponen, penilai anonim, kehadiran)">
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:userTask>
+
+    <bpmn:exclusiveGateway id="G_Banding" name="Ajukan banding?">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+      <bpmn:outgoing>Flow_8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:userTask id="T_AjukanBanding" name="Tulis alasan banding (pegawai, hasil sendiri)">
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+      <bpmn:outgoing>Flow_9</bpmn:outgoing>
+    </bpmn:userTask>
+
+    <bpmn:serviceTask id="S_SimpanBanding" name="Simpan banding (status pending)">
+      <bpmn:incoming>Flow_9</bpmn:incoming>
+      <bpmn:outgoing>Flow_10</bpmn:outgoing>
+    </bpmn:serviceTask>
+
+    <bpmn:endEvent id="End_Banding" name="Banding terkirim">
+      <bpmn:incoming>Flow_10</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:endEvent id="End_Selesai" name="Selesai">
+      <bpmn:incoming>Flow_8</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start_Mulai" targetRef="T_BukaHasil" />
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="T_BukaHasil" targetRef="S_AmbilHasil" />
+    <bpmn:sequenceFlow id="Flow_3" sourceRef="S_AmbilHasil" targetRef="G_Otorisasi" />
+    <bpmn:sequenceFlow id="Flow_4" name="Tidak" sourceRef="G_Otorisasi" targetRef="End_Ditolak" />
+    <bpmn:sequenceFlow id="Flow_5" name="Ya" sourceRef="G_Otorisasi" targetRef="T_LihatHasil" />
+    <bpmn:sequenceFlow id="Flow_6" sourceRef="T_LihatHasil" targetRef="G_Banding" />
+    <bpmn:sequenceFlow id="Flow_7" name="Ya" sourceRef="G_Banding" targetRef="T_AjukanBanding" />
+    <bpmn:sequenceFlow id="Flow_8" name="Tidak" sourceRef="G_Banding" targetRef="End_Selesai" />
+    <bpmn:sequenceFlow id="Flow_9" sourceRef="T_AjukanBanding" targetRef="S_SimpanBanding" />
+    <bpmn:sequenceFlow id="Flow_10" sourceRef="S_SimpanBanding" targetRef="End_Banding" />
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Hasil">
+    <bpmndi:BPMNPlane id="BPMNPlane_Hasil" bpmnElement="Collaboration_Hasil">
+      <bpmndi:BPMNShape id="Start_Mulai_di" bpmnElement="Start_Mulai">
+        <dc:Bounds x="180" y="60" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_BukaHasil_di" bpmnElement="T_BukaHasil">
+        <dc:Bounds x="150" y="140" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_AmbilHasil_di" bpmnElement="S_AmbilHasil">
+        <dc:Bounds x="620" y="140" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G_Otorisasi_di" bpmnElement="G_Otorisasi">
+        <dc:Bounds x="645" y="260" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Ditolak_di" bpmnElement="End_Ditolak">
+        <dc:Bounds x="812" y="267" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_LihatHasil_di" bpmnElement="T_LihatHasil">
+        <dc:Bounds x="150" y="340" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="G_Banding_di" bpmnElement="G_Banding">
+        <dc:Bounds x="175" y="480" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="T_AjukanBanding_di" bpmnElement="T_AjukanBanding">
+        <dc:Bounds x="150" y="580" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="S_SimpanBanding_di" bpmnElement="S_SimpanBanding">
+        <dc:Bounds x="620" y="580" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Banding_di" bpmnElement="End_Banding">
+        <dc:Bounds x="652" y="700" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="End_Selesai_di" bpmnElement="End_Selesai">
+        <dc:Bounds x="182" y="700" width="36" height="36" />
+      </bpmndi:BPMNShape>
+
+      <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1"><di:waypoint x="198" y="96" /><di:waypoint x="198" y="140" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_2_di" bpmnElement="Flow_2"><di:waypoint x="250" y="180" /><di:waypoint x="620" y="180" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_3_di" bpmnElement="Flow_3"><di:waypoint x="670" y="220" /><di:waypoint x="670" y="260" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_4_di" bpmnElement="Flow_4"><di:waypoint x="695" y="285" /><di:waypoint x="812" y="285" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_5_di" bpmnElement="Flow_5"><di:waypoint x="645" y="285" /><di:waypoint x="250" y="380" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_6_di" bpmnElement="Flow_6"><di:waypoint x="200" y="420" /><di:waypoint x="200" y="480" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_7_di" bpmnElement="Flow_7"><di:waypoint x="200" y="530" /><di:waypoint x="200" y="580" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_8_di" bpmnElement="Flow_8"><di:waypoint x="200" y="505" /><di:waypoint x="200" y="700" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_9_di" bpmnElement="Flow_9"><di:waypoint x="250" y="620" /><di:waypoint x="620" y="620" /></bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10_di" bpmnElement="Flow_10"><di:waypoint x="670" y="660" /><di:waypoint x="670" y="700" /></bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

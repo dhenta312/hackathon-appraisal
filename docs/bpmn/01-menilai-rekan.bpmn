@@ -41,7 +41,7 @@
       <bpmn:outgoing>Flow_2</bpmn:outgoing>
     </bpmn:userTask>
 
-    <bpmn:userTask id="T_PilihRekan" name="Pilih rekan yang dinilai">
+    <bpmn:userTask id="T_PilihRekan" name="Pilih pegawai yang dinilai (360°)">
       <bpmn:incoming>Flow_2</bpmn:incoming>
       <bpmn:outgoing>Flow_3</bpmn:outgoing>
     </bpmn:userTask>
@@ -56,7 +56,7 @@
       <bpmn:outgoing>Flow_5</bpmn:outgoing>
     </bpmn:userTask>
 
-    <bpmn:userTask id="T_IsiSkor" name="Isi skor 0–5 + alasan per komponen">
+    <bpmn:userTask id="T_IsiSkor" name="Isi skor 0–5 + alasan per pertanyaan">
       <bpmn:incoming>Flow_5</bpmn:incoming>
       <bpmn:outgoing>Flow_6</bpmn:outgoing>
     </bpmn:userTask>
