@@ -2,7 +2,7 @@
   <img src="https://api.iconify.design/lucide/atom.svg?color=%23ffffff&width=160" width="160" alt="nano logo" />
 </p>
 
-# nano — AI Asisten untuk Manajemen Proyek (Ide → Dokumentasi)
+# nano — AI Asisten untuk Manajemen Proyek (Ide → Sistem → Dokumentasi)
 
 **nano** adalah AI asisten berbasis Claude Code yang membantu tim menyelesaikan siklus
 pengembangan sistem secara utuh dan konsisten — dari **ide → PRD → rencana sistem →

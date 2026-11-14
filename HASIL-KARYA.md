@@ -1,53 +1,72 @@
 # Hasil Karya — HACKATHON 2026 (BSI UII)
 
-**Judul karya:** nano — AI Asisten untuk Manajemen Proyek (Ide → Dokumentasi)
-**Bukti penerapan:** Platform Penilaian Kinerja Pegawai (Laravel + Angular, end-to-end)
+**Judul karya:** nano — AI Asisten untuk Manajemen Proyek (Ide → Sistem → Dokumentasi)
+**Bukti penerapan:** Platform Penilaian Kinerja Pegawai (Laravel + Angular, end-to-end) — pilot project
+
+> Dokumen ini mengikuti 6 bagian format penulisan hasil karya Hackathon 2026.
 
 ---
 
 ## 01. Problem
 
-Pengembangan sistem di lingkungan kampus menghadapi masalah **konsistensi proses**, bukan
-masalah kekurangan alat. Satu tim sudah memakai AI untuk menulis kode, tetapi:
+**Badan Sistem Informasi UII tidak kekurangan format. Tidak kekurangan tempat menyimpan dokumen. Tidak
+kekurangan alat bantu AI. Yang kurang hanya satu: waktu untuk mengetiknya.**
 
-- **Konteks hilang antar-sesi dan antar-orang.** Keputusan di rapat tidak tercatat di mana
-  pun, sehingga sesi berikutnya dimulai dari nol dan hal yang sama diputuskan ulang.
-- **Dokumen kebutuhan tidak seragam.** PRD, rencana teknis, dan dokumentasi tiap tim
-  berbeda format, sehingga sulit dibandingkan, di-review, atau diwariskan.
-- **Standar desain UII (Pilar) tidak selalu dipakai** — tampilan aplikasi bergantung selera
-  masing-masing pengembang.
-- **Dokumentasi pengguna jadi prioritas terakhir**, sering tidak selesai saat proyek
-  diserahkan.
-- **AI dipakai tanpa kendali** → hasilnya terdengar meyakinkan tetapi sebagian karangan
-  (halusinasi API, keputusan teknis tanpa dasar).
+Dokumen sudah punya format baku, dan Confluence sudah jadi rumahnya. Tapi rumah itu kosong
+sampai ada orang yang duduk dan mengetik. Itulah masalahnya:
 
-Akibatnya biaya terbesar proyek bukan menulis kode, melainkan **pengerjaan ulang** akibat
-salah paham, dan **penyerahan** yang tertahan karena dokumen tidak siap.
+- **Semua dokumen masih lahir dari jari manusia** — notulen rapat, laporan progres, dokumen
+  serah terima, dokumen UAT, daftar risiko, sampai dokumentasi pengguna. Makin banyak
+  dokumen, makin panjang antrean mengetik.
+- **Confluence jadi gudang, bukan mesin** — notulen rapat masuk, lalu berhenti di sana.
+  Tidak ada yang mengubahnya menjadi analisis; jembatan antara rapat dan dokumen tetap
+  dijaga ingatan orang.
+- **Format teknis sudah siap, isinya belum** — template FSD/SPEC ada, tetapi tetap diketik
+  dari nol setiap proyek.
+- **Pilar sudah ada, komponen custom masih liar** — komponen di luar Pilar dirancang manual
+  dan perlahan semakin kompleks.
+- **Dokumentasi pengguna selalu jadi yang terakhir** — dan paling sering tidak pernah selesai.
+- **AI dipakai tanpa rem** — hasilnya terdengar meyakinkan, padahal sebagian karangan:
+  API yang tidak ada, keputusan teknis tanpa dasar.
+
+Ujungnya sama di setiap proyek: **waktu tim habis untuk mengetik ulang yang seharusnya bisa
+mengerjakan hal lain**, dan penyerahan tertahan karena dokumen belum siap.
 
 ---
 
 ## 02. Current Process
 
-**Sebelum nano:**
+**Alurnya sudah ada. Yang belum ada adalah yang mengerjakannya.**
 
-| Tahap | Cara kerja sekarang | Masalah |
+| Tahap | Cara kerja sekarang | Yang masih manual |
 |---|---|---|
-| Diskusi → requirement | Chat & rapat; hasil di catatan pribadi atau dokumen bebas | Tidak terstruktur, hilang antar-sesi |
-| Perencanaan teknis | Dibuat per pengembang, bentuk bebas | Tidak seragam antar-tim, sulit direview |
-| Pembangunan | AI dipakai ad-hoc (copilot/chat) tanpa SOP | Hasil bergantung skill individu, rawan halusinasi |
-| Desain UI | Mengikuti selera pengembang | Standar Pilar tidak dipakai |
-| Dokumentasi | Dikerjakan di akhir, bila sempat | Sering tidak lengkap |
+| Diskusi → analisis | Hasil rapat **disimpan di Confluence** | Menyusun analisis dari catatan; menuangkannya ke halaman Confluence |
+| Dokumen pendukung | Disimpan di Confluence dengan format ada | **Notulen rapat, laporan progres, dokumen serah terima, dokumen UAT, daftar risiko** — semuanya diketik manual |
+| Perencanaan teknis | Sudah ada formatnya (FSD/SPEC) | Tetap **ditulis manual** dari nol |
+| Desain UI | Sudah ada **Pilar** (design system UII) | **Terkendala komponen custom** — komponen di luar Pilar masih harus dirancang manual dan kerap tidak konsisten |
+| Dokumentasi pengguna | Dibuat di akhir proyek | Masih **ditulis manual**, sering tidak sempat selesai |
 
-**Inti persoalan:** setiap tahap bergantung pada **ingatan dan kebiasaan individu**, bukan
-pada prosedur yang dilekatkan pada alat. Tim baru harus mempelajari ulang cara kerja tim
-sebelumnya dari nol.
+**Inti persoalan:** format dan tempat sudah tertata; yang belum tertata adalah **proses
+produksinya**. Setiap dokumen bergantung pada satu orang yang sedang punya waktu untuk
+mengetik. Confluence baru sebatas arsip — belum pernah menjadi bagian dari alur kerja.
+
+Khusus untuk **penilaian kinerja pegawai** (kasus yang digantikan di pilot project):
+prosesnya memakai **Google Form + rekap manual oleh HR** — template berbeda per role,
+penilai wajib menulis alasan di semua komponen, dan skor baru ketahuan setelah HR merekap
+di akhir periode.
 
 ---
 
 ## 03. Solution
 
-**nano** — AI asisten berbasis Claude Code yang menjadikan **siklus pengembangan sistem
-sebagai prosedur yang dibakukan dan dapat dieksekusi**.
+**nano menjalankan satu siklus penuh — bukan hanya dokumentasinya.** Ia masuk paling awal,
+membaca notulen rapat di Confluence, menyusun analisis dan spesifikasi, lalu **membangun
+sistemnya**: desain dengan Pilar, kode Angular + Laravel yang dipandu Context7 dan Laravel
+Boost. Setelah sistemnya jalan, ia menutup lingkaran — menghasilkan dokumentasi dan
+**menerbitkannya kembali ke Confluence**.
+
+Format tetap milik organisasi. Tempat penyimpanan tetap milik organisasi. Yang digantikan
+adalah **pekerjaan manual di sepanjang siklus** — dari mengetik dokumen sampai menebak API.
 
 ### Satu pintu masuk, tiga pekerjaan
 
@@ -57,96 +76,168 @@ sebagai prosedur yang dibakukan dan dapat dieksekusi**.
 | **Pengembangan Sistem** | kebutuhan → design Figma + document spec + prototype (Full Angular+Laravel / Lite Vite) |
 | **Dokumentasi** | aplikasi jalan → automated test + report + user manual |
 
-### Empat mekanisme yang membedakan nano
+### Yang sudah berjalan hari ini
 
-1. **Memori antar-sesi** — berkas `docs/nano/state.md` di dalam repo proyek mencatat fase,
-   yang selesai, yang berjalan, pertanyaan terbuka, dan keputusan. Karena ikut ter-clone,
-   memori terdokumentasi dan tidak bergantung ingatan individu.
-2. **Kontrol manusia di tiap langkah** — AI mengusulkan, manusia mengonfirmasi sebelum
-   pekerjaan dilanjutkan. AI tidak memutuskan sendiri.
-3. **Mengenal Pilar** — design token PILAR Design System UII dibawa sebagai knowledge bawaan
-   nano, sehingga hasil UI konsisten sejak awal.
-4. **Empat kendali kualitas** — (a) konfirmasi manusia per tahap, (b) kejujuran atas
-   ketidaktahuan (informasi tanpa sumber ditandai "perlu dikonfirmasi"), (c) satu sumber
-   resmi (dokumen di repo), (d) riwayat versi (hasil baru tidak menimpa yang lama).
+| Sebelumnya dikerjakan manual | Kini ditangani nano |
+|---|---|
+| **Membaca notulensi/hasil diskusi di Confluence** | nano meminta link dokumentasi, membaca halamannya, lalu menjadikannya bahan analisis |
+| Analisis dari catatan rapat | PRD + FSD/SPEC + BPMN |
+| Perencanaan teknis (sudah ada format) | diisi nano mengikuti format yang ada |
+| Dokumentasi pengguna di akhir proyek | user manual + laporan tes, dihasilkan sebagai bagian alur |
+| Menyalin dokumen ke Confluence | **publish otomatis** (PRD, FSD, BPMN, screenshot, manual) |
 
-### Bukti penerapan — Platform Penilaian Kinerja Pegawai
+Perhatikan bahwa lingkarannya sudah **tertutup**: nano membaca dari Confluence sebelum
+bekerja, dan menulis ke Confluence setelah selesai. Tidak ada lagi orang yang bolak-balik
+menyalin.
 
-Aplikasi web yang **dibangun memakai nano** sebagai studi kasus nyata, bukan mockup.
-Aplikasi menggantikan penilaian kinerja berbasis Google Form + rekap manual HR:
+### nano ikut membangun sistemnya — bukan sekadar mencatatnya
 
-- **Alur menilai yang ringan** — role auto-load, alasan per komponen, save draft & resume, progres.
-- **Skor yang transparan** — rumus terlihat, rincian per komponen, kontribusi penilai
-  ditampilkan anonim (Penilai A/B), presensi sebagai data.
+Ini yang membedakan nano dari asisten dokumentasi. Saat masuk ke **Pengembangan Sistem**,
+nano tidak mengarang dari ingatan; ia membaca acuan yang benar sebelum menulis satu baris kode.
+
+| Penopang | Perannya saat nano membangun sistem |
+|---|---|
+| **Pilar (design system UII)** | token PILAR **terbundel di dalam nano** (`references/pilar-design-tokens.md`), dibaca sebelum menyusun desain → UI mengikuti standar UII sejak layar pertama, bukan selera pengembang |
+| **Context7 MCP** | menarik **dokumentasi library terkini** (Angular, Laravel, Vite, Tailwind) → nano membaca API resminya, bukan menebak dari ingatan |
+| **Laravel Boost MCP** | membawa **guideline & best practice Laravel** resmi → kode backend mengikuti konvensi framework, bukan tebakan |
+| **dev-workflow UII** | konvensi pengembangan organisasi — stack, token Tailwind PILAR, pola commit, stepper, jebakan yang biasa terjadi |
+
+Hasilnya bisa dipilih sesuai kebutuhan: **Full** (Angular + Laravel + SQLite) untuk sistem
+yang butuh backend dan data, atau **Lite** (Vite) untuk prototype cepat. Keduanya tetap
+membawa Pilar. nano juga bisa menyalakan aplikasinya sendiri — cek dependency, minta
+konfirmasi, lalu jalankan server dan berikan URL-nya.
+
+### Empat hal yang membuat nano berbeda
+
+1. **nano tidak lupa.** Berkas `docs/nano/state.md` di dalam repo mencatat fase, yang sudah
+   selesai, yang sedang jalan, pertanyaan terbuka, dan keputusan. Karena ikut ter-clone,
+   memori ini milik tim — bukan milik satu kepala.
+2. **Manusia tetap di kursi kemudi.** nano mengusulkan, manusia mengonfirmasi. Tidak ada
+   tahap yang berjalan tanpa izin.
+3. **nano membangun sesuai standar, bukan sesuai tebakan.** Pilar untuk desain, Context7
+   dan Laravel Boost untuk kode — tiga sumber kebenaran yang menahan AI dari mengarang.
+4. **Empat kendali kualitas.** Konfirmasi manusia per tahap, kejujuran atas ketidaktahuan
+   (informasi tanpa sumber ditandai "perlu dikonfirmasi"), satu sumber resmi di repo, dan
+   riwayat versi yang tidak menimpa.
+
+### Batas yang kami akui: Pilar dan komponen custom
+
+Pilar dibawa sebagai pengetahuan bawaan, jadi komponen yang sudah ada di Pilar langsung
+dipakai konsisten. **Komponen custom di luar Pilar belum sepenuhnya tertangani** — nano
+memakai pola dan token Pilar sebagai acuan, tetapi perancangan komponen baru masih perlu
+tinjauan manusia. Ini **solusi parsial, bukan tuntas**, dan kami sebut apa adanya.
+
+### Lima dokumen yang belum kami tangani
+
+Kami tidak mengklaim semuanya beres. Kelima dokumen ini masih diketik manual dan menjadi
+pekerjaan berikutnya:
+
+| Dokumen | Kondisi sekarang |
+|---|---|
+| **Notulen rapat** | dibaca nano sebagai bahan analisis, tetapi **belum** ditulis ulang oleh nano |
+| **Laporan progres** | masih diketik manual di Confluence |
+| **Dokumen serah terima** | masih diketik manual di akhir proyek |
+| **Dokumen UAT** | masih diketik manual |
+| **Daftar risiko** | masih diketik manual |
+
+### Pilot project — Platform Penilaian Kinerja Pegawai
+
+Satu aplikasi web nyata yang **dibangun memakai nano**, bukan mockup. Fungsinya di sini
+bukan menggantikan peran HR, melainkan **menjadi bukti**: nano sanggup membawa produk dari
+ide sampai dokumentasi.
+
+- **Menilai jadi ringan** — role auto-load, alasan per komponen, save draft & resume, progres.
+- **Skor terbuka** — rumus terlihat, rincian per komponen, kontribusi penilai ditampilkan
+  anonim (Penilai A/B), presensi sebagai data.
 - **Skor maksimum 100** — Core Value (10), Soft Skill (25), Hard Skill (30),
-  Growth & Innovation (15), Presensi (20).
-- **Tata kelola mandiri admin** — kelola periode, pertanyaan, pilihan jawaban, dan bobot
-  tanpa bantuan teknis.
-- **Deteksi pengisian asal** — skor seragam, semua-maksimal, dan alasan copas ditandai
+  Growth & Innovation (15), Kehadiran & Kedisiplinan (20).
+- **Admin mandiri** — kelola periode, pertanyaan, pilihan jawaban, dan bobot tanpa bantuan
+  teknis. Otorisasi terpisah antara admin dan pengguna biasa.
+- **Pengisian asal terdeteksi** — skor seragam, semua-maksimal, dan alasan copas ditandai
   sebelum data masuk.
 
-**Output yang dihasilkan nano untuk proyek ini:** PRD, FSD/SPEC, BPMN, Document Spec,
-User Manual, laporan tes, dan deck presentasi — lengkap dalam satu alur.
+**Yang dihasilkan nano untuk proyek ini:** PRD, FSD/SPEC, BPMN, Document Spec, User Manual,
+laporan tes, dan deck presentasi — seluruhnya dalam satu alur.
 
 ---
 
 ## 04. Impact
 
-### Before vs After — proses pengembangan
+**Buktinya bukan slide. Buktinya riwayat git.**
+
+Yang berubah adalah **cara tim mengembangkan sistem**, bukan cara HR menilai pegawai.
+Platform Penilaian Kinerja adalah **pilot project** — objek uji untuk mengukur seberapa jauh
+nano bisa membawa sebuah produk.
+
+### Sebelum vs Sesudah
 
 | Aspek | Sebelum | Setelah memakai nano |
 |---|---|---|
+| Produksi dokumen | diketik manual satu per satu | dihasilkan nano dari catatan diskusi |
+| Perencanaan teknis | format ada, isi diketik manual | diisi nano mengikuti format yang ada |
+| Dokumentasi pengguna | manual, sering tidak selesai | dihasilkan sebagai bagian alur |
+| Hasil rapat → analisis | baca notulensi, analisis dibuat manual | nano membaca halaman Confluence & menyusun analisisnya |
+| Publish ke Confluence | disalin manual ke halaman | dipublikasikan otomatis |
 | Sumber kebenaran | ingatan individu & chat | `docs/nano/state.md` + dokumen di repo |
-| Konsistensi dokumen | bebas per tim | satu format baku (PRD → FSD → BPMN) |
-| Standar desain | selera pengembang | PILAR dibawa sebagai knowledge bawaan |
-| Posisi dokumentasi | dikerjakan terakhir, sering tidak jadi | dihasilkan sebagai bagian alur |
+| Menulis kode | mengandalkan ingatan AI soal API | dipandu **Context7** (doc terkini) + **Laravel Boost** (best practice) |
+| Standar desain | Pilar ada, komponen custom manual | **token Pilar terbundel di nano**; komponen custom: parsial |
 | Ketergantungan pada individu | tinggi | prosedur ada di repo, siapa pun bisa melanjutkan |
+| Kendali atas AI | ad-hoc, hasil rawan karangan | 4 kendali kualitas + *grounding* Context7/Laravel Boost |
 
-### Before vs After — proses penilaian kinerja (pengguna akhir)
+### Dampak terukur pada pilot project
 
-| Aspek | Sebelum (Google Form + rekap HR) | Setelah (Platform Penilaian Kinerja) |
-|---|---|---|
-| Waktu menilai satu rekan | ±3 jam | ±15 menit |
-| Rekap skor | manual oleh HR, lambat & rawan salah | otomatis saat penilaian dikirim |
-| Transparansi skor | angka gelap, sering dipertanyakan | rumus & rincian per komponen terbuka |
-| Beban penilai | template berbeda per role, wajib alasan semua | role auto-load, draft bisa dilanjutkan |
-| Deteksi pengisian asal | baru terdeteksi setelah direkap | ditandai sebelum data dikirim |
+Satu produk end-to-end — Laravel + Angular, 5 kategori penilaian, RBAC, deteksi pengisian
+asal — dibangun **±2 hari kerja / 38 commit**, pada **30 Okt – 5 Nov 2026**.
 
-### Hasil terukur
+> **Nol commit menyentuh aplikasi setelah 5 Nov.** Dua minggu berikutnya, repo hanya
+> diperbarui untuk mengembangkan nano itu sendiri. Artinya kode yang dihasilkan **selesai** —
+> bukan setengah jadi yang harus ditambal terus.
 
-- **Penilaian satu rekan turun dari ±3 jam menjadi ±15 menit** — pengurangan waktu
-  sekitar 92% pada pekerjaan yang paling membebani penilai.
-- **Rekap manual HR hilang sepenuhnya** — skor terhitung saat penilaian dikirim.
-- **Keluhan "kenapa skor saya segitu?" dapat dijawab** — setiap angka bisa ditelusuri ke
-  komponen dan kontributor (anonim).
+Dampaknya terasa di dua sisi:
 
-> Catatan kejujuran: angka waktu di atas diambil dari batas atas dan bawah proses manual
-> yang dilaporkan tim HR. Pengukuran before/after yang ketat (sampel penilai, periode
-> terkontrol) direncanakan sebagai bagian fase adopsi dan belum dilakukan.
+- **Bagi pengembang** — satu orang menempuh ide → PRD → FSD → aplikasi → dokumentasi dalam
+  satu tarikan napas, tanpa kehilangan konteks antar-sesi.
+- **Bagi pengguna akhir (bonus dari pilot)** — waktu menilai satu rekan turun dari ±3 jam
+  menjadi ±15 menit, dan rekap manual HR hilang karena skor terhitung saat dikirim.
+
+> **Catatan kejujuran.** Angka kecepatan build (2 hari, 38 commit) dihitung langsung dari
+> riwayat git — siapa pun bisa memeriksanya. Angka ±3 jam → ±15 menit berasal dari laporan
+> tim HR sebagai batas proses lama, **bukan** pengukuran terkontrol; pengukuran ketatnya
+> direncanakan pada fase adopsi dan **belum dilakukan**.
+
+### Angka yang bisa dibawa ke panggung
+
+- **±3 jam → ±15 menit** untuk menilai satu rekan — sekitar **92%** pekerjaan terberat
+  penilai hilang.
+- **Rekap manual HR: nol** — skor terhitung saat penilaian dikirim.
+- **Pertanyaan "kenapa skor saya segitu?" akhirnya bisa dijawab** — setiap angka bisa
+  ditelusuri ke komponen dan kontributornya (anonim).
 
 ---
 
 ## 05. Governance
 
-### Bagaimana memastikan cara kerja ini tetap dipatuhi?
+**Kepatuhan tidak boleh bergantung pada disiplin orang. Ia harus melekat pada alatnya.**
 
-1. **Prosedur melekat pada alat, bukan pada orang.** Skill nano disimpan di repo git dan
-   dipasang lewat satu perintah (`./setup.sh`). Tim baru tidak bisa "lupa" mengikuti alur —
-   alur itu yang menjalankan pekerjaan.
-2. **Memori per-proyek difilekan di repo.** Setiap sesi diawali dengan membaca `state.md`
-   dan diakhiri dengan memperbaruinya. Jejak keputusan dapat ditelusuri siapa pun.
-3. **Kontrol manusia sebagai gerbang mutu.** AI tidak melanjutkan tahap tanpa konfirmasi
-   penanggung jawab. Tanggung jawab akhir berada di manusia, bukan pada AI.
-4. **Satu sumber resmi.** Dokumen di repo adalah acuan; jawaban di chat tidak dianggap
-   kontrak. Ini mencegah perbedaan tafsir antar-tim.
-5. **Riwayat versi terjaga.** Pembaruan dokumen menghasilkan versi baru, tidak menimpa —
-   sehingga perubahan dapat dipertanggungjawabkan.
-6. **Kepemilikan bersama.** Karena skill tersimpan di git, siapa pun di organisasi dapat
-   meninjau, memperbaiki, dan menelusuri riwayatnya. Tidak ada ketergantungan pada satu orang.
+1. **Prosedurnya ada di dalam alat.** Skill nano tersimpan di repo git dan dipasang dengan
+   satu perintah (`./setup.sh`). Tim baru tidak bisa "lupa" mengikuti alur — alur itulah yang
+   menjalankan pekerjaan.
+2. **Memori proyek ikut ter-commit.** Setiap sesi dibuka dengan membaca `state.md` dan
+   ditutup dengan memperbaruinya. Jejak keputusan bisa ditelusuri siapa pun.
+3. **Manusia adalah gerbang mutu.** Tidak ada tahap yang lanjut tanpa konfirmasi penanggung
+   jawab. Tanggung jawab akhir tetap di manusia, bukan di AI.
+4. **Satu sumber resmi.** Dokumen di repo adalah acuan; jawaban di chat bukan kontrak. Ini
+   yang mencegah satu tim menafsirkan berbeda dari tim lain.
+5. **Riwayat tidak ditimpa.** Setiap pembaruan menghasilkan versi baru, sehingga setiap
+   perubahan bisa dipertanggungjawabkan.
+6. **Tidak ada satu orang yang jadi titik lemah.** Karena skill ada di git, siapa pun bisa
+   meninjau, memperbaiki, dan menelusuri riwayatnya.
+7. **Format organisasi dihormati.** nano mengisi format yang sudah berlaku — FSD/SPEC dan
+   halaman Confluence — bukan memaksa format baru.
 
 ### Rencana adopsi bertahap
 
-| Fase | Cakupan | Ukuran |
+| Fase | Cakupan | Yang diukur |
 |---|---|---|
 | **Uji coba** | 1–2 tim | waktu penyusunan dokumen, jumlah revisi akibat salah paham |
 | **Perluasan** | 3–5 tim | konsistensi desain, kelengkapan dokumentasi |
@@ -156,31 +247,37 @@ User Manual, laporan tes, dan deck presentasi — lengkap dalam satu alur.
 
 ## 06. Security
 
-### Bagaimana mencegah solusi menjadi security risk?
+**Bahaya terbesar AI bukanlah jawaban yang salah — melainkan jawaban salah yang terdengar
+benar.** Karena itu pertahanannya dibangun sejak awal.
 
 | Risiko | Mitigasi |
 |---|---|
 | **Halusinasi AI** (API/konfigurasi karangan) | 4 kendali kualitas + *grounding*: Context7 (dokumentasi library terkini) dan Laravel Boost (best practice Laravel) menahan AI menebak API |
-| **Kebocoran kredensial** | seluruh kredensial (token Figma, Confluence, `.env`) di-*gitignore* dan hanya lokal; tidak pernah masuk riwayat commit |
+| **Kebocoran kredensial** | seluruh kredensial (token Figma, Confluence, `.env`) di-*gitignore* dan hanya lokal; terverifikasi tidak pernah masuk riwayat commit |
 | **AI bertindak tanpa otorisasi** | AI hanya mengusulkan; setiap tahap menunggu konfirmasi manusia. Tidak ada keputusan otomatis yang mengikat |
 | **Data sensitif dikirim ke layanan luar** | hanya konteks yang relevan yang dikirim; dokumen hasil tetap tersimpan di repo organisasi, bukan di layanan pihak ketiga |
 | **Kode membawa celah keamanan** | kode hasil nano ditinjau lewat PRD/SPEC dan direview manusia sebelum rilis; standar Laravel (Boost) dan Angular diikuti |
 | **Kehilangan pekerjaan** | riwayat git + memori `state.md` = tidak ada pekerjaan yang hilang bila sesi atau anggota berubah |
 | **Tanggung jawab tidak jelas** | keputusan final selalu di penanggung jawab manusia — terlacak di riwayat dokumen dan commit |
 
-### Batas yang diakui
+### Batas yang kami akui
 
-- Platform Penilaian Kinerja **belum** menggunakan SSO/LDAP dan belum lolos audit
-  keamanan production-grade. Untuk demo, autentikasi memakai akun yang di-seed.
+- Platform Penilaian Kinerja **belum** memakai SSO/LDAP dan belum lolos audit keamanan
+  production-grade. Untuk demo, autentikasi memakai akun yang di-seed.
 - Integrasi absensi masih berupa data contoh, bukan koneksi ke sistem kehadiran nyata.
+- **Komponen custom di luar Pilar belum sepenuhnya ditangani nano** (solusi parsial).
 
-Keduanya tercatat sebagai roadmap, bukan diklaim sebagai sudah terselesaikan.
+Ketiganya adalah roadmap, bukan klaim bahwa semuanya sudah beres.
 
 ---
 
-## Ringkasan satu paragraf
+## Penutup
 
-nano mengubah penggunaan AI dari *asal jalan* menjadi **prosedur kerja yang dibakukan**:
-satu pintu masuk tiga pekerjaan, memori antar-sesi, kontrol manusia per tahap, dan design
-system UII sebagai bawaan — lalu membuktikannya dengan membangun Platform Penilaian Kinerja
-Pegawai secara end-to-end, lengkap dengan dokumentasi dan tests.
+Selama ini AI dipakai untuk **satu potong pekerjaan**: menulis kode. nano memakainya untuk
+**seluruh siklus** — membaca rapat di Confluence, membangun sistemnya dengan Pilar, Context7,
+dan Laravel Boost, lalu menutupnya dengan dokumentasi yang diterbitkan kembali ke Confluence.
+
+Satu pintu masuk, tiga pekerjaan, memori yang tidak lupa, manusia yang tetap memegang
+keputusan, dan standar UII sebagai bawaan. Lalu dibuktikan dengan membangun Platform
+Penilaian Kinerja Pegawai secara end-to-end sebagai pilot project — dari ide, ke kode, ke
+dokumentasi, dalam satu alur.

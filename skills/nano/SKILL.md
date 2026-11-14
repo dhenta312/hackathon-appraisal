@@ -3,7 +3,7 @@ name: nano
 description: Use when starting or continuing a software development project and wanting a single consistent workflow — turning stakeholder discussions into requirements and process models, planning and prototyping the system per company standards (Pilar), and producing user documentation and test reports — with cross-session memory and human confirmation at each step. Also use when the user greets or addresses nano (e.g., "hai nano", "hallo nano").
 ---
 
-# nano — AI Asisten untuk Manajemen Proyek (Ide → Dokumentasi)
+# nano — AI Asisten untuk Manajemen Proyek (Ide → Sistem → Dokumentasi)
 
 ## Overview
 
