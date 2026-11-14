@@ -1,5 +1,5 @@
 <div class="flex items-center justify-end gap-400">
-  @if (showDraftSet() && isFirst) {
+  @if (showDraftSet()) {
     <button
       type="button"
       class="h-10 inline-flex items-center gap-150 px-400 rounded-m bg-[#e17100] text-white text-body-m font-semibold disabled:opacity-50"
@@ -16,7 +16,7 @@
     class="h-10 inline-flex items-center gap-150 px-400 rounded-m text-text-primary text-body-m font-semibold disabled:opacity-50"
     (click)="cancel.emit()"
   >
-    <img [src]="isLast ? 'arrow-left.svg' : 'xmark.svg'" alt="" class="size-[20px]" />
+    <img src="xmark.svg" alt="" class="size-[20px]" />
     <span>Batal</span>
   </button>
 
