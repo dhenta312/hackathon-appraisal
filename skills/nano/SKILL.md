@@ -72,6 +72,27 @@ apakah ada link dokumentasi (mis. notulensi di Confluence) — bila ada, baca is
   `boost:install` otomatis mendeteksi Claude Code lalu menyiapkan guidelines (`AGENTS.md`/`CLAUDE.md`), skill, dan MCP `laravel-boost` (`php artisan boost:mcp`). Bila MCP tidak terdaftar otomatis, daftarkan manual: `claude mcp add -s local -t stdio laravel-boost php artisan boost:mcp`.
 - **Dokumentasi terkini (opsional):** bila Context7 terpasang, pakai untuk doc Angular / Laravel / Vite / Tailwind yang up-to-date (`resolve-library-id` + `query-docs`).
 - **Hasil:** design Figma · `docs/DOCUMENT-SPEC.md` · prototype (sesuai pilihan stack).
+
+#### Design Figma dari app yang sudah ada (code → Figma)
+
+Bila tujuannya "generate desain Figma dari app/prototype yang sudah berjalan", ikuti resep ini
+(bukan menggambar dari nol):
+
+1. **Cari port app yang benar** — `lsof -iTCP:<port>`; jangan asumsi 4200/8000 (sering ada
+   proyek lain di port itu). Cek `frontend/src/app/api-url.ts` cocok dengan port backend.
+2. **Ambil data asli** — curl endpoint API (dengan token) atau query DB; jangan mengarang
+   angka/nama/status (sumber salah total skor, jumlah baris, dst.).
+3. **Capture acuan pixel** — `screenshotting-web-app` (Chrome CDP + inject token ke
+   `localStorage`) untuk screenshot layar ber-login; jadi acuan, bukan tebak-tebakan. Ekstrak
+   *computed styles* (warna/font/ukuran) dari app via Playwright lalu cocokkan ke desain.
+4. **Pakai komponen PILAR** — `importComponentSetByKeyAsync` + `setProperties`, bukan gambar
+   dari nol. Ikon/logo SVG eksak via `upload_assets` (hindari transkripsi path panjang yang
+   rawan salah). Bind warna ke variabel lokal file (`mapped`/`brand`), font **Inter**.
+5. **Validasi** — bandingkan struktur (nama node/teks/ukuran) dan *computed styles*, bukan
+   hanya teks; ukur tinggi konten vs tinggi frame agar tidak terpotong.
+6. **Shell jadi komponen** — topbar+sidebar yang dipakai banyak halaman dibuat sekali lalu
+   di-duplikat/instance, jangan di-build ulang per halaman (bug menyebar).
+
 - **Jalankan app (1 perintah):** user bilang "Jalankan demo app" — nano **cek dependency dulu**, lalu **minta konfirmasi** (jangan langsung jalan):
   1. Cek `node_modules` / `vendor`; untuk Full juga `.env` + key + DB.
   2. Laporkan yang kurang + rencana (install apa, jalankan apa) → **minta konfirmasi user**.
@@ -106,7 +127,7 @@ alur/scenario, screenshot tertanam di tiap baris**:
 | Pekerjaan | Skill |
 |---|---|
 | Diskusi & Analisis | superpowers:brainstorming · superpowers:writing-plans · ai-native-development-workflow |
-| Pengembangan Sistem | dev-workflow (Full: Angular+Laravel) · figma:figma-generate-design · figma:figma-design-to-code · figma:figma-generate-library |
+| Pengembangan Sistem | dev-workflow (Full: Angular+Laravel) · figma:figma-use · figma:figma-generate-design · figma:figma-design-to-code · figma:figma-generate-library · screenshotting-web-app (capture acuan) |
 | Dokumentasi | generating-test-reports · screenshotting-web-app · editing-powerpoint-with-python |
 
 ## Dependency opsional
@@ -136,6 +157,23 @@ Saat mengerjakan **Pengembangan Sistem**, baca kedua file di atas **sebelum** me
 2. **Kejujuran atas ketidaktahuan** — info tanpa sumber ditandai, bukan diisi.
 3. **Satu sumber resmi** — dokumen di repo adalah acuan utama.
 4. **Riwayat terjaga** — tiap iterasi versi baru (tidak menimpa); keputusan tercatat.
+
+## Jebakan Figma Plugin API (use_figma)
+
+Wajib dibaca sebelum menulis kode `use_figma` / `createNodeFromSvg`:
+
+| Jebakan | Solusi |
+|---|---|
+| `resize(w,1)` mengunci tinggi jadi 1px (konten terlihat "kosong") | pakai `primaryAxisSizingMode`/`counterAxisSizingMode = 'AUTO'` untuk hug |
+| `layoutSizingHorizontal='FILL'` sebelum jadi child auto-layout | set **setelah** `appendChild` |
+| `createNodeFromSvg` / `createAutoLayout` bisa default **fill putih** | set `fills=[]` eksplisit pada wrapper/ikon; **jangan** "clear+restore" blanket — menimpa warna non-putih (rail gradient, label aktif, badge, dst.) |
+| SVG ber-`<clipPath>` atau tanpa `fill="none"` di root | artefak **fill hitam** (bendera, app-logo) |
+| Gradient stop | wajib sertakan `a:1` |
+| `counterAxisAlignItems` pada layout horizontal | nilai `MIN`/`MAX`/`CENTER`, bukan `START`/`END` |
+| `layoutPositioning='ABSOLUTE'` | set **setelah** `appendChild` |
+| Ubah teks | `loadFontAsync` dulu |
+| `marginTop` | tidak ada di Figma — pakai spacer frame |
+| Impor ikon/logo SVG | pakai `upload_assets` (bukan rekonstruksi manual) agar path presisi |
 
 ## Jebakan umum
 
