@@ -52,6 +52,38 @@ yang self-contained:
   --print-to-pdf="test-report.pdf" test-report.html
 ```
 
+## Template Test Report (format QA TEST)
+
+Laporan akhir mengikuti format **QA TEST** — **satu baris per alur (scenario)**, screenshot
+tertanam di kolom `Screenshot` tiap baris (bukan ditumpuk di bawah teks).
+
+### Struktur
+
+1. **Metadata table** (label → nilai): `Tester` (mis. "Playwright (E2E otomatis)"),
+   `Testing Date`, `Environment`, `Scenario`, `Description`.
+2. **Success Scenario** — tabel dengan kolom:
+   `No | Test Case | Steps | Expected Result | Actual Result | Status | Screenshot`
+   - **Tiap alur = satu baris** (contoh: "Alur login", "Buka menu Penilaian (Tim saya)",
+     "Buka form penilaian", "Simpan draf").
+   - `Steps` = aksi/skenario; `Expected Result` = hasil yang diharapkan; `Actual Result` =
+     "Sesuai — …"; `Status` = status pill hijau `PASS`.
+   - `Screenshot` = screenshot alur tersebut, tertanam di sel barisnya.
+3. **Error Scenario** (bila ada test gagal/diblokir) — kolom sama; status merah/kuning,
+   tambah `Analysis` / `Repaired By` bila perlu.
+
+### Screenshot per alur
+
+- Di test Playwright, panggil `page.screenshot({ path: 'test-results/NN-*.png', fullPage: true })`
+  **per langkah** (login, tim, form, simpan draf, dst.) — bukan satu screenshot utuh.
+- Saat publish ke Confluence: upload tiap screenshot sebagai attachment, lalu embed `mediaSingle`
+  di sel `Screenshot` baris yang sesuai.
+
+### Catatan Confluence (ADF)
+
+- Gambar di dalam sel tabel harus `mediaSingle` — `media` inline di `paragraph` **ditolak**
+  editor baru (berubah jadi "unsupported content").
+- Status hijau = node `status` `{ text: "PASS", color: "green" }`.
+
 ## Jebakan umum
 
 | Gejala | Sebab / solusi |

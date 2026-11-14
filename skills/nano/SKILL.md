@@ -57,6 +57,7 @@ apakah ada link dokumentasi (mis. notulensi di Confluence) — bila ada, baca is
 - **BPMN** — diagram proses bisnis (swimlane, `.bpmn` XML + visual).
 - **Hasil:** `docs/PRD.md` · `docs/SPEC.md` · `docs/bpmn/*.bpmn` (+ `.png`).
 - **Publish ke Confluence (opsional):** tawarkan publish dokumen (PRD/FSD/BPMN) ke Confluence Cloud — bila kredensial + space/parent tersedia. Lihat skill `generating-confluence-docs`.
+  - **BPMN dipublish terpisah** — bukan jadi satu dengan SPEC/PRD. Halaman BPMN memakai template: heading **"BPMN — [Nama Produk]"** + satu **expand** per diagram (title = nama diagram, isi = gambar BPMN). Detail: `generating-confluence-docs`.
 
 ### 2. Pengembangan Sistem
 - **Design Figma** — menyusun/membangun desain memakai **Pilar** (design system UII).
@@ -86,6 +87,13 @@ apakah ada link dokumentasi (mis. notulensi di Confluence) — bila ada, baca is
 - **User manual** — panduan pengguna bergambar (alur langkah + screenshot).
 - **Hasil:** test report · user manual (PDF + markdown).
 - **Publish ke Confluence (opsional):** tawarkan publish panduan/report ke Confluence Cloud. Lihat skill `generating-confluence-docs`.
+
+**Template test report (wajib):** laporan test mengikuti format **QA TEST** — **satu baris per
+alur/scenario, screenshot tertanam di tiap baris**:
+1. **Metadata table** — `Tester` · `Testing Date` · `Environment` · `Scenario` · `Description`.
+2. **Success Scenario** — tabel `No | Test Case | Steps | Expected Result | Actual Result | Status | Screenshot`; tiap alur = satu baris; `Status` = pill hijau `PASS`; kolom `Screenshot` berisi screenshot alur tersebut.
+3. **Error Scenario** (bila ada test gagal/diblokir) — kolom sama, status merah/kuning.
+   Detail lengkap: skill `generating-test-reports`.
 
 ## Memori — docs/nano/state.md
 

@@ -85,6 +85,24 @@ Output: markdown (judul + isi) — kebalikan dari `convert.mjs`. Berguna untuk m
 notulensi rapat / dokumen di Confluence sebagai **bahan diskusi & analisis** (mis. input
 "Diskusi & Analisis" di nano).
 
+## Template halaman BPMN
+
+BPMN dipublish sebagai **halaman sendiri** (jangan digabung dengan SPEC/PRD). Struktur:
+
+1. **Heading** (level 2, tebal): `BPMN — [Nama Produk]`.
+2. **Satu `expand` per diagram** — `attrs.title` = nama diagram (mis. "1. Menilai (360°)"),
+   isinya satu `mediaSingle` (gambar BPMN, width ~800).
+
+```json
+{ "type": "expand", "attrs": { "title": "1. Menilai (360°)" },
+  "content": [
+    { "type": "mediaSingle", "attrs": { "layout": "center" },
+      "content": [ { "type": "media", "attrs": { "type": "file", "id": "<fileId>", "collection": "<pageId>", "width": 800 } } ] }
+  ] }
+```
+
+Alur: render BPMN → PNG (`render-bpmn.mjs`) → upload attachment → `mediaSingle` di dalam `expand`.
+
 ## Kesalahan umum
 
 | Gejala | Sebab |
