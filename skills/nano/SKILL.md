@@ -12,7 +12,9 @@ Kecuali user minta hal kecil di luar alur (lihat pengecualian di bawah), ikuti l
 1. **Sapaan** — baca `docs/nano/state.md`. **WAJIB** tampilkan 3 menu: **Diskusi & Analisis** · **Pengembangan Sistem** · **Dokumentasi**. Kalau `state.md` belum ada (project baru): inisialisasi dulu, lalu **tetap** tawarkan menu — jangan tanya "ada yang bisa dibantu?".
 2. **Diskusi & Analisis** — sebelum diskusi, **WAJIB tanyakan** dokumen/link (mis. notulensi Confluence). Setelah diskusi, **WAJIB tawarkan** output: PRD · FSD/SPEC · BPMN → lalu tawarkan publish ke Confluence. **JANGAN lanjut ke coding sebelum user memilih.**
 3. **Pengembangan Sistem** — sebelum koding, **WAJIB konfirmasi** stack **Full (Angular+Laravel)** vs **Lite (Vite)**, lalu **tawarkan urutan**: spec dulu? design Figma dulu? atau langsung coding? **JANGAN langsung coding sebelum user memutuskan.**
-4. **Dokumentasi** — test report + user manual sesuai pilihan.
+4. **Dokumentasi** — test report + user manual sesuai pilihan. **WAJIB tawarkan dua hal,
+   tidak saling menggantikan:** (a) **format dokumen** — Word · Excel · PowerPoint · PDF ·
+   Markdown (pakai document-skills); (b) **publish ke Confluence** — ya/tidak.
 5. **Tiap akhir tahap** — konfirmasi ke user, lalu perbarui `state.md`.
 
 > **Pengecualian:** permintaan kecil di luar alur (mis. "perbaiki typo", "jelaskan X") boleh langsung dikerjakan tanpa 3 menu/fase.
@@ -63,11 +65,19 @@ baca `state.md` dulu sebelum menjawab.
 **Masukan:** catatan rapat, transkrip diskusi, dokumen apa pun. **Di awal, aktif tanyakan**
 apakah ada link dokumentasi (mis. notulensi di Confluence) — bila ada, baca isinya
 (`generating-confluence-docs` → `read-page.mjs`) sebagai bahan diskusi.
+
+> **Sesi terkait dokumen:** bila user menyerahkan file Word/Excel/PowerPoint/PDF, atau
+> minta membuat/mengedit dokumen, **tanyakan format output final** (Word · Excel ·
+> PowerPoint · PDF · Markdown) dan gunakan **document-skills** (`docx`/`xlsx`/`pptx`/`pdf`).
+> Baca file masukan dulu (python-docx / openpyxl / python-pptx / pypdf) sebelum menyusun keluaran.
+
 - **PRD** — dokumen kebutuhan terstruktur (latar, tujuan, ukuran, ruang lingkup, fungsional,
   alur, risiko) + daftar pertanyaan terbuka.
 - **FSD / SPEC** — spesifikasi teknis (arsitektur, stack, kontrak API, struktur, pengujian).
 - **BPMN** — diagram proses bisnis (swimlane, `.bpmn` XML + visual).
 - **Hasil:** `docs/PRD.md` · `docs/SPEC.md` · `docs/bpmn/*.bpmn` (+ `.png`).
+- **Ekspor opsional:** tawarkan ekspor PRD/FSD ke **Word (.docx)** / **PDF** untuk dikirim
+  ke stakeholder (pakai `docx`/`pdf`).
 - **Publish ke Confluence (opsional):** tawarkan publish dokumen (PRD/FSD/BPMN) ke Confluence Cloud — bila kredensial + space/parent tersedia. Lihat skill `generating-confluence-docs`.
   - **BPMN dipublish terpisah** — bukan jadi satu dengan SPEC/PRD. Halaman BPMN memakai template: heading **"BPMN — [Nama Produk]"** + satu **expand** per diagram (title = nama diagram, isi = gambar BPMN). Detail: `generating-confluence-docs`.
 
@@ -119,7 +129,25 @@ Bila tujuannya "generate desain Figma dari app/prototype yang sudah berjalan", i
 - **Automated test + report** — Playwright E2E + laporan HTML + PDF (screenshot + penjelasan).
 - **User manual** — panduan pengguna bergambar (alur langkah + screenshot).
 - **Hasil:** test report · user manual (PDF + markdown).
-- **Publish ke Confluence (opsional):** tawarkan publish panduan/report ke Confluence Cloud. Lihat skill `generating-confluence-docs`.
+- **Tawarkan format file (WAJIB):** sebelum menulis dokumen, tanyakan format output yang
+  diinginkan — **Word (.docx)** · **Excel (.xlsx)** · **PowerPoint (.pptx)** · **PDF** ·
+  **Markdown**. Pakai **Document Skills** (Anthropic): `docx`, `xlsx`, `pptx`, `pdf`.
+  - **Petakan per artefak:** test report → `.docx` (laporan QA) + `.xlsx` (lampiran tabel
+    test case) + `.pdf` (versi kirim); user manual → `.pdf`/`.docx`; ringkasan/slide
+    stakeholder → `.pptx`.
+  - **Overlap pptx:** untuk membuat slide dari/data, pakai `pptx` (Anthropic); untuk edit
+    cepat file `.pptx` yang sudah ada, boleh pakai `editing-powerpoint-with-python`.
+  - **Jika document-skills belum terpasang** (skill `docx`/`xlsx`/`pptx`/`pdf` tidak
+    tersedia), tawarkan pasang dulu: `/plugin marketplace add anthropics/skills` →
+    `/plugin install document-skills@anthropic-agent-skills`, atau jatuh ke `md`/HTML→pdf.
+  - **Selalu verifikasi** hasil: buka ulang file (python-docx/openpyxl/python-pptx/pypdf)
+    dan cek struktur sebelum menyerahkan. Jangan klaim "berhasil" tanpa dibuka ulang.
+  - Contoh hasil uji: `docs/nano/contoh/` (di repo nano).
+- **Publish ke Confluence (opsional — WAJIB tetap ditawarkan):** setelah format file
+  disepakati dan dokumen jadi, **selalu tawarkan** publish panduan/report ke Confluence
+  Cloud. Lihat skill `generating-confluence-docs`. Pilihan format (Word/Excel/PPT/PDF) dan
+  publish Confluence adalah **dua tawaran terpisah** — keduanya harus ditawarkan; user boleh
+  memilih salah satu, keduanya, atau tidak sama sekali.
 
 **Template test report (wajib):** laporan test mengikuti format **QA TEST** — **satu baris per
 alur/scenario, screenshot tertanam di tiap baris**:
@@ -140,7 +168,14 @@ alur/scenario, screenshot tertanam di tiap baris**:
 |---|---|
 | Diskusi & Analisis | superpowers:brainstorming · superpowers:writing-plans · ai-native-development-workflow |
 | Pengembangan Sistem | dev-workflow (Full: Angular+Laravel) · figma:figma-use · figma:figma-generate-design · figma:figma-design-to-code · figma:figma-generate-library · screenshotting-web-app (capture acuan) |
-| Dokumentasi | generating-test-reports · screenshotting-web-app · editing-powerpoint-with-python |
+| Dokumentasi | generating-test-reports · screenshotting-web-app · editing-powerpoint-with-python · **docx · xlsx · pptx · pdf** (Anthropic document-skills) |
+
+**Document Skills** (Anthropic, plugin `document-skills@anthropic-agent-skills`): buat
+dokumen Word/Excel/PowerPoint/PDF sungguhan. Pasang bila belum ada:
+`/plugin marketplace add anthropics/skills` → `/plugin install document-skills@anthropic-agent-skills`.
+Dependensi Python: `python-docx` `openpyxl` `python-pptx` `pypdf` `pdfplumber` `reportlab`
+`pdf2image`; untuk membuat `.docx` pakai library npm `docx`. Untuk render visual
+`.docx`/`.pptx` → PDF butuh LibreOffice (`soffice`), tanpa itu verifikasi struktural saja.
 
 ## Dependency opsional
 
