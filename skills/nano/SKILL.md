@@ -127,7 +127,8 @@ Bila tujuannya "generate desain Figma dari app/prototype yang sudah berjalan", i
 
 ### 3. Dokumentasi
 - **Automated test + report** — Playwright E2E + laporan HTML + PDF (screenshot + penjelasan).
-- **User manual** — panduan pengguna bergambar (alur langkah + screenshot).
+- **User manual** — panduan pengguna bergambar (alur langkah + screenshot), **WAJIB pakai
+  template `.docx` resmi BSI UII** (lihat sub-bagian di bawah — jangan buat dari nol).
 - **Hasil:** test report · user manual (PDF + markdown).
 - **Tawarkan format file (WAJIB):** sebelum menulis dokumen, tanyakan format output yang
   diinginkan — **Word (.docx)** · **Excel (.xlsx)** · **PowerPoint (.pptx)** · **PDF** ·
@@ -149,6 +150,84 @@ Bila tujuannya "generate desain Figma dari app/prototype yang sudah berjalan", i
   publish Confluence adalah **dua tawaran terpisah** — keduanya harus ditawarkan; user boleh
   memilih salah satu, keduanya, atau tidak sama sekali.
 
+#### User manual — WAJIB pakai template BSI UII (jangan buat dari nol)
+
+User manual dibuat di atas **template `.docx` resmi** tim UX/BSI UII, **bukan** dokumen baru.
+Sumber panduan: *User Manual Guidance* di Confluence UX
+(https://bsi-uii.atlassian.net/wiki/spaces/UX/pages/150405155). Aset lokal (base directory skill):
+`templates/user-manual-template.docx` · `templates/cover-logo.png` · `templates/cover-bg.png`.
+
+Prosedur:
+1. **Baca dulu** `references/user-manual-guidance.md` sebelum menulis — isinya struktur
+   (cover → overview → heading berjenjang → screenshot → penutup), aturan penulisan, format
+   heading, dan spesifikasi cover (logo + background).
+2. **Salin template** `templates/user-manual-template.docx` → file kerja baru; **jangan
+   menimpa/mengedit template asli**. Untuk versi baru, duplikasi dulu.
+3. **Rename** sesuai format: `Manual [sistem]: [fitur dan versi] - [user: fitur utama]`
+   (contoh: `Manual UIIAdmisi: Pascasarjana v1.0 - Pendaftar: Pendaftaran Pascasarjana`).
+4. **Isi** dengan mengikuti isi/komentar template:
+   - **Satu manual per user/peran** (Pendaftar, Petugas verifikasi, Kaprodi, …).
+   - Bahasa **jelas & formal**; ejaan benar (`di tempat`, `silakan`).
+   - Heading numbering **manual** (jangan auto-numbering). Heading 1 = 24pt bold +
+     highlight kuning, H2/H3 = biru `#093697` bold, H4 = hitam bold.
+   - Tiap bagian diawali *"Berikut langkah-langkah yang harus dilakukan, yaitu:"*, langkah
+     bernomor, catatan **italic**, dan **di akhir tiap step tambahkan kalimat "… telah selesai."**
+   - Screenshot: proporsional, beri **anotasi panah/kotak**; potong bila terlalu panjang
+     (jangan potong di teks/field). Ikon dalam teks: width 0.2 in. Untuk halaman A4 margin
+     0.8 in (lebar isi ~6.67 in), pakai **width 6.0 in** agar tidak melebihi margin.
+5. **Edit template**, bukan generate `docx` dari library — pakai `python-docx` untuk mengisi
+   salinan, agar style/gambar template tetap utuh. Hapus komentar instruksi di salinan final.
+6. **Verifikasi** dengan membuka ulang (python-docx): cek heading, gambar, dan teks
+   "… telah selesai." tiap step. Jangan klaim selesai tanpa dibuka ulang.
+
+##### Cover: logo + grafik latar (WAJIB, jangan cuma teks)
+
+Cover template punya **dua gambar** — cover teks-saja akan dianggap salah:
+- **Logo UII** — *inline*, lebar **3.0 in**, di tengah, paling atas (`templates/cover-logo.png`).
+- **Grafik latar dekoratif** biru-kuning — **melayang di belakang teks** (anchor `behindDoc=1`),
+  **8.51 in × 4.73 in**, posisi `relativeFrom="page"` H=0 · V≈**6.3 in** (menempel bawah
+  halaman), `wrapNone` (`templates/cover-bg.png`).
+
+python-docx tak punya API untuk gambar melayang → tambahkan logo via `run.add_picture(width=Inches(3.0))`
+lalu ubah `w:drawing/wp:inline` milik background menjadi `wp:anchor` (urutan anak skema OOXML:
+`simplePos → positionH → positionV → extent → effectExtent → wrapNone → docPr → graphic`).
+**Contoh kerja self-contained** (skrip + hasil + README) ada di
+`references/user-manual-example/` — `scripts/build-user-manual.py` (generator docx),
+`scripts/docx2html.py` + `scripts/render-pdf.sh` (render PDF). Jalankan langsung di proyek
+baru: `python3 .../build-user-manual.py --out Manual.docx --shots ./shots`.
+
+##### Render PDF (bila LibreOffice/Word tidak ada)
+
+Cek dulu: `which soffice libreoffice` / `/Applications/Microsoft Word.app`. **Jangan pasang
+LibreOffice (~1 GB) tanpa konfirmasi user.** Bila tidak ada, render **`.docx` → HTML → Chrome
+headless `--print-to-pdf`** (Chrome hampir selalu ada). Prinsip yang terbukti benar:
+- **Pisahkan gambar inline vs anchor**: inline = logo/screenshot (alirkan normal); anchor
+  `behindDoc` = background cover (jangan ikut arus teks).
+- **Tata per halaman**: bungkus tiap halaman dalam `div.page` (split saat ada `w:br type="page"`),
+  `@page { size:A4; margin:0 }` + `padding:0.8in` per `.page`, `page-break-after:always`.
+- **Hormati perataan paragraf** (`paragraph.alignment` → `text-align`) — tanpa ini judul center
+  jadi rata kiri.
+- **Background cover** = `img{position:absolute; left:0; bottom:0; width:100%; z-index:0}` di
+  dalam `.page` ber-`position:relative`; isi teks dibungkus `.content{z-index:1}`.
+- Beri jeda baris kosong di cover (paragraf kosong planner) agar alamat tak menempel ke judul.
+- Konversi markdown-ish: dukung `**bold**` dan `*italic*` saat membangun paragraf (kalau tidak,
+  tanda bintang muncul literal).
+
+```bash
+"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new --disable-gpu \
+  --no-pdf-header-footer --virtual-time-budget=5000 \
+  --print-to-pdf="Manual-....pdf" "file:///path/manual.html"
+```
+
+##### Verifikasi (jangan klaim "berhasil" tanpa ini)
+
+- **docx:** `python-docx` → hitung `inline_shapes`, pastikan ada `wp:anchor` + `behindDoc="1"`
+  (cover), cek heading/teks "… telah selesai.", pastikan tidak ada `*` literal.
+- **PDF:** `pypdf` cek jumlah halaman; **render halaman ke PNG** lalu lihat:
+  `pdftoppm -png -r 90 "Manual.pdf" page` → cek cover (logo+latar), screenshot utuh, penutup.
+- **Jebakan Quick Look:** kotak kecil `□` di preview `qlmanage`/Finder adalah **artefak render
+  paragraf kosong**, bukan isi dokumen — konfirmasi lewat render PDF (`pdftoppm`).
+
 **Template test report (wajib):** laporan test mengikuti format **QA TEST** — **satu baris per
 alur/scenario, screenshot tertanam di tiap baris**:
 1. **Metadata table** — `Tester` · `Testing Date` · `Environment` · `Scenario` · `Description`.
@@ -168,14 +247,16 @@ alur/scenario, screenshot tertanam di tiap baris**:
 |---|---|
 | Diskusi & Analisis | superpowers:brainstorming · superpowers:writing-plans · ai-native-development-workflow |
 | Pengembangan Sistem | dev-workflow (Full: Angular+Laravel) · figma:figma-use · figma:figma-generate-design · figma:figma-design-to-code · figma:figma-generate-library · screenshotting-web-app (capture acuan) |
-| Dokumentasi | generating-test-reports · screenshotting-web-app · editing-powerpoint-with-python · **docx · xlsx · pptx · pdf** (Anthropic document-skills) |
+| Dokumentasi | generating-test-reports · screenshotting-web-app · editing-powerpoint-with-python · **docx · xlsx · pptx · pdf** (Anthropic document-skills) · **user manual → template `templates/user-manual-template.docx` + `references/user-manual-guidance.md`** |
 
 **Document Skills** (Anthropic, plugin `document-skills@anthropic-agent-skills`): buat
 dokumen Word/Excel/PowerPoint/PDF sungguhan. Pasang bila belum ada:
 `/plugin marketplace add anthropics/skills` → `/plugin install document-skills@anthropic-agent-skills`.
 Dependensi Python: `python-docx` `openpyxl` `python-pptx` `pypdf` `pdfplumber` `reportlab`
-`pdf2image`; untuk membuat `.docx` pakai library npm `docx`. Untuk render visual
-`.docx`/`.pptx` → PDF butuh LibreOffice (`soffice`), tanpa itu verifikasi struktural saja.
+`pdf2image`; untuk membuat `.docx` pakai library npm `docx`. Render visual `.docx` → PDF paling
+akurat via LibreOffice (`soffice`); **tanpa** itu, user manual bisa di-render lewat
+**docx → HTML → Chrome headless `--print-to-pdf`** lalu `pdftoppm` untuk verifikasi (lihat
+sub-bagian "Render PDF" di fase Dokumentasi).
 
 ## Dependency opsional
 
@@ -191,6 +272,18 @@ bukan bergantung pada skill/memory mesin tertentu:
 - **`references/pilar-design-tokens.md`** — nilai token PILAR Design System UII
   (palet teks, tipografi, fokus) + daftar yang masih hilang. Baca ini sebelum menyusun
   desain/koding UI dengan PILAR.
+- **`references/user-manual-guidance.md`** — panduan resmi **User Manual Guidance** (BSI UII,
+  Confluence UX): aturan penulisan, struktur cover→overview→heading→screenshot→penutup,
+  format heading (H1 24pt highlight kuning · H2/H3 biru `#093697` · H4 hitam), + tips edit
+  template. **Wajib** dibaca sebelum membuat user manual.
+- **`templates/user-manual-template.docx`** — template `.docx` resmi (hasil export Google
+  Doc `12aduIlpSj…`). **Salin** file ini untuk tiap manual; jangan edit template aslinya.
+- **`templates/cover-logo.png` · `templates/cover-bg.png`** — aset cover template (logo UII
+  inline 3.0 in; grafik latar dekoratif anchor 8.51×4.73 in di belakang teks). Wajib dipakai
+  agar cover tidak "teks saja".
+- **`references/user-manual-example/`** — contoh kerja self-contained: `assets/` (docx+pdf
+  hasil), `scripts/` (generator docx, docx→HTML, render-pdf), `README.md`. Jalankan ulang untuk
+  proyek baru; jadikan acuan saat membuat user manual.
 - **`skills/dev-workflow/SKILL.md`** — konvensi pengembangan UII (stack Laravel+Angular,
   token Tailwind PILAR, commit, stepper, jebakan). Bisa dibaca langsung sebagai referensi,
   atau diaktifkan sebagai skill standalone (lihat README).

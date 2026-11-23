@@ -6,11 +6,37 @@
 ## Status saat ini
 
 - **Fase:** belum mulai (diskusi; belum memilih fase)
-- **Terakhir diperbarui:** 2026-11-20
+- **Terakhir diperbarui:** 2026-11-23
 
 ## Yang sudah selesai
 
-- (kosong)
+- **2026-11-23** — **Contoh user manual dari template** dibuat:
+  `docs/nano/contoh/Manual-Penilaian-Kinerja-Penilai-v1.0.docx` (1.9 MB, 4 screenshot asli,
+  84 paragraf). Sistem: Platform Penilaian Kinerja (repo demo ini), user: **Penilai / Rekan Sejawat**.
+  - Mengikuti template: cover biru `#093697` + alamat/IT support + salam; Overview + garis besar
+    alur; 3 Heading 1 (Masuk · Membuka Form · Mengisi dan Mengirim) + H2 Penutup; tiap bagian
+    diawali "Berikut langkah-langkah…", langkah bernomor, catatan *italic*, diakhiri
+    "… telah selesai."; screenshot + caption; penutup + salam.
+  - Heading terverifikasi: H1 24pt bold `#093697` highlight kuning · H2 18pt bold `#093697`.
+  - Screenshot diambil dari app asli (Chrome CDP, backend port 8002 + frontend port 4300 —
+    port 4200 milik proyek lain `App_Purnatugas`, tidak disentuh). Server uji sudah dimatikan.
+  - Catatan: `soffice` tidak ada → render visual hanya via Quick Look (`qlmanage`); kotak kecil
+    `□` di preview Quick Look adalah artefak render paragraf kosong, **bukan** isi dokumen.
+  - **PDF versi kirim** dibuat 2026-11-23: `Manual-Penilaian-Kinerja-Penilai-v1.0.pdf` (6 halaman,
+    ~2,4 MB). Karena LibreOffice/Word/pandoc tidak ada, PDF di-render via **docx → HTML → Chrome
+    headless `--print-to-pdf`** (bukan engine Word). `.docx` tetap sumber utama; PDF meniru
+    struktur/warna/style template. Diverifikasi via pypdf + `pdftoppm` (6 halaman, 4 screenshot,
+    tanpa tanda `*` literal). Jika butuh PDF persis hasil Word → pasang LibreOffice.
+  - Perbaikan 2026-11-23: penanda `**bold**`/`*italic*` diproses (tidak tampil literal); langkah
+    alur Overview di-bold; screenshot 6in proporsional.
+  - **Perbaikan cover 2026-11-23 (permintaan user):** cover kini punya **logo UII** (inline 3.0in,
+    atas, tengah) + **grafik latar dekoratif** biru-kuning **melayang di belakang teks** (anchor
+    `behindDoc`, 8.51×4.73in, dari halaman V≈6.3in) — sesuai template. Asset disimpan di skill:
+    `templates/cover-logo.png` & `templates/cover-bg.png`, terdokumentasi di
+    `references/user-manual-guidance.md` bagian A.
+    Generator PDF diperbarui: pisahkan gambar inline vs anchor, tata per halaman, hormati
+    perataan paragraf (center), dan render background sebagai `cover-bg` absolut di bawah.
+
 
 ## Yang sedang berjalan
 
@@ -21,6 +47,33 @@
 - (kosong)
 
 ## Keputusan yang sudah disepakati
+
+- **2026-11-23** — **Skill nano (fase Dokumentasi / user manual) diperbarui menyeluruh** dengan
+  pelajaran sesi ini. SKILL.md kini punya sub-bagian: **"Cover: logo + grafik latar"**,
+  **"Render PDF (bila LibreOffice/Word tidak ada)"**, dan **"Verifikasi"**. Ditambahkan pula
+  **contoh kerja self-contained** di skill: `references/user-manual-example/`
+  (`scripts/build-user-manual.py` + `docx2html.py` + `render-pdf.sh` + `assets/` docx&pdf +
+  `README.md`, skrip sudah ber-argumen `--out`/`--shots`/`--logo`/`--bg`). Aset cover
+  `templates/cover-logo.png` & `cover-bg.png`. Diuji end-to-end: hasil docx 2,0 MB, PDF 6 hal,
+  cover ber-logo+latar identik. Semua terdokumentasi di daftar **Knowledge bawaan** SKILL.md.
+
+- **2026-11-23** — **User manual WAJIB pakai template `.docx` resmi BSI UII**, bukan buat baru.
+  - Sumber: Confluence UX *User Manual Guidance* (page `150405155`). Token Confluence
+    diperbarui 2026-11-23 (token lama ditolak 403).
+  - Halaman guidance **tidak punya lampiran `.docx`** — template aslinya **Google Doc**
+    (`12aduIlpSj0sFMo9QDvmjMH9R2HcWYAwi-NEY-wlR7EU`). Sudah di-export ke `.docx` dan disimpan
+    di skill: `~/.claude/skills/nano/templates/user-manual-template.docx` (12.9 MB, 31 gambar,
+    106 paragraf, style Heading 1–4).
+  - Instruksi detail diekstrak dari **komentar** Google Doc → ditulis ke
+    `~/.claude/skills/nano/references/user-manual-guidance.md`.
+  - **SKILL.md diperbarui:** sub-bagian "User manual — WAJIB pakai template BSI UII" di fase
+    Dokumentasi (prosedur + aturan heading/screenshot/penutup), tabel skill, dan daftar
+    Knowledge bawaan.
+  - Ringkasan aturan: satu manual per user; bahasa jelas & formal (`di tempat`, `silakan`);
+    numbering heading **manual** (H1 24pt highlight kuning, H2/H3 biru `#093697` bold, H4 hitam
+    bold); tiap step diakhiri kalimat "… telah selesai."; screenshot width 7.4 in + anotasi;
+    format nama file `Manual [sistem]: [fitur dan versi] - [user: fitur utama]`.
+
 
 - **2026-11-20** — Skill komunitas **Karpathy rules** (`forrestchang/andrej-karpathy-skills`)
   **tidak dipasang**: rule-nya tumpang-tindih dengan superpowers + system prompt, dan
