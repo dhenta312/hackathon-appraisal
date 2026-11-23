@@ -10,6 +10,16 @@
 
 ## Yang sudah selesai
 
+- **2026-11-23** — **Panduan integrasi tim dipublish ke Confluence** (permintaan user untuk
+  onboarding anggota tim): *"Panduan Penggunaan Claude Code & Skill nano"* di space **AT
+  (Avengers Team)**, di bawah parent **Project** (`1079738369`).
+  Halaman: `https://bsi-uii.atlassian.net/wiki/spaces/AT/pages/1424097282`.
+  Isi: apa itu Claude Code & nano · pasang Claude Code & login · prasyarat (wajib/opsional
+  tabel) · pasang nano (clone → `./setup.sh` → restart → verifikasi → `hai nano`) · mulai
+  proyek baru (salin `state.md`) · tiga pekerjaan nano + contoh percakapan · fitur penting ·
+  update · troubleshooting · tips. Format `atlas_doc_format`, full-width. Terverifikasi:
+  9×H2, 11×H3, 4 tabel, ter-render normal (bukan JSON).
+
 - **2026-11-23** — **Contoh user manual dari template** dibuat:
   `docs/nano/contoh/Manual-Penilaian-Kinerja-Penilai-v1.0.docx` (1.9 MB, 4 screenshot asli,
   84 paragraf). Sistem: Platform Penilaian Kinerja (repo demo ini), user: **Penilai / Rekan Sejawat**.
