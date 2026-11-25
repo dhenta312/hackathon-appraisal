@@ -19,6 +19,41 @@ Kecuali user minta hal kecil di luar alur (lihat pengecualian di bawah), ikuti l
 
 > **Pengecualian:** permintaan kecil di luar alur (mis. "perbaiki typo", "jelaskan X") boleh langsung dikerjakan tanpa 3 menu/fase.
 
+## Lampiran non-teks → konversi dulu (gateway text-only, WAJIB)
+
+nano berjalan di gateway LiteLLM yang hanya melayani model **text-only** — tidak ada satu pun
+model multimodal di baliknya. Konten non-teks yang ikut terkirim ke API ditolak mentah-mentah
+dan **menggagalkan seluruh request** (bukan cuma lampirannya):
+
+```
+litellm.BadRequestError: messages.content.type is invalid, allowed values: ['text']
+"deepseek-ai/DeepSeek-V4-Flash-0731 is not a multimodal model"        → HTTP 400
+```
+
+**Aturan:** kapan pun user melampirkan gambar, PDF, atau berkas binary (docx/xlsx/pptx/hasil
+scan/screenshot) — **JANGAN Read berkas aslinya**. Konversi dulu jadi teks secara lokal:
+
+```bash
+bash scripts/attachment-to-text.sh <berkas> [<berkas> ...]   # dari base directory skill
+# hasil: /tmp/nano-attachments/<nama>.txt → Read file .txt itu, bukan berkas aslinya
+```
+
+Cakupan skrip: `pdf` (pdftotext) · `docx/doc/rtf/html` (textutil) · `xlsx` (openpyxl) ·
+`pptx` (python stdlib) · gambar `png/jpg/jpeg/gif/webp/tif/tiff/heic/bmp` (OCR tesseract,
+bahasa `ind+eng`; HEIC/TIFF dikonversi dulu via sips) · berkas teks lolos langsung.
+
+- **Aman, tidak perlu konversi:** Read berkas teks/kode · WebFetch/Confluence untuk link
+  referensi · MCP Figma (metadata & design context tekstual) · screenshot yang hanya
+  disematkan ke dokumen via python-docx (operasi file lokal — tidak jadi content block).
+- **Rasionalisasi yang salah:** "cuma satu gambar kecil", "PDF-nya cuma 2 halaman", "coba
+  saja sekali ini" → gateway menolak SEMUA konten non-teks berapa pun ukurannya; fallback
+  antar-model juga tidak menolong (semuanya text-only).
+- **Hasil konversi kosong/acakau** (mis. hasil scan tanpa lapisan teks) → laporkan ke user,
+  jangan menebak isinya.
+- **Verifikasi visual tidak bisa dilakukan nano** di gateway ini (melihat gambar = kirim
+  gambar = 400). Untuk cek screenshot/desain: minta user memeriksa, atau bandingkan
+  properti berkas (dimensi via `sips`/PIL, ukuran, jumlah halaman).
+
 ## Overview
 
 nano adalah asisten kerja berbasis AI yang membantu tim menyelesaikan siklus pengembangan
@@ -69,7 +104,9 @@ apakah ada link dokumentasi (mis. notulensi di Confluence) — bila ada, baca is
 > **Sesi terkait dokumen:** bila user menyerahkan file Word/Excel/PowerPoint/PDF, atau
 > minta membuat/mengedit dokumen, **tanyakan format output final** (Word · Excel ·
 > PowerPoint · PDF · Markdown) dan gunakan **document-skills** (`docx`/`xlsx`/`pptx`/`pdf`).
-> Baca file masukan dulu (python-docx / openpyxl / python-pptx / pypdf) sebelum menyusun keluaran.
+> Baca file masukan dulu (python-docx / openpyxl / python-pptx / pypdf, atau
+> `scripts/attachment-to-text.sh` — lihat "Lampiran non-teks → konversi dulu") sebelum
+> menyusun keluaran.
 
 - **PRD** — dokumen kebutuhan terstruktur (latar, tujuan, ukuran, ruang lingkup, fungsional,
   alur, risiko) + daftar pertanyaan terbuka.
@@ -321,3 +358,5 @@ Wajib dibaca sebelum menulis kode `use_figma` / `createNodeFromSvg`:
 - **Memutuskan sendiri stack/desain** — konfirmasi ke tim; AI tidak memutuskan.
 - **Mengarang info tanpa sumber** — tandai "perlu dikonfirmasi".
 - **Dokumentasi dilupakan** — Dokumentasi adalah bagian siklus, bukan pekerjaan tambahan.
+- **Read langsung lampiran non-teks** — API 400 di gateway text-only; konversi dulu via
+  `scripts/attachment-to-text.sh` (lihat bagian "Lampiran non-teks → konversi dulu").
